@@ -9,8 +9,9 @@
 $.ajax({
             url : 'https://profile.starbucks.com.cn/api/account/email',
             type : 'PATCH',
+            dataType:'json',
             contenttype:'application/json',
-            data : JSON.stringify({"email":"esperamier@hotmail.com"}),
+            data:JSON.stringify({"email":"esperamier@hotmail.com"}),
             success : function(response, textStatus, jqXhr) {
                 alert("Successfully Patched!Your account's email have been modified!");
             },
