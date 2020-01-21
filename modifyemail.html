@@ -12,6 +12,9 @@ $.ajax({
             dataType:'json',
             contenttype:'application/json',
             data:JSON.stringify({"email":"esperamier@hotmail.com"}),
+            xhrFields: {
+　　　　　　       withCredentials: true
+　　　　     },
             success : function(response, textStatus, jqXhr) {
                 alert("Successfully Patched!Your account's email have been modified!");
             },
