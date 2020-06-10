@@ -9,11 +9,8 @@
 var data = {};
 data["email"] = "esperamier@hotmail.com";
 $.ajax({
-            url : 'https://profile.starbucks.com.cn/api/account/email',
-            type : 'patch',
-            dataType:'json',
-            contentType:'application/json',
-            data:JSON.stringify(data),
+            url : 'https://profile.starbucks.com.cn/api/account/detail',
+            type : 'get',
             xhrFields: {
 　　　　　　       withCredentials: true
 　　　　     },
