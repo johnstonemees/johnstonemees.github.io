@@ -12,6 +12,9 @@
 			    url : 'https://www.magisto.com/api/video/comments/P14CZgkQE20vQg5hCzE',
 			    type : 'POST',
 			    data:data,
+			    headers: {
+        			"X-Requested-With":'XMLHttpRequest'
+    			 },
 			    xhrFields: {
 			     withCredentials: true
 			 },
