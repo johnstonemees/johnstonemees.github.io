@@ -3,6 +3,11 @@
 <meta name="referrer" content="never">
 </head>
 <body>
-<iframe src=https://profile.starbucks.com.cn/api/account/detail></iframe>
+<iframe id="frame" src=https://profile.starbucks.com.cn/api/account/detail></iframe>
+ <script>
+   document.getElementById('frame').addEventListener('click', function (ev) {
+        alert("selected!");
+    })
+  </script>
 </body>
 </html>
