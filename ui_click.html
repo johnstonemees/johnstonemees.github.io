@@ -4,9 +4,14 @@
 </head>
 <body>
 <iframe id="frame" src=https://profile.starbucks.com.cn/api/account/detail></iframe>
+ <div id="testnoiframe">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
  <script>
    document.getElementById('frame').addEventListener('click', function (ev) {
         alert("selected!");
+    })
+  
+     document.getElementById('testnoiframe').addEventListener('click', function (ev) {
+        alert("div selected!");
     })
   </script>
 </body>
