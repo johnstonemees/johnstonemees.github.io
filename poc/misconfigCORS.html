@@ -74,7 +74,7 @@ steal customer's cards Transactions
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				document.getElementById("transactions").innerHTML = response;
+				document.getElementById("transactions").innerHTML = JSON.stringify(response.data);
                                 console.log(response);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
