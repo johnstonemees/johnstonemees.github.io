@@ -18,6 +18,12 @@ steal customer's cards informaiton
 </br>
 </br>
 </br>
+<div>
+click the button to Steal the customer's Transactions!
+<button id="stealCards" onclick="stealCardsTransactions()">Steal the customer's Transactions</button>
+steal customer's cards Transactions
+<textarea id="transactions" style="width: 200px; height: 150px;"></textarea>
+</div>
 <script>
 	var cardsID;
 	function stealCustomerCards(){
@@ -32,8 +38,8 @@ steal customer's cards informaiton
 			 },
 			    success : function(response, textStatus, jqXhr) {
 				$("＃customer").val(response);
-				cardsID = response.data[0].id;
-                                console.log(cardsID);
+				//cardsID = response.data[0].id;
+                                console.log(response);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				// log the error to the console
@@ -58,7 +64,7 @@ steal customer's cards informaiton
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				$("＃customer").val(response);
+				$("＃transactions").val(response);
                                 console.log(response);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
