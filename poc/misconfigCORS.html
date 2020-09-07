@@ -37,9 +37,9 @@ steal customer's cards Transactions
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				$("＃customer").val(response);
-				//cardsID = response.data[0].id;
-                                console.log(response);
+				document.getElementById("customer").innerHTML = response;
+				cardsID = response.data[0].id;
+                                console.log(cardsID);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				// log the error to the console
@@ -64,7 +64,7 @@ steal customer's cards Transactions
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				$("＃transactions").val(response);
+				document.getElementById("transactions").innerHTML = response;
                                 console.log(response);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
