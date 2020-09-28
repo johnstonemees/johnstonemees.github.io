@@ -6,7 +6,7 @@ var ccc = document.cookie;
  console.log(ccc);
 window.parent.parent.postMessage("test","*");
 this.__proto__.location.href="https://www.google.com";
-window.parent.location.href = "https://www.google.com";
+window.parent.parent.location.href = "https://www.google.com";
 </script>
 </body>
 </html>
