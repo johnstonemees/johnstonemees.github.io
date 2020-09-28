@@ -2,7 +2,7 @@
 <body>
 <script>
 console.log(document.domain);
-  confirm(1);
+window.parent.postMessage("test","*");
 window.parent.location.href = "https://www.google.com";
 </script>
 </body>
