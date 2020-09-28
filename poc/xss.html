@@ -2,8 +2,10 @@
 <body>
 <script>
 console.log(document.domain);
-  console.log(document.cookie);
-window.parent.postMessage("test","*");
+var ccc = document.cookie;
+ console.log(ccc);
+window.postMessage("test","*");
+this.__proto__.location.href="https://www.google.com";
 window.parent.location.href = "https://www.google.com";
 </script>
 </body>
