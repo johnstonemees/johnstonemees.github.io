@@ -35,7 +35,7 @@
             }
             
             function mobileEncrypted(){
-              var mobile = document.getElementById("attackermobilenum");
+              var mobile = document.getElementById("attackermobilenum").value;
               var e = '{type: 17, mobile: '+mobile+', ticket: ""}'
               console.log(e);
               var en = encryptParams(e);
@@ -44,7 +44,7 @@
             }
             
             function codeEncrypted(){
-              var code = document.getElementById("attackercodeid");
+              var code = document.getElementById("attackercodeid").value;
               var e = '{type: 17, code: '+code+', ticket: ""}'
               console.log(e);
               var en = encryptParams(e);
