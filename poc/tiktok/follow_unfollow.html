@@ -23,16 +23,19 @@ The result of reporting.
 		data["reason"] = "111";
 		data["object_id"] = "6885697313201818885";
 		data["owner_id"] = "6885651327947457538";
-		data["75398519921"] = "video";
+		data["report_type"] = "video";
 		$.ajax({
 			    url : 'https://www.tiktok.com/node/report/reasons_put?aid=1988&app_name=tiktok_web&device_platform=web&referer=&user_agent=Mozilla%2F5.0+(Windows+NT+6.1%3B+Win64%3B+x64%3B+rv:81.0)+Gecko%2F20100101+Firefox%2F81.0&cookie_enabled=true&screen_width=1920&screen_height=1080&browser_language=zh-CN&browser_platform=Win32&browser_name=Mozilla&browser_version=5.0+(Windows)&browser_online=true&ac=&timezone_name=Etc%2FGMT-8&page_referer=https:%2F%2Fwww.tiktok.com%2F@user2621822501116%3Flang%3Den&priority_region=&appId=1180&region=KR&appType=t&isAndroid=false&isMobile=false&isIOS=false&OS=windows&did=6885647817369519617&verifyFp=verify_kghtttjw_OVZcNuGX_du7l_49zD_A8wy_CFAhIFK160S4',
 			    type : 'POST',
 			    dataType:'json',
 			    contentType:'application/json',
 			    data:JSON.stringify(data),
+			xhrFields: {
+			     withCredentials: true
+			 },
 			    success : function(data) {
 				         alert("Reporting success!");
-				         $("#result").val(data);
+				         $("#result").val(JSON.parse(data));
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				console.log("The error occured: " + textStatus, errorThrown);
