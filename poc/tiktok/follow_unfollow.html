@@ -30,9 +30,6 @@ The result of reporting.
 			    dataType:'json',
 			    contentType:'application/json',
 			    data:JSON.stringify(data),
-			    xhrFields: {
-			     withCredentials: true
-			 },
 			    success : function(data) {
 				         alert("Reporting success!");
 				         $("#result").val(data);
