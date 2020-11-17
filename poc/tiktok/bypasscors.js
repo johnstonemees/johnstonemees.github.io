@@ -21,6 +21,9 @@
 		{
 			alert("Poc for abuse feedback,you can click the link below for prove.");
 		}
+		 else {
+                 	console.log(xmlhttp2.responseText);
+	    	}
 	}
     	xmlhttp2.setRequestHeader('content-type', 'application/json');
 	xmlhttp2.open("POST","https://ads.tiktok.com/athena/api/order/submit/",true);
