@@ -25,7 +25,8 @@
                  	console.log(xmlhttp2.responseText);
 	    	}
 	}
-    	xmlhttp2.setRequestHeader('content-type', 'application/json');
+    	
 	xmlhttp2.open("POST","https://ads.tiktok.com/athena/api/order/submit/",true);
+	xmlhttp2.setRequestHeader('content-type', 'application/json');
 	xmlhttp2.withCredentials = true;
 	xmlhttp2.send(JSON.stringify(sendData));
