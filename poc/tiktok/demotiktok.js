@@ -4,7 +4,7 @@ var apis=new Array("","account","accounts","amount","balance","balances","bar","
 
 for (var i=0;i<apis.length;i++)
 { 
-   var endpoint1 = "https://ads.tiktok.com/athena/api/user/" + apis[i];
+   var endpoint1 = "https://ads.tiktok.com/athena/api/" + apis[i];
    var endpoint2 = "https://ads.tiktok.com/athena/api/order/" + apis[i];
    var endpoint3 = "https://ads.tiktok.com/athena/api/log/" + apis[i];
    var xmlhttp1 = new XMLHttpRequest();
@@ -16,6 +16,7 @@ for (var i=0;i<apis.length;i++)
 				result[endpoint1+"-"+xmlhttp1.status] ="Nothing";
 			}else{
 				result[endpoint1+"-"+xmlhttp1.status] =xmlhttp1.responseText;
+				console.log(result);
 			}
 		}
 	}
@@ -30,12 +31,12 @@ for (var i=0;i<apis.length;i++)
 		if (xmlhttp2.readyState==4)
 		{
 			if(xmlhttp2.status==404){
-				result[endpoint2+"-"+xmlhttp2.status] =xmlhttp2.responseText;
+				result[endpoint2+"-"+xmlhttp2.status] ="Nothing";
 			}else{
 				result[endpoint2+"-"+xmlhttp2.status] =xmlhttp2.responseText;
 			}
 		}
-	     console.log(result);
+	     
 	}
     	
 	xmlhttp2.open("GET",endpoint2 ,true);
