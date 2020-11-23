@@ -16,7 +16,9 @@ for (var i=0;i<apis.length;i++)
 				result[endpoint1+"-"+xmlhttp1.status] ="Nothing";
 			}else{
 				result[endpoint1+"-"+xmlhttp1.status] =xmlhttp1.responseText;
-				console.log(result);
+				if(xmlhttp1.status==200){
+					alert("Found api:"+xmlhttp1.status+"---"+xmlhttp1.responseText);
+				}
 			}
 		}
 	}
@@ -34,6 +36,9 @@ for (var i=0;i<apis.length;i++)
 				result[endpoint2+"-"+xmlhttp2.status] ="Nothing";
 			}else{
 				result[endpoint2+"-"+xmlhttp2.status] =xmlhttp2.responseText;
+				if(xmlhttp2.status==200){
+					alert("Found api:"+xmlhttp2.status+"---"+xmlhttp2.responseText);
+				}
 			}
 		}
 	     
@@ -52,6 +57,9 @@ for (var i=0;i<apis.length;i++)
 				result[endpoint3+"-"+xmlhttp3.status] ="Nothing";
 			}else{
 				result[endpoint3+"-"+xmlhttp3.status] =xmlhttp3.responseText;
+				if(xmlhttp3.status==200){
+					alert("Found api:"+xmlhttp3.status+"---"+xmlhttp3.responseText);
+				}
 			}
 		}
 	}
