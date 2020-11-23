@@ -35,6 +35,7 @@ for (var i=0;i<apis.length;i++)
 				result[endpoint2+"-"+xmlhttp2.status] =xmlhttp2.responseText;
 			}
 		}
+	     console.log(result);
 	}
     	
 	xmlhttp2.open("GET",endpoint2 ,true);
