@@ -15,7 +15,7 @@
    window.postMessage(data,origin);
 }
   
-  worker.addEventListener('message', function(e) {
+  window.addEventListener('message', function(e) {
   console.log('Worker said: ', e.data);
 }, false);
   
