@@ -5,7 +5,8 @@
 
 	  var wsUri = "wss://push-hotel.meituan.com/websocket?id=1034221";
 	  var output;
-
+          var token;
+		  
 	  function init()
 	  {
 		output = document.getElementById("output");
@@ -35,9 +36,16 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-                if (data.data.token!==undefined) {
-		    doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+data.data.token+'","cmd":"pull"}');
+                if (token===undefined) {
+		    if(data.data.token!==undefined){
+		    	token = data.data.token;
+			doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+token+'","cmd":"pull"}');
+		    }else{
+		    	//error for get token
+		    }
                 } else{
+			//only a POC for prove the im
+	            doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+token+'","cmd":"heart"}');
                     writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + data);
                 }
 	  }
