@@ -44,9 +44,9 @@
 		    	//error for get token
 		    }
                 } else{
-			//only a POC for prove the im
+                    writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + JSON.stringify(data));
+		    //just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
 	            doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+token+'","cmd":"heart"}');
-                    writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + data);
                 }
 	  }
 
