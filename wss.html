@@ -3,7 +3,7 @@
 	  <title>Testing</title>
 	  <script language="javascript" type="text/javascript">
 
-	  var wsUri = "wss://host.com";
+	  var wsUri = "wss://push-hotel.meituan.com/websocket?id=1034221";
 	  var output;
 
 	  function init()
@@ -37,8 +37,8 @@
 	 	let data = JSON.parse(evt.data);
                 if (data.data.token) {
                     console.log(data.data.token);
-                } else if (data.command == "getscenes") {
-                    // 其他命令
+                } else{
+                    writeToScreen('<span style="color: red;">服务器返回信息:</span> ' + data);
                 }
 	  }
 
