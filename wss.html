@@ -35,7 +35,7 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-                if (data.data.token) {
+                if (data.data.token!==undefined) {
 		    doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+data.data.token+'","cmd":"pull"}');
                 } else{
                     writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + data);
