@@ -36,9 +36,9 @@
 	  {
 	 	let data = JSON.parse(evt.data);
                 if (data.data.token) {
-                    console.log(data.data.token);
+		    doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"data.data.token","cmd":"pull"}');
                 } else{
-                    writeToScreen('<span style="color: red;">服务器返回信息:</span> ' + data);
+                    writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + data);
                 }
 	  }
 
