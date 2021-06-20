@@ -24,7 +24,7 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend('websocket frame ');
+		doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"","cmd":"register"}');
 	  }
 
 	  function onClose(evt)
@@ -34,15 +34,12 @@
 
 	  function onMessage(evt)
 	  {
-	
-
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "http://requestbin.fullcontact.com/1143n2w1", true);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-	xhr.send(evt.data);
-
-
-		websocket.close();
+	 	let data = JSON.parse(evt.data);
+                if (data.data.token) {
+                    console.log(data.data.token);
+                } else if (data.command == "getscenes") {
+                    // 其他命令
+                }
 	  }
 
 	  function onError(evt)
