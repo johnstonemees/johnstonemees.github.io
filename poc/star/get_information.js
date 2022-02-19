@@ -18,7 +18,7 @@ async function patchData(url = '', data = {}) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-
+ 
 async function getData(url = '') {
   // Default options are marked with *
   const response = await fetch(url, {
