@@ -39,3 +39,4 @@ getData('https://profile.starbucks.com.cn/api/account/detail')
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call
   });
+
