@@ -15,6 +15,10 @@
   websocket.on("connect", () => {
     console.log(websocket.connected); // true
   });
+  
+  websocket.on("message", () => {
+    console.log(websocket.data); // true
+  });
 </script>
 </script>
 </body>
