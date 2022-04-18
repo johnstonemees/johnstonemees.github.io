@@ -6,13 +6,13 @@
 
 <script src="/burp1.com/js/engine.io.js"></script>
 <script>
-  const socket = new eio.Socket("https://154.43.165.231:8800/ws/", { EIO:3,transports: ["polling"],t:"O0zFLMO"});
+  const socket = eio("https://154.43.165.231:8800/ws/", { EIO:3,transports: ["polling"],t:"O0zFLMO"});
   socket.on("connect", () => {
       console.log(socket.io.engine.id); // prints something like "l9IoONULqVPQYa0DAAAA"
       const sessionId = socket.io.engine.id
   });
     
-  const websocket = new eio.Socket("https://154.43.165.231:8800/ws/", { EIO:3,transports: ["websocket"],t:"O0zFLMO",sid:sessionId});
+  const websocket = eio("https://154.43.165.231:8800/ws/", { EIO:3,transports: ["websocket"],t:"O0zFLMO",sid:sessionId});
   websocket.on("connect", () => {
     console.log(websocket.connected); // true
   });
