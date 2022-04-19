@@ -12,7 +12,8 @@
   const socket = eio("https://154.43.165.231:8800/", { path: '/ws' ,transports: ["polling","websocket"],transportOptions: {
             polling: {
                 extraHeaders: {
-                    'x-session-id': 1
+                    'x-session-id': 1,
+                    'x-auth-token':"11af1fa455034af19627d97ec01d2d9b"
                 }
               }
         }});
