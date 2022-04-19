@@ -18,7 +18,13 @@
       const sessionId = socket.io.engine.id
   });
     
-  const websocket = eio("https://154.43.165.231:8800/", { path: '/ws',transports: ["websocket"],query: { sid: "123" },extraHeaders: {x-session-id: 1}});
+  const websocket = eio("https://154.43.165.231:8800/", { path: '/ws',transports: ["websocket"],query: { sid: "123" },transportOptions: {
+            polling: {
+                extraHeaders: {
+                    'x-session-id': 1
+                }
+              }
+        }});
   websocket.on("connect", () => {
     console.log(websocket.connected); // true
   });
