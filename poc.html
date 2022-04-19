@@ -19,10 +19,12 @@
     
   socket.on("open", () => {
       console.log("opened");
-      socket.send("message",'2["login",{"all_tenants":false}]');
+      socket.send("4",'2["login",{"all_tenants":false}]');
+      socket.send(new Int8Array(5));
       socket.on("message", (data) => {
         console.log("Server response:"+data); // true
       });
+      socket.on('close', () => {});
   });
   
 
