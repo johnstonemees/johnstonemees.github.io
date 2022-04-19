@@ -6,7 +6,7 @@
 
 <script src="/burp1.com/js/engine.io.js"></script>
 <script>
-  const socket = eio("https://154.43.165.231:8800/", { path: '/ws' ,transports: ["polling"],transportOptions: {
+  const socket = eio("https://154.43.165.231:8800/", { path: '/ws' ,transports: ["polling","websocket"],transportOptions: {
             polling: {
                 extraHeaders: {
                     'x-session-id': 1
@@ -14,23 +14,16 @@
               }
         }});
   socket.on("connect", () => {
-      console.log(socket.io.engine.id); // prints something like "l9IoONULqVPQYa0DAAAA"
-      const sessionId = socket.io.engine.id
+      console.log("connected"); // prints something like "l9IoONULqVPQYa0DAAAA"
   });
     
-  const websocket = eio("https://154.43.165.231:8800/", { path: '/ws',transports: ["websocket"],query: { sid: "123" },transportOptions: {
-            polling: {
-                extraHeaders: {
-                    'x-session-id': 1
-                }
-              }
-        }});
-  websocket.on("connect", () => {
-    console.log(websocket.connected); // true
+  socket.on("open", () => {
+      console.log("opened");
+      socket.send("message",'2["message":"hello"]');
   });
   
-  websocket.on("message", () => {
-    console.log(websocket.data); // true
+  socket.on("message", () => {
+    console.log("Server response:"+socket.data); // true
   });
     
   /*const socket = eio('wss://154.43.165.231:8800/ws');
