@@ -6,7 +6,13 @@
 
 <script src="/burp1.com/js/engine.io.js"></script>
 <script>
-  const socket = eio("https://154.43.165.231:8800/", { path: '/ws' ,transports: ["polling"],query: { auth: "123" },extraHeaders: {x-session-id: 1}});
+  const socket = eio("https://154.43.165.231:8800/", { path: '/ws' ,transports: ["polling"],transportOptions: {
+            polling: {
+                extraHeaders: {
+                    'x-session-id': 1
+                }
+              }
+        }});
   socket.on("connect", () => {
       console.log(socket.io.engine.id); // prints something like "l9IoONULqVPQYa0DAAAA"
       const sessionId = socket.io.engine.id
