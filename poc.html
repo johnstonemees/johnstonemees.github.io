@@ -19,12 +19,13 @@
     
   socket.on("open", () => {
       console.log("opened");
-      socket.send("message",'2["message":"hello"]');
+      socket.send("message",'2["login",{"all_tenants":false}]');
+      socket.on("message", (data) => {
+        console.log("Server response:"+data); // true
+      });
   });
   
-  socket.on("message", () => {
-    console.log("Server response:"+socket.data); // true
-  });
+
     
   /*const socket = eio('wss://154.43.165.231:8800/ws');
   socket.on('open', () => {
