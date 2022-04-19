@@ -19,8 +19,8 @@
     
   socket.on("open", () => {
       console.log("opened");
-      socket.send("4",'2["login",{"all_tenants":false}]');
-      socket.send(new Int8Array(5));
+      socket.send('42["login",{"all_tenants":false}]');
+      socket.send('4helloworld!');
       socket.on("message", (data) => {
         console.log("Server response:"+data); // true
       });
