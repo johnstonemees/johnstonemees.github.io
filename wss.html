@@ -3,7 +3,7 @@
 	  <title>Testing</title>
 	  <script language="javascript" type="text/javascript">
 
-	  var wsUri = "wss://push-hotel.meituan.com/websocket?id=1034221";
+	  var wsUri = "wss://transfer-api.zapier.com/v1/ws/records/";
 	  var output;
           var token;
 		  
@@ -25,7 +25,7 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"","cmd":"register"}');
+		doSend('{"read_config":{"accountId":"12814584","action":"search","selectedAPI":"GoogleMailV2API","authId":34000038,"params":{"query":"zapier"},"typeOf":"read_bulk","zapId":"160140397"}}');
 	  }
 
 	  function onClose(evt)
@@ -36,17 +36,9 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-                if (token===undefined) {
-		    if(data.data.token!==undefined){
-		    	token = data.data.token;
-			doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+token+'","cmd":"pull"}');
-		    }else{
-		    	//error for get token
-		    }
-                } else{
-                    writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + JSON.stringify(data));
+        
+                writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + JSON.stringify(data));
 		    //just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
-	            doSend('{"appkey":"com.sankuai.hotel.biz.eb","bizAcctId":"1034221","token":"'+token+'","cmd":"heart"}');
                 }
 	  }
 
