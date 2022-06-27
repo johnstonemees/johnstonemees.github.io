@@ -26,9 +26,9 @@
 	  function onOpen(evt,authId)
 	  {
 		writeToScreen("CONNECTED");
-		writeToScreen("authId is" + i);
+		writeToScreen("authId is " + authId);
 			//setInterval(testWebSocket(i),4000);
-		doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ i +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
+		doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 		//doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 	  }
 
