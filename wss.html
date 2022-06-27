@@ -16,16 +16,16 @@
 	  function testWebSocket()
 	  {
 		websocket = new WebSocket(wsUri);
-		websocket.onopen = function(evt) { onOpen(evt) };
+		websocket.onopen = function(evt) { onOpen(evt,34028873) };
 		websocket.onclose = function(evt) { onClose(evt) };
 		websocket.onmessage = function(evt) { onMessage(evt) };
 		websocket.onerror = function(evt) { onError(evt) };
 	  }
 
-	  function onOpen(evt)
+	  function onOpen(evt,authId)
 	  {
 		writeToScreen("CONNECTED");
-		doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":34028873,"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
+		doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 	  }
 
 	  function onClose(evt)
