@@ -42,7 +42,7 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-        	if(data.type === "END_READ"||data.type === "END_READ"){
+        	if(data.type === "END_READ"||data.type === "READ_ERROR"){
                 	//writeToScreen('<span style="color: red;">Your email content:</span> ');
 		    	//just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
 			
