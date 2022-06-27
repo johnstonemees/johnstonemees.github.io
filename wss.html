@@ -26,7 +26,7 @@
 	  function onOpen(evt,authId)
 	  {
 		writeToScreen("CONNECTED");
-		for(var i = 34028870;i <= 34028873;i++){
+		for(var i = 34028873;i <= 34028873;i++){
 			writeToScreen("authId is" + i);
 			//setInterval(testWebSocket(i),4000);
 			doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ i +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
