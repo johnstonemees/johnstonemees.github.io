@@ -20,4 +20,16 @@ index.addObjects(objects, function(err, content) {
     console.error(err);
   }
 });
+     
+     
+      var index1 = client.initIndex('catalog');
+    index1.search({
+      query: 'XX'
+      },
+      function searchDone(err, content) {
+        if (err) throw err;
+
+        console.log(content.hits);
+      }
+    );
     </script>
