@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE data [<!ENTITY file SYSTEM "file:///etc/passwd">]>
+<!DOCTYPE data [<!ENTITY file "test">]>
 <data>&file;</data>
 <data1>mydata</data1>
 <data2>{{9*9}}</data2>
