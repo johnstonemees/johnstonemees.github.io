@@ -26,8 +26,9 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend('{"command":"subscribe","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}"}');
-		//doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
+		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\"}");
+		doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
+		  //doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 	  }
 
 	  function onClose(evt)
@@ -65,11 +66,11 @@
 	  
 		  
          function step1(){
-		doSend('{"command":"subscribe","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}"}');
+		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\"}");
 	  }
 	  
 	  function step2(){
-		doSend('{"command":"message","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}","data":"{\"action\":\"retrieve_messages\"}"}');
+		doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
 	}
 	  </script>
 
