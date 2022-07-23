@@ -11,9 +11,10 @@
 	  {
 		output = document.getElementById("output");
 		writeToScreen("Start to steal your chat message......");
+		testWebSocket()
 	  }
 
-	  function testWebSocket(authId)
+	  function testWebSocket()
 	  {	
 		websocket = new WebSocket(wsUri);
 		websocket.onopen = function(evt) { onOpen(evt) };
