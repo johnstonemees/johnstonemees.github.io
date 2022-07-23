@@ -26,7 +26,7 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend('{"command":"message","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}","data":"{\"action\":\"retrieve_messages\"}"}');
+		doSend('{"command":"subscribe","identifier":"{\"channel\":\"Storefront::Messaging::MessagesChannel\"}"}');
 		//doSend('{"read_config":{"accountId":"1111111","action":"search","selectedAPI":"GoogleMailV2API","authId":'+ authId +',"params":{"query":"facebook"},"typeOf":"read_bulk","zapId":"111111"}}');
 	  }
 
@@ -38,7 +38,8 @@
 	  function onMessage(evt)
 	  {
 	 	let data = JSON.parse(evt.data);
-		writeToScreen('<span style="color: red;">BOOM!Your email content:</span> ' + JSON.stringify(data));
+		if(data.type === "ping"){return}
+		writeToScreen('<span style="color: red;">Server return message:</span> ' + JSON.stringify(data));
 	  }
 
 	  function onError(evt)
