@@ -27,7 +27,7 @@
 	  {
 		writeToScreen("CONNECTED");
 		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\"}");
-		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"});
+		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"}");
 		doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
 		 
 	  }
