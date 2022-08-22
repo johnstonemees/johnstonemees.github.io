@@ -3,7 +3,7 @@
     "urls": [
         {
             "url": "https://koffdsa.github.io/burp1.com/poc/xss.yaml",
-            "name": "Foo"
+            "name": "Foos"
         }
     ]
 }
