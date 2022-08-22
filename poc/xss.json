@@ -1,0 +1,9 @@
+{
+    "url": "https://koffdsa.github.io/poc/xss.yaml",
+    "urls": [
+        {
+            "url": "https://koffdsa.github.io/poc/xss.yaml",
+            "name": "Foo"
+        }
+    ]
+}
