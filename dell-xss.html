@@ -1,0 +1,13 @@
+<html>
+<body>
+<meta name="referrer" content="always">
+<form id="xss"
+      name="xss"
+      method="GET"
+      action="https://mvm.dell.com/aa">
+</form>
+<script>
+document.getElementById("xss").submit();
+</script>
+</body>
+</html>
