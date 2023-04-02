@@ -39,9 +39,9 @@
 
 	  function onMessage(evt)
 	  {
-	 	let data = JSON.parse(evt.data);
-		if(data.type === "ping"){return}
-		writeToScreen('<span style="color: red;">Server return message:</span> ' + JSON.stringify(data));
+	 	//let data = JSON.parse(evt.data);
+		//if(data.type === "ping"){return}
+		writeToScreen('<span style="color: red;">Server return message:</span> ' + evt.data;//JSON.stringify(data));
 	  }
 
 	  function onError(evt)
