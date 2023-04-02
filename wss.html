@@ -3,7 +3,7 @@
 	  <title>Testing</title>
 	  <script language="javascript" type="text/javascript">
     	 //load the iframe
-	  var wsUri = "wss://mydrive.tomtom.com/onp-web-service/ws/rest/notifications";
+	  var wsUri = "wss://pornbox.com/socket.io/?EIO=4&transport=websocket";
 	  var output;
           var token;
 	  
@@ -26,9 +26,9 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend("HEARTBEAT");
-		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"}");
-		doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
+		//doSend("HEARTBEAT");
+		//doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"}");
+		//doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
 		 
 	  }
 
