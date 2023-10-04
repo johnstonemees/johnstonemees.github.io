@@ -30,6 +30,3 @@ const response = fetch('https://www.pangleglobal.com/media/api/user/update', {
   body: JSON.stringify(addNew),
 })
 console.log('status:', response.status) 
-
-
-//finisthed
