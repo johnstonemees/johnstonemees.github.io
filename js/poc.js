@@ -29,5 +29,5 @@ const response = await fetch('https://www.pangleglobal.com/media/api/user/update
   },
   body: JSON.stringify(newProduct),
 })
-console.log('status:', response.status)
+console.log('status:', response.status) 
 
