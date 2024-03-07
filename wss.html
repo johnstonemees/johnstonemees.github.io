@@ -26,8 +26,7 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend("{\"timestamp\":1692197114}");
-		doSend("{\"action\":\"subscribe\",\"collection\":\"ad_reporting_pendings\",\"subscriptions\":[{\"type\":\"current\"}]}");
+		doSend("{\"type\":\"ping\"}");
 		//doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"}");
 		//doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
 		 
