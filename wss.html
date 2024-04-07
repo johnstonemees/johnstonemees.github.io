@@ -26,7 +26,7 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend("{\"type\":\"ping\"}");
+		doSend("{\"@type\":\"heartbeat\"}");
 		//doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"}");
 		//doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
 		 
