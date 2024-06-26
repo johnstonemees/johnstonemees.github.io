@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>文件一键上传</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            $(function() {
+                //当点击"一键上传"按钮的时候,触发表单中的浏览文件的操作
+                $("#hehe").click(function() {
+                    $("#Filedata").click();
+                })
+                //当选择好上传文件后,执行提交表单的操作
+                $("#Filedata").change(function() {
+                    alert("上传文件");
+                    $("#form1").submit();
+                })
+            })
+        </script>
+    </head>
+
+    <body>
+        <input type="button" id="hehe" value="上传文件" />
+        <form style="display: none;" id="form1" action="https://mbs-defective-uat.adidas.com.cn/albumManagement/upload.aspx" method="post" enctype="multipart/form-data">
+            <input type="file" name="Filedata" id="Filedata" />
+        </form>
+    </body>
+
+</html>
