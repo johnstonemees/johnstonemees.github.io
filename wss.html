@@ -3,7 +3,7 @@
 	  <title>Testing</title>
 	  <script language="javascript" type="text/javascript">
     	 //load the iframe
-	  var wsUri = "wss://socket.bitpanda.com/socket.io/?EIO=4&transport=websocket";
+	  var wsUri = "wss://console.neon.tech/cable";
 	  var output;
           var token;   
 	  
@@ -26,7 +26,7 @@
 	  function onOpen(evt)
 	  {
 		writeToScreen("CONNECTED");
-		doSend("{\"@type\":\"heartbeat\"}");
+		doSend("{\"command\":\"subscribe\",\"identifier\":\"{\"channel\":\"/projects\"}\"}");
 		//doSend("{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::ConversationsChannel\\\"}\"}");
 		//doSend("{\"command\":\"message\",\"identifier\":\"{\\\"channel\\\":\\\"Storefront::Messaging::MessagesChannel\\\"}\",\"data\":\"{\\\"action\\\":\\\"retrieve_messages\\\"}\"}");
 		 
