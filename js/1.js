@@ -22,7 +22,7 @@ if (xsrfToken) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-Xsrf-Token': XSRF-TOKEN, // 设置X-Xsrf-Token头部
+            'X-Xsrf-Token': xsrfToken, // 设置X-Xsrf-Token头部
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
             'Accept': 'application/json, text/plain, */*',
             'Sec-Fetch-Site': 'same-origin',
