@@ -44,6 +44,7 @@ const targetAddress = 'https://cnbs-api.underarmour.cn/graphql/?opname=queryAddr
 const requestOptions = {
   method: 'POST',
   mode: 'cors', // 启用CORS模式
+  credentials: 'include', 
   headers: {
     'Content-Type': 'application/json',
   },
