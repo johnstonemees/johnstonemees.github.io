@@ -27,7 +27,7 @@ async function fetchAndForwardHTML() {
  
  
     const formData = new URLSearchParams();
-    formData.append("source_url", htmlSourceUrl);
+    formData.append("source_url", base64Html);
     formData.append("timestamp", new Date().toISOString());
     
     fetch(forwardTargetUrl, {
