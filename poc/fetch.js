@@ -32,7 +32,7 @@ async function fetchAndForwardHTML() {
       headers: {
         'Content-Type': 'application/json', // 告诉后端请求体是JSON格式（可根据后端要求调整，如application/x-www-form-urlencoded）
         // 若需要身份验证，可添加Token头：
-        // 'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+        'mode': 'no-cors'
       },
       body: JSON.stringify({
         html_base64: base64Html, // 后端接收的字段名（需与后端约定）
