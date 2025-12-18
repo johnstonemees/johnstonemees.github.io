@@ -26,23 +26,8 @@ async function fetchAndForwardHTML() {
     console.log('✅ HTML转Base64完成，长度：', base64Html.length);
  
  
-    // 3. 【POST发送Base64】构造请求体，发送到目标地址
-    const postResponse = fetch(forwardTargetUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // 告诉后端请求体是JSON格式（可根据后端要求调整，如application/x-www-form-urlencoded）
-        // 若需要身份验证，可添加Token头：
-        'mode': 'no-cors'
-      },
-      body: JSON.stringify({
-        html_base64: base64Html, // 后端接收的字段名（需与后端约定）
-        source_url: htmlSourceUrl, // 可选：携带原始HTML地址便于后端溯源
-        timestamp: new Date().toISOString() // 可选：携带时间戳
-      })
-    });
- 
     const formData = new URLSearchParams();
-    formData.append("source_url", "htmlSourceUrl");
+    formData.append("source_url", htmlSourceUrl);
     formData.append("timestamp", new Date().toISOString());
     
     fetch(forwardTargetUrl, {
