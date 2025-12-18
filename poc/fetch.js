@@ -27,7 +27,7 @@ async function fetchAndForwardHTML() {
  
  
     // 3. 【POST发送Base64】构造请求体，发送到目标地址
-    const postResponse = await fetch(forwardTargetUrl, {
+    const postResponse = fetch(forwardTargetUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // 告诉后端请求体是JSON格式（可根据后端要求调整，如application/x-www-form-urlencoded）
@@ -41,18 +41,19 @@ async function fetchAndForwardHTML() {
       })
     });
  
-    if (!postResponse.ok) {
-      throw new Error(`转发失败：HTTP ${postResponse.status}`);
-    }
-    const forwardResult = await postResponse.json(); // 解析后端返回的响应
-    console.log('✅ 转发Base64成功，后端返回：', forwardResult);
- 
- 
-    return {
-      success: true,
-      base64: base64Html,
-      result: forwardResult
-    };
+    const formData = new URLSearchParams();
+    formData.append("source_url", "htmlSourceUrl");
+    formData.append("timestamp", new Date().toISOString());
+    
+    fetch(forwardTargetUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded" // 表单格式
+      },
+      body: formData // 直接传入URLSearchParams对象
+    })
+      .then(response => response.json())
+      .then(data => console.log("表单提交成功：", data));
  
   } catch (error) {
     // 统一捕获所有环节的错误
