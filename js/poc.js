@@ -19,7 +19,7 @@ if (csrfTokenElement) {
     formData.append('birthday', '');
     formData.append('birthdayMonth', '');
     formData.append('birthdayDate', '');
-    formData.append('_csrf', '3fea7a40-ef6f-4775-b63e-96e25c7d6bed');
+    formData.append('_csrf', csrfTokenElement);
     formData.append('myaccount', 'Save changes');
             
     // 发送 POST 请求（不处理返回数据）
