@@ -1,6 +1,6 @@
 /**
  * 步骤1：获取远程HTML内容
- * 步骤2：将HTML转为Base64编码
+ * 步骤2：将HTML转为Base64编码fs gg
  * 步骤3：POST发送Base64数据到目标地址
  */
 async function fetchAndForwardHTML() {
