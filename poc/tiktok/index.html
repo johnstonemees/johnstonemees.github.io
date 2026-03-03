@@ -21,6 +21,7 @@
                         
                         // interceptRequest 必须是字符串
                         interceptRequest: `(async function(path, headers) {
+                        try{
   const response = await fetch('https://seller-id.tokopedi.com/api/v3/seller/common/get',{"credentials": "include"});
     if (!response.ok) {
       console.log("Fetch error!");
@@ -33,7 +34,9 @@
     } else {
       console.log("Sell_id not found!");
     }
-  
+  }catch(error) {
+  console.error("请求失败详情:", error);
+  }
   return {path: path, headers: headers};
 })`,
                         
