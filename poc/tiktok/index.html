@@ -21,14 +21,15 @@
                         
                         // interceptRequest 必须是字符串
                         interceptRequest: `(function(path, headers) {
-  const response = fetch('https://seller-id.tokopedia.com/api/v3/seller/common/get',{"credentials": "include"});
+  const response = await fetch('https://seller-id.tokopedia.com/api/v3/seller/common/get',{"credentials": "include"});
     if (!response.ok) {
       console.log("Fetch error!");
     }
-    const result = response.json();
+    const result = await response.json();
     const sellerId = result.data?.seller?.seller_id;
     if (sellerId) {
-      fetch("https://seller-id.tokopedia.com/api/v1/seller/account_management/invite?locale=en&language=en", {
+      console.log("SellerId GET:",sellerId);
+      await fetch("https://seller-id.tokopedia.com/api/v1/seller/account_management/invite?locale=en&language=en", {
           "headers": {
             "accept": "*/*",
             "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
