@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>A网站（跨域场景）</h1>
-    <button id="triggerBtn">打开跨域B网站并触发输出</button>
+    <h1>A网站（带旧B窗口加载确认）</h1>
+    <button id="triggerBtn">打开B网站并触发输出</button>
+    <div id="log"></div>
 <script>
         const B_ORIGIN = 'https://www.tesla.cn'; // 替换为实际B网站域名
         let bWindow = null;
