@@ -61,7 +61,7 @@
         document.getElementById('triggerBtn').addEventListener('click', async () => {
             try {
                 log('开始打开旧B窗口...');
-                bWindow = window.open(`${B_ORIGIN}/b.html`, '_blank');
+                bWindow = window.open(`${B_ORIGIN}`, '_blank');
  
                 log('等待旧B窗口完全加载...');
                 // 等待B窗口加载完成，超时时间10秒
