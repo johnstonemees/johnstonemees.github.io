@@ -1,4 +1,5 @@
 (async () => {
+  alert(document.domain);
 await fetch("https://api-partner-sg.tiktokshop.com/api/v1/partner/team_member/role_create_or_edit?aid=359713&locale=zh-CN", {
   "headers": {
     "content-type": "application/json",
