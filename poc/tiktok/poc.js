@@ -47,7 +47,7 @@ fetch("https://seller-id.tokopedia.com/api/v1/seller/account_management/invite?l
           }],
           seller_roles: [],
           default_language: "en",
-          email: "esperamier+2@bugcrowdninja.com",
+          email: "johnstone+attacker2@wearehackerone.com.com",
           mobile: "",
           user_name: "weattacker"
         }),
