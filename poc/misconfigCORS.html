@@ -28,7 +28,7 @@ function loadReferenceData() {
     // 显示加载状态
     referenceElement.innerHTML = '<span style="color: #666;">加载中...</span>';
  
-    fetch('https://api.schoolspringstaging.com/api/JobBoardConfig/AtsAdminUrl?domainName=', { // 替换为实际API地址
+    fetch('https://api.schoolspringstaging.com/api/CCandidate/GetCandidateInfoById/7602032', { // 替换为实际API地址
         method: 'GET',
         mode: 'cors', // 显式指定CORS模式
         headers: {
