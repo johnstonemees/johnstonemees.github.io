@@ -29,20 +29,104 @@
   ];
 
   const FETCH_HTML_HEADERS = {
-    Accept: 'text/html,application/xhtml+xml',
-    'X-Requested-With': 'XMLHttpRequest',
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
   };
 
-  function decodeHtmlEntities(s) {
-    if (!s) return '';
-    const ta = document.createElement('textarea');
-    ta.innerHTML = s;
-    return ta.value;
+  async function fetchHtml(path, asNavigation = false) {
+    const url = path.startsWith('http') ? path : `${BASE}${path}`;
+    const headers = { ...FETCH_HTML_HEADERS };
+    if (!asNavigation) headers['X-Requested-With'] = 'XMLHttpRequest';
+
+    const resp = await fetch(url, { credentials: 'include', headers, redirect: 'follow' });
+    const text = await resp.text();
+    if (!resp.ok) throw new Error(`${path} HTTP ${resp.status}`);
+    if (isLoginPage(text)) throw new Error(`${path} returned login page — session expired`);
+    return text;
   }
 
-  function cleanText(text) {
-    if (!text) return '';
-    return decodeHtmlEntities(text).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+  function isLoginPage(html) {
+    return (
+      /id\.sage\.com/i.test(html) ||
+      /Cloud ID/i.test(html) ||
+      (html.includes('login') && html.includes('password') && !html.includes('SopEmployee'))
+    );
+  }
+
+  /** Try /companies and /companies/overview — merge HTML for ID extraction */
+  async function fetchCompaniesHtml() {
+    const chunks = [];
+    for (const path of ['/companies', '/companies/overview']) {
+      try {
+        const html = await fetchHtml(path, true);
+        chunks.push(html);
+        console.log(`📄 loaded ${path} (${html.length} bytes)`);
+      } catch (e) {
+        console.warn(`⚠ ${path}:`, e.message);
+      }
+    }
+    if (!chunks.length) throw new Error('Could not load /companies or /companies/overview');
+    return chunks.join('\n');
+  }
+
+  /** Company IDs — multiple sources (Firma grid, overview links, nav, sopConstants) */
+  function extractCompanyIds(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const ids = new Set();
+    const add = (id) => {
+      if (id && /^\d{4,10}$/.test(String(id))) ids.add(String(id));
+    };
+
+    // 1) Company list grid on /companies
+    doc.querySelectorAll('td.grid-company-number, td.row-id.grid-company-number').forEach((td) => {
+      add(cleanText(td.textContent));
+    });
+
+    // 2) delete/action anchors data-number="414079"
+    doc.querySelectorAll('[data-number]').forEach((el) => add(el.getAttribute('data-number')));
+
+    // 3) Company dropdown (may be in .hidden block)
+    doc.querySelectorAll(
+      'select#SopEmployee_CompanyId option, select[name*="CompanyId"] option'
+    ).forEach((opt) => add(opt.value));
+
+    // 4) overview sidebar links (single or double quotes)
+    doc.querySelectorAll('a[href*="companies/overview/"]').forEach((a) => {
+      const m = (a.getAttribute('href') || '').match(/overview\/(\d+)/);
+      if (m) add(m[1]);
+    });
+
+    // 5) nav links /companies/414079/employees etc.
+    doc.querySelectorAll('a[href*="/companies/"]').forEach((a) => {
+      const m = (a.getAttribute('href') || '').match(/\/companies\/(\d+)\/(?:employees|accounting|documents)/);
+      if (m) add(m[1]);
+    });
+
+    // 6) sopConstants JSON blob
+    doc.querySelectorAll('[data-tag="sopConstants"]').forEach((el) => {
+      try {
+        const json = JSON.parse(el.textContent || '{}');
+        add(json?.currentCompany?.companyNumber);
+      } catch (_) {}
+    });
+
+    // 7) regex fallbacks on raw HTML
+    const patterns = [
+      /\/companies\/overview\/(\d+)/g,
+      /\/companies\/(\d+)\/employees/g,
+      /\/companies\/(\d+)\/accounting/g,
+      /data-number="(\d+)"/g,
+      /"companyNumber"\s*:\s*(\d+)/g,
+      /grid-company-number[^>]*>(\d+)</g,
+    ];
+    for (const re of patterns) {
+      for (const m of html.matchAll(re)) add(m[1]);
+    }
+
+    const result = [...ids].sort((a, b) => Number(a) - Number(b));
+    if (!result.length) {
+      console.warn('⚠ extractCompanyIds: no IDs — HTML preview:', html.slice(0, 500));
+    }
+    return result;
   }
 
   function decodeCfEmail(hex) {
@@ -77,32 +161,16 @@
     return m?.[1] || null;
   }
 
-  async function fetchHtml(path) {
-    const url = path.startsWith('http') ? path : `${BASE}${path}`;
-    const resp = await fetch(url, { credentials: 'include', headers: FETCH_HTML_HEADERS });
-    if (!resp.ok) throw new Error(`${path} HTTP ${resp.status}`);
-    return resp.text();
+  function decodeHtmlEntities(s) {
+    if (!s) return '';
+    const ta = document.createElement('textarea');
+    ta.innerHTML = s;
+    return ta.value;
   }
 
-  /** Company IDs from /companies (select options + overview links) */
-  function extractCompanyIds(html) {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const ids = new Set();
-
-    doc.querySelectorAll(
-      'select#SopEmployee_CompanyId option, select[name*="CompanyId"] option, select[name*="company"] option'
-    ).forEach((opt) => {
-      if (/^\d+$/.test(opt.value)) ids.add(opt.value);
-    });
-
-    doc.querySelectorAll('a[href*="/companies/overview/"]').forEach((a) => {
-      const m = (a.getAttribute('href') || '').match(/overview\/(\d+)/);
-      if (m) ids.add(m[1]);
-    });
-
-    for (const m of html.matchAll(/\/companies\/overview\/(\d+)/g)) ids.add(m[1]);
-
-    return [...ids].sort();
+  function cleanText(text) {
+    if (!text) return '';
+    return decodeHtmlEntities(text).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
   /** Find employee grid root — NOT #SopEmployee_grid */
@@ -273,14 +341,25 @@
   try {
     console.log('🚀 start', BASE);
 
-    const companiesHtml = await fetchHtml('/companies');
+    const companiesHtml = await fetchCompaniesHtml();
     const csrf = parseCsrfFromHtml(companiesHtml);
     if (!csrf) throw new Error('CSRF not found on /companies');
     console.log('🔑 CSRF:', csrf.slice(0, 8) + '...');
 
-    const companyIds = extractCompanyIds(companiesHtml);
+    let companyIds = extractCompanyIds(companiesHtml);
+
+    // fallback: parse IDs from current tab if fetch returned minimal HTML
+    if (!companyIds.length) {
+      companyIds = extractCompanyIds(document.documentElement.outerHTML);
+      if (companyIds.length) console.log('🏢 company IDs from current page DOM');
+    }
+
     console.log('🏢 company IDs:', companyIds);
-    if (!companyIds.length) throw new Error('No company IDs on /companies');
+    if (!companyIds.length) {
+      throw new Error(
+        'No company IDs — open https://lohnabrechnung.sage.com/companies while logged in, then re-run'
+      );
+    }
 
     await storeGridPreferences(csrf, '/companies');
     await new Promise((r) => setTimeout(r, 800));
