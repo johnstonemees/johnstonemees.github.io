@@ -35,6 +35,7 @@ function loadReferenceData() {
             'Content-Type': 'application/json',
             // 如有需要可添加其他请求头，如Authorization
         },
+		body:'{}',
         credentials: 'include' // 如果需要携带Cookie可改为'include'
     })
     .then(response => {
