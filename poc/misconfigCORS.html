@@ -35,7 +35,7 @@ function loadReferenceData() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return;
 	var responseData = JSON.parse(xhr.responseText);
-	referenceElement.innerHTML = '<div class="reference-content"> <h3>参考数据</h3> <pre>${JSON.stringify(data, null, 2)}</pre> </div>';
+	referenceElement.innerHTML = '<div class="reference-content"> <h3>参考数据</h3> <pre>' + JSON.stringify(responseData, null, 2) + '</pre> </div>';
   };
   xhr.send(payload);
 }	
