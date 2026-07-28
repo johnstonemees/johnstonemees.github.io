@@ -13,6 +13,7 @@
     let timer = null;
     bbtestgo = window.open("https://www.pangleglobal.com/publisher/report","_blank");
 	timer = setInterval(function(){
+		console.log("send");
         bbtestgo.postMessage({
         type: 'tea:openVisualEditor',
         referrer: { apiDomain: API_DOMAIN, rangersDomain },
@@ -25,6 +26,7 @@
 	      if (data.type === 'pause') {
 	        if (timer) {
 	          clearInterval(timer);
+			  console.log("clean");
 	          timer = null;
 	        }
 	      }
