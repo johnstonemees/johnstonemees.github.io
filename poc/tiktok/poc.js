@@ -18,7 +18,7 @@ if (csrfToken) {
     console.log('[+] 已获取 csrftoken:', csrfToken);
     
     // 发送 POST 请求
-    fetch('https://www.example.com/media/api/user/update', {
+    fetch('https://www.pangleglobal.com/media/api/user/update', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
