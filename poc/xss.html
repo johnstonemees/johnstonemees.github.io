@@ -12,12 +12,12 @@
     
 
     bbtestgo = window.open("https://www.pangleglobal.com/publisher/report","_blank");
-    setInterval(function(){
+    setTimeout(function(){
              bbtestgo.postMessage({
                 type: 'tea:openVisualEditor',
                 referrer: { apiDomain: API_DOMAIN, rangersDomain },
                 lang: 'zh',
               }, '*');
-  },5000)
+  },12000)
    </script>
 </html>
